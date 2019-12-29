@@ -21,7 +21,7 @@ services:
 
   # back-end:
 
-  db:
+  db-dev:
     container_name: db-mysql
     image: mysql:5.7
     restart: always
