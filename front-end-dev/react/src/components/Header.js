@@ -26,7 +26,7 @@ class Header extends React.Component {
                 </form>
                 <a
                     className="link"
-                    href="https://twitter.com"
+                    href="http://127.0.0.1:8080"
                 >
                     <img
                         className="icon-twitter"
@@ -36,7 +36,7 @@ class Header extends React.Component {
                 </a>
                 <a
                     className="link"
-                    href="https://slack.com"
+                    href="http://127.0.0.1:8080/2"
                 >
                     <img
                         className="icon-slack"
