@@ -36,7 +36,6 @@ services:
     volumes:
       - ./back-end-dev/app:/app
     working_dir: /app
-    user: appuser
     command: ./gradlew --project-cache-dir /tmp/gradle-cache bootRun
     networks: 
       - backend
