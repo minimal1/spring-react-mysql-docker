@@ -1,12 +1,15 @@
 package RepositoryTest;
 
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import com.ntsim.HotSpringDockerApplicationTests;
 import com.ntsim.model.entity.User;
 import com.ntsim.repository.UserRepository;
 
+@RunWith(SpringRunner.class)
 public class UserRepositoryTest extends HotSpringDockerApplicationTests{
 
 	@Autowired
