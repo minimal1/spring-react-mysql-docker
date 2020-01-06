@@ -54,7 +54,7 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - db-data:/var/lib/mysql
+      - ./db-data-dev:/var/lib/mysql
     networks:
       - backend
 

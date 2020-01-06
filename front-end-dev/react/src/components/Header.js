@@ -1,101 +1,97 @@
 import React from 'react'
+import {Link} from 'react-router'
 
 class Header extends React.Component { 
+    constructor(props) {
+        super(props)
+
+        this.handleSubmit = this.handleSubmit.bind(this)
+    }
+
+    handleSubmit(event) {
+
+    }
+
     render() {
         return (
             <header>
-                <a 
-                    className="link"
+                <a
+                    href="/"
+                    className="main-link img-link"
                 >
                     <img
-                        className="header-logo"
                         src="/imgs/icon-logo.JPEG"
+                        className="main-logo"
                     />
                 </a>
                 
-                <form
-                    className="search-form mr-auto"
+                <form 
+                    className="search-form"
+                    onSubmit={this.handleSubmit}
                 >
-                    <input 
+                    <input
                         type="text"
-                        name="keyword"
-                        className="search-input"
-                        placeholder="Search"
+                        className="search-keyword"
+                        placeholder="Search for papers"
                     />
+
                     <button
-                        className="icon"
+                        className="search-button"
                     >
                         <img
                             src="/imgs/icon-search.png"
+                            className="icon-search"
                         />
                     </button>
                 </form>
-                
-                <nav
-                    className="header-nav"
-                >
+
+                <nav>
                     <ul
-                        className="header-nav list"
+                        className="nav-list"
                     >
-                        <li 
-                            className="list-item nav-link-right"
+                        <li
+                            className="list-item"
                         >
                             <a
-                                className="nav-link-right nav-textual-link"
-                                href="http://127.0.0.1:8080"
+                                href="/"
+                                className="nav-link"
                             >
-                                <img
-                                    className="nav-icon-twitter"
-                                    src="/imgs/icon-twitter.png"
-                                />
-                                Twitter
+                                Trend
                             </a>
                         </li>
-                        <li 
-                            className="list-item nav-link-right"
+
+                        <li
+                            className="list-item"
                         >
                             <a
-                                className="nav-link-right nav-textual-link"
-                                href="http://127.0.0.1:8080"
-                            >
-                                <img
-                                    className="nav-icon-slack"
-                                    src="/imgs/icon-slack.png"
-                                />
-                                Slack
-                            </a>
-                        </li>
-                        <li 
-                            className="list-item nav-link-right"
-                        >
-                            <a
-                                className="nav-link-right nav-textual-link no-img"
-                                href="http://127.0.0.1:8080"
-                            >
-                                Trends
-                            </a>
-                        </li>
-                        <li 
-                            className="list-item nav-link-right"
-                        >
-                            <a
-                                className="nav-link-right nav-textual-link no-img"
-                                href="http://127.0.0.1:8080"
+                                href="/"
+                                className="nav-link"
                             >
                                 About
                             </a>
                         </li>
-                        <li 
-                            className="list-item nav-link-right"
+
+                        <li
+                            className="list-item"
                         >
                             <a
-                                className="nav-link-right nav-textual-link no-img"
-                                href="http://127.0.0.1:8080"
+                                href="/"
+                                className="nav-link"
                             >
-                                Log In/Register
+                                Log In
                             </a>
                         </li>
 
+                        <li
+                            className="list-item"
+                        >
+                            <a
+                                href="/"
+                                className="nav-link"
+                            >
+                                Register
+                            </a>
+                        </li>
                     </ul>
                 </nav>
             </header>
