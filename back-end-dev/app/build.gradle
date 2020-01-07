@@ -38,7 +38,8 @@ dependencies {
 	compile('org.springframework.boot:spring-boot-starter-web')
 	compile('org.springframework.boot:spring-boot-starter-data-jpa')
 	compile('mysql:mysql-connector-java')
-	compile('org.projectlombok:lombok')
+	compile('org.projectlombok:lombok:1.18.10')
+	compile('org.apache.pdfbox:pdfbox:1.8.8')
 	developmentOnly('org.springframework.boot:spring-boot-devtools')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
