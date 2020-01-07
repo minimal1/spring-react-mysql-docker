@@ -1,5 +1,5 @@
 import React from 'react'
-import {Link} from 'react-router'
+import {Link} from 'react-router-dom'
 
 class Header extends React.Component { 
     constructor(props) {
@@ -15,15 +15,15 @@ class Header extends React.Component {
     render() {
         return (
             <header>
-                <a
-                    href="/"
+                <Link 
+                    to="/"
                     className="main-link img-link"
                 >
                     <img
                         src="/imgs/icon-logo.JPEG"
                         className="main-logo"
                     />
-                </a>
+                </Link>
                 
                 <form 
                     className="search-form"
@@ -74,23 +74,25 @@ class Header extends React.Component {
                         <li
                             className="list-item"
                         >
-                            <a
-                                href="/"
+                            <Link 
+                                to="/login"
                                 className="nav-link"
                             >
                                 Log In
-                            </a>
+                            </Link>
+                            
                         </li>
 
                         <li
                             className="list-item"
                         >
-                            <a
-                                href="/"
+                            <Link 
+                                to="/register"
                                 className="nav-link"
                             >
                                 Register
-                            </a>
+                            </Link>
+                            
                         </li>
                     </ul>
                 </nav>
