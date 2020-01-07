@@ -7,6 +7,7 @@ COPY react/package.json /usr/src/app/package.json
 RUN npm install --silent
 RUN npm install react-scripts -g --silent
 
+
 COPY react/ /usr/src/app
 
 ARG REACT_APP_API_BASE_URL

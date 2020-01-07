@@ -7,9 +7,8 @@ class SearchResults extends React.Component {
     render() {
         // 리스트
         return (
-            <div className="result-list">
-                list
-            </div>
+            <section>
+            </section>
         )
     }
 }
