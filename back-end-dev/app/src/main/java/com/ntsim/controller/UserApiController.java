@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ntsim.model.network.Header;
 import com.ntsim.model.network.request.UserApiRequest;
 import com.ntsim.model.network.response.UserApiResponse;
 import com.ntsim.service.UserApiLogicService;
@@ -20,7 +21,7 @@ public class UserApiController {
 	private UserApiLogicService userApiLogicService;
 
 	@PostMapping("/signup")
-	public UserApiResponse create(@RequestBody UserApiRequest userApiRequest) {
+	public Header<UserApiResponse> create(@RequestBody Header<UserApiRequest> userApiRequest) {
 
 		return userApiLogicService.create(userApiRequest);
 	}
