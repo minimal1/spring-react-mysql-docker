@@ -1,8 +1,10 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+/** @format */
 
-import './index.css'
+import React from 'react';
+import ReactDOM from 'react-dom';
 
-import App from './App'
+import './index.css';
 
-ReactDOM.render(<App />,document.querySelector("#root"))
+import App from './App';
+
+ReactDOM.render(<App />, document.querySelector('#root'));
