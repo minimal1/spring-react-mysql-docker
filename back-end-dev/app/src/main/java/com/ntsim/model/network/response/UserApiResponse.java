@@ -18,4 +18,5 @@ public class UserApiResponse {
 	private String userPassword;
 	
 	private String userEmail;
+
 }

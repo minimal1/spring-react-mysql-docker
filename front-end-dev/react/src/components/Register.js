@@ -43,13 +43,13 @@ class Register extends React.Component {
                 "Content-Type": "application/json"
             }
         };
-
+        
         if (
             id &&
             pw &&
             email
         ) {
-            fetch("http://localhost:8080/signup", signup_info)
+            fetch("http://127.0.0.1:8080/signup", signup_info)
                 .then(alert("가입이 완료되었습니다."))
                 .then(this.props.history.push("/"));
         } else {
