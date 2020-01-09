@@ -25,4 +25,9 @@ public class UserApiController {
 
 		return userApiLogicService.create(userApiRequest);
 	}
+	
+	@PostMapping("/login")
+	public Header<UserApiResponse> login(@RequestBody Header<UserApiRequest> userApiRequest) {
+		return userApiLogicService.login(userApiRequest);
+	}
 }

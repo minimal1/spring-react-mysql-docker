@@ -1,5 +1,7 @@
 package com.ntsim.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -13,34 +15,65 @@ import com.ntsim.repository.UserRepository;
 @Service
 public class UserApiLogicService {
 
+	boolean pwCheck = false;
+
 	@Autowired
 	private UserRepository userRepository;
-	
+
 	public Header<UserApiResponse> create(@RequestBody Header<UserApiRequest> userApiRequest) {
 
 		UserApiRequest uRequest = userApiRequest.getData();
-		
-		User user = User.builder()
-				.studentNumber(uRequest.getId())
-				.userPassword(uRequest.getPw())
-				.userEmail(uRequest.getEmail())
-				.build();
-		
+
+		Optional<User> userCheck = userRepository.findById(uRequest.getId());
+
+		if (userCheck.isPresent()) {
+			return Header.ERROR("이미 존재하는 아이디 입니다.");
+		}
+
+		User user = User.builder().studentNumber(uRequest.getId()).userPassword(uRequest.getPw())
+				.userEmail(uRequest.getEmail()).build();
+
 		User newUser = userRepository.save(user);
-		
+
 		return response(newUser);
 	}
-	
-	private Header<UserApiResponse> response(User user) {
+
+	public Header<UserApiResponse> login(@RequestBody Header<UserApiRequest> userApiRequest) {
 		
-		UserApiResponse userApiResponse = UserApiResponse.builder()
-				.studentNumber(user.getStudentNumber())
-				.userEmail(user.getUserEmail())
-				.userPassword(user.getUserPassword())
-				.build();
+		UserApiRequest uRequest = userApiRequest.getData();
+
+		Optional<User> userCheck = userRepository.findById(uRequest.getId());
+
+		if(!userCheck.isPresent()) {
+			return Header.ERROR("존재하지 않는 아이디 입니다.");
+		}
 		
-		return Header.OK(userApiResponse);
-				
+		
+		userCheck.ifPresent(user -> {
+			pwCheck = false;
+			
+			String pw = user.getUserPassword();
+			if(uRequest.getPw().equals(pw)) {
+				pwCheck = true;
+			}
+		});
+		
+		if(pwCheck) {
+			User user = User.builder().studentNumber(uRequest.getId()).userPassword(uRequest.getPw())
+					.userEmail(uRequest.getEmail()).build();
+			return response(user);
+		} else {
+			return Header.ERROR("비밀 번호가 일치하지 않습니다.");
+		}
 	}
-	
+
+	private Header<UserApiResponse> response(User user) {
+
+		UserApiResponse userApiResponse = UserApiResponse.builder().studentNumber(user.getStudentNumber())
+				.userEmail(user.getUserEmail()).userPassword(user.getUserPassword()).build();
+
+		return Header.OK(userApiResponse);
+
+	}
+
 }
