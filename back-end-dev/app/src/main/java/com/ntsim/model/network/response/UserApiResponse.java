@@ -11,8 +11,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class UserApiResponse {
 	
-	private String resultCode;
-	
 	private Integer studentNumber;
 	
 	private String userPassword;
