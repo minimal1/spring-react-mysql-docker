@@ -30,27 +30,40 @@ class Register extends React.Component {
             pw
         } = this.state;
 
-        const signupInfo = {
-            id: this.state.id,
-            pw: this.state.pw,
-            email: this.state.email
+        const signup_request = {
+            result_code: "OK",
+            description: "signup_request",
+            data: {
+                id: this.state.id,
+                pw: this.state.pw,
+                email: this.state.email
+            }
         };
 
         const signup_info = {
             method: "POST",
-            body: JSON.stringify(signupInfo),
+            body: JSON.stringify(signup_request),
             headers: {
                 "Content-Type": "application/json"
             }
         };
-        
+
         if (
             id &&
             pw &&
             email
         ) {
             fetch("http://127.0.0.1:8080/signup", signup_info)
-                .then(alert("가입이 완료되었습니다."))
+                .then(res => {
+                    return res.json()
+                })
+                .then(json => {
+                    if (json.result_code === "OK") {
+                        alert("Signup successed!")
+                    }else {
+                        alert(`Signup failed ${json.description}`)
+                    }
+                })
                 .then(this.props.history.push("/"));
         } else {
             alert("입력값을 확인해주세요");
