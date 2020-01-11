@@ -67,24 +67,26 @@ class Login extends React.Component {
   render() {
     return (
       <section>
+        <h1 className='login-title'>Login</h1>
         <form className='login-form' onSubmit={this.handleSubmit}>
+          <label>Student ID</label>
           <input
             type='text'
             className='id-input'
             name='id'
             value={this.state.id}
             onChange={this.handleChange}
-            placeholder='학번'
           />
+
+          <label>Password</label>
           <input
             type='text'
             className='pw-input'
             name='pw'
             value={this.state.pw}
             onChange={this.handleChange}
-            placeholder='PW'
           />
-          <button className='text-button'>login</button>
+          <button className='text-button'>Login</button>
         </form>
       </section>
     );
