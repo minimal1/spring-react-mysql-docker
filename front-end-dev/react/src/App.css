@@ -148,7 +148,6 @@ ul.nav-list {
   position: relative;
   top: 4px;
 }
-
 /* Header of page end */
 
 /* Container of page start */
@@ -357,10 +356,27 @@ section.page-for-detail div {
 }
 
 .detail-for-paper a {
+  font-size: 14px;
+  font-weight: 600;
   margin-right: 10px;
   padding: 10px;
   color: #fff;
-  background-color: #00d6c9;
-  border: 1px rgba(0, 0, 0, 0.05) solid;
+  background-image: linear-gradient(
+    to bottom,
+    #02aab0 0%,
+    #00cdac 1%,
+    #02aab0 100%
+  );
+  border: 1px #e0e0e0 solid;
   border-radius: 5px;
+  vertical-align: baseline;
+}
+
+.detail-for-paper a svg {
+  vertical-align: bottom;
+  width: 1.5em;
+  height: auto;
+  fill: currentColor;
+  stroke: currentColor;
+  margin-right: 5px;
 }
