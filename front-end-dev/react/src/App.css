@@ -1,5 +1,7 @@
 /** @format */
 
+@import '~antd/dist/antd.css';
+
 * {
   box-sizing: border-box;
 }
@@ -48,7 +50,9 @@ img.main-logo {
   padding-bottom: 0;
 }
 
-form input[type='text'] {
+form input[type='text'],
+input[type='password'],
+input[type='email'] {
   color: gray;
   font-size: 15px;
   padding: 10px 20px;
@@ -59,7 +63,9 @@ form input[type='text'] {
   transition: background-color 0.25s, color 0.25s, box-shadow 0.25s;
 }
 
-form input[type='text']:hover {
+form input[type='text']:hover,
+input[type='password']:hover,
+input[type='email']:hover {
   border-color: rgba(0, 0, 0, 0.05);
   transition: box-shadow 0.2s, border-color 0.2s;
   color: #000000;
@@ -70,14 +76,23 @@ form input[type='text']:hover + .search-button .icon-search {
   opacity: 1;
 }
 
-form input[type='text']:focus {
+form input[type='text']:focus,
+input[type='password']:focus,
+input[type='email']:focus {
   border: 0px solid #aaa;
   color: #333;
   box-shadow: 0px 8px 15px -8px rgba(0, 0, 0, 0.2);
 }
 
-form input[type='text']:placeholder {
+form input[type='text']:placeholder,
+input[type='password']:placeholder,
+input[type='email']:placeholder {
   color: #aaa;
+}
+
+.page-title {
+  font-size: 30px;
+  margin: 30px auto;
 }
 
 .search-form .search-keyword {
@@ -264,11 +279,6 @@ section {
 }
 
 /* Register form start */
-.register-title {
-  font-size: 50px;
-  margin: 30px auto;
-}
-
 .register-form {
   width: 50%;
   display: flex;
@@ -284,32 +294,34 @@ section {
   margin: 20px 0;
 }
 
-.register-form input[type='text']:focus {
+.register-form input[type='text']:focus,
+input[type='password']:focus,
+input[type='email']:focus {
   border: 0.5px solid #aaa;
   color: #333;
   box-shadow: 0px 8px 15px -8px rgba(0, 0, 0, 0.2);
 }
 
-.register-form button {
-  margin: 20px 0;
-  background-color: #00d6c9;
-  color: #fff;
+.register-form-button {
+  width: 100%;
+  margin-top: 15px;
 }
 
-.register-form button:hover {
-  background-color: #21cbce;
-  color: #fff !important;
+.register-form-button[disabled],
+.register-form-button[disabled]:hover,
+.register-form-button[disabled]:focus {
+  opacity: 0.6;
+  color: #fff;
+  background-color: #1890ff;
+  border-color: #1890ff;
 }
+
 /* Register form end */
 
 /* Logion form start */
 .login-section {
   border: 1px solid #aaa;
   border-radius: 5px;
-}
-.login-title {
-  font-size: 30px;
-  margin: 30px auto;
 }
 
 .login-form {
@@ -327,21 +339,15 @@ section {
   margin: 20px 0;
 }
 
-.login-form input[type='text']:focus {
+.login-form input[type='text']:focus,
+input[type='password']:focus {
   border: 0.5px solid #aaa;
   color: #333;
   box-shadow: 0px 8px 15px -8px rgba(0, 0, 0, 0.2);
 }
 
-.login-form button {
-  margin: 20px 0;
-  background-color: #00d6c9;
-  color: #fff;
-}
-
-.login-form button:hover {
-  background-color: #21cbce;
-  color: #fff !important;
+.login-form-button {
+  width: 100%;
 }
 /* Logion form end */
 
