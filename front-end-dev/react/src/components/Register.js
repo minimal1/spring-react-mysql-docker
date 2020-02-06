@@ -1,104 +1,344 @@
 /** @format */
 
 import React from 'react';
+import {
+  register,
+  checkUsernameAvailability,
+  checkEmailAvailability
+} from '../util/APIUtils';
+import { Link } from 'react-router-dom';
+import {
+  USERNAME_MIN_LENGTH,
+  USERNAME_MAX_LENGTH,
+  PASSWORD_MIN_LENGTH,
+  PASSWORD_MAX_LENGTH
+} from '../constants/index';
+
+import { Form, Input, Button, notification } from 'antd';
+const FormItem = Form.Item;
 
 class Register extends React.Component {
-	constructor(props) {
-		super(props);
+  constructor(props) {
+    super(props);
 
-		this.state = {
-			id: '',
-			email: '',
-			pw: ''
-		};
-		this.handleChange = this.handleChange.bind(this);
-		this.handleSubmit = this.handleSubmit.bind(this);
-	}
+    this.state = {
+      username: {
+        value: ''
+      },
+      email: {
+        value: ''
+      },
+      password: {
+        value: ''
+      }
+    };
 
-	handleChange(e) {
-		const { name, value } = e.target;
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.validateUsernameAvailability = this.validateUsernameAvailability.bind(
+      this
+    );
+    this.validateEmailAvailability = this.validateEmailAvailability.bind(this);
+    this.isFormInvalid = this.isFormInvalid.bind(this);
+  }
 
-		this.setState({
-			[name]: value
-		});
-	}
+  handleChange(e, validationFunc) {
+    const target = e.target;
+    const inputName = target.name;
+    const inputValue = target.value;
 
-	handleSubmit(e) {
-		//서버로 가입 양식 제출
-		e.preventDefault();
-		const { id, email, pw } = this.state;
+    this.setState({
+      [inputName]: {
+        value: inputValue,
+        ...validationFunc(inputValue)
+      }
+    });
+  }
 
-		const signup_request = {
-			result_code: 'OK',
-			description: 'signup_request',
-			data: {
-				id: this.state.id,
-				pw: this.state.pw,
-				email: this.state.email
-			}
-		};
+  handleSubmit(e) {
+    //서버로 가입 양식 제출
+    e.preventDefault();
 
-		const signup_info = {
-			method: 'POST',
-			body: JSON.stringify(signup_request),
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		};
+    const registerRequest = {
+      result_code: 'OK',
+      description: 'register_request',
+      data: {
+        name: this.state.name.value,
+        id: this.state.username.value,
+        email: this.state.email.value,
+        pw: this.state.password.value
+      }
+    };
 
-		if (id && pw && email) {
-			fetch('http://127.0.0.1:8080/signup', signup_info)
-				.then(res => {
-					return res.json();
-				})
-				.then(json => {
-					if (json.result_code === 'OK') {
-						alert('Signup successed!');
-					} else {
-						alert(`Signup failed ${json.description}`);
-					}
-				})
-				.then(this.props.history.push('/'));
-		} else {
-			alert('입력값을 확인해주세요');
-		}
-	}
+    register(registerRequest)
+      .then(response => {
+        notification.success({
+          message: '졸업논문ing',
+          description:
+            'Thank you! You"re successfully registered. Please Login to continue!'
+        });
+        this.props.history.push('/login');
+      })
+      .catch(error => {
+        notification.error({
+          message: '졸업논문ing',
+          description:
+            error.description ||
+            'Sorry! Something went wrong. Please try again!'
+        });
+      });
+  }
 
-	render() {
-		return (
-			<section>
-				<form className='register-form' onSubmit={this.handleSubmit}>
-					<input
-						type='text'
-						className='id-input'
-						name='id'
-						value={this.state.id}
-						onChange={this.handleChange}
-						placeholder='학번'
-					/>
+  isFormInvalid() {
+    return !(
+      this.state.username.validateStatus === 'success' &&
+      this.state.email.validateStatus === 'success' &&
+      this.state.password.validateStatus === 'success'
+    );
+  }
+  render() {
+    return (
+      <section>
+        <h1 className='page-title'>Create your account</h1>
+        <Form onSubmit={this.handleSubmit} className='register-form'>
+          <FormItem
+            label='Username'
+            hasFeedback
+            validateStatus={this.state.username.validateStatus}
+            help={this.state.username.errorMsg}
+          >
+            <Input
+              // className='id-input'
+              size='large'
+              name='username'
+              autoComplete='off'
+              placeholder='Your student ID'
+              value={this.state.username.value}
+              onBlur={this.validateUsernameAvailability}
+              onChange={event =>
+                this.handleChange(event, this.validateUsername)
+              }
+            />
+          </FormItem>
+          <FormItem
+            label='Email'
+            hasFeedback
+            validateStatus={this.state.email.validateStatus}
+            help={this.state.email.errorMsg}
+          >
+            <Input
+              className='email-input'
+              size='large'
+              name='email'
+              type='email'
+              autoComplete='off'
+              placeholder='Your email'
+              value={this.state.email.value}
+              onBlur={this.validateEmailAvailability}
+              onChange={event => this.handleChange(event, this.validateEmail)}
+            />
+          </FormItem>
+          <FormItem
+            label='Password'
+            hasFeedback
+            validateStatus={this.state.password.validateStatus}
+            help={this.state.password.errorMsg}
+          >
+            <Input
+              className='pw-input'
+              size='large'
+              name='password'
+              type='password'
+              autoComplete='off'
+              placeholder='A password between 6 to 20 characters'
+              value={this.state.password.value}
+              onChange={event =>
+                this.handleChange(event, this.validatePassword)
+              }
+            />
+          </FormItem>
+          <FormItem>
+            <Button
+              className='register-form-button'
+              type='primary'
+              htmlType='submit'
+              size='large'
+              disabled={this.isFormInvalid()}
+            >
+              Register
+            </Button>
+            Already registed? <Link to='/login'>Login now!</Link>
+          </FormItem>
+        </Form>
+      </section>
+    );
+  }
 
-					<input
-						type='text'
-						className='pw-input'
-						name='pw'
-						value={this.state.pw}
-						onChange={this.handleChange}
-						placeholder='PW'
-					/>
+  validateUsername = username => {
+    if (username.length < USERNAME_MIN_LENGTH) {
+      return {
+        validateStatus: 'error',
+        errorMsg: `Username is too short (Minimum ${USERNAME_MIN_LENGTH} characters needed.)`
+      };
+    } else if (username.length > USERNAME_MAX_LENGTH) {
+      return {
+        validateStatus: 'error',
+        errorMsg: `Username is too long (Maximum ${USERNAME_MAX_LENGTH} characters needed.)`
+      };
+    } else {
+      return {
+        validateStatus: null,
+        errorMsg: null
+      };
+    }
+  };
 
-					<input
-						type='text'
-						className='email-input'
-						name='email'
-						value={this.state.email}
-						onChange={this.handleChange}
-						placeholder='EMAIL'
-					/>
-					<button className='text-button'>register</button>
-				</form>
-			</section>
-		);
-	}
+  validateEmail = email => {
+    if (!email) {
+      return {
+        validateStatus: 'error',
+        errorMsg: 'Email may not be empty'
+      };
+    }
+
+    const EMAIL_REGEX = RegExp('[^@ ]+@[^@ ]+\\.[^@ ]+');
+
+    if (!EMAIL_REGEX.test(email)) {
+      return {
+        validateStatus: 'error',
+        errorMsg: 'Email not valid'
+      };
+    }
+
+    return { validateStatus: null, errorMsg: null };
+  };
+
+  validatePassword = password => {
+    if (password.length < PASSWORD_MIN_LENGTH) {
+      return {
+        validateStatus: 'error',
+        errorMsg: `Password is too shart (Minimum ${PASSWORD_MIN_LENGTH} characters needed.)`
+      };
+    } else if (password.length > PASSWORD_MAX_LENGTH) {
+      return {
+        validateStatus: 'error',
+        errorMsg: `Password is too long (Maximum ${PASSWORD_MAX_LENGTH} characters allowed.)`
+      };
+    } else {
+      return {
+        validateStatus: 'success',
+        errorMsg: null
+      };
+    }
+  };
+
+  validateUsernameAvailability() {
+    // First check for client side errors in username
+    const usernameValue = this.state.username.value;
+    const usernameValidation = this.validateUsername(usernameValue);
+
+    if (usernameValidation.validateStatus === 'error') {
+      this.setState({
+        username: {
+          value: usernameValue,
+          ...usernameValidation
+        }
+      });
+      return;
+    }
+
+    this.setState({
+      username: {
+        value: usernameValue,
+        validateStatus: 'validating',
+        errorMsg: null
+      }
+    });
+
+    // Last check for server side
+    checkUsernameAvailability(usernameValue)
+      .then(response => {
+        if (response.result_code === 'OK') {
+          this.setState({
+            username: {
+              value: usernameValue,
+              validateStatus: 'succeess',
+              errorMsg: null
+            }
+          });
+        } else {
+          this.setState({
+            username: {
+              value: usernameValue,
+              validateStatus: 'error',
+              errorMsg: 'This username is already taken'
+            }
+          });
+        }
+      })
+      .catch(error => {
+        this.setState({
+          username: {
+            value: usernameValue,
+            validateStatus: 'success',
+            errorMsg: null
+          }
+        });
+      });
+  }
+
+  validateEmailAvailability() {
+    const emailValue = this.state.email.value;
+    const emailValidation = this.validateEmail(emailValue);
+
+    if (emailValidation.validateStatus === 'error') {
+      this.setState({
+        email: {
+          value: emailValue,
+          ...emailValidation
+        }
+      });
+      return;
+    }
+
+    this.setState({
+      email: {
+        value: emailValue,
+        validateStatus: 'validating',
+        errorMsg: null
+      }
+    });
+
+    checkEmailAvailability(emailValue)
+      .then(reponse => {
+        if (reponse.result_code === 'OK') {
+          this.setState({
+            email: {
+              value: emailValue,
+              validateStatus: 'success',
+              errorMsg: null
+            }
+          });
+        } else {
+          this.setState({
+            email: {
+              value: emailValue,
+              validateStatus: 'error',
+              errorMsg: 'This email is aleady registered'
+            }
+          });
+        }
+      })
+      .catch(error => {
+        this.setState({
+          email: {
+            value: emailValue,
+            validateStatus: 'success',
+            errorMsg: null
+          }
+        });
+      });
+  }
 }
 
 export default Register;
