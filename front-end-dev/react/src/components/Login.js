@@ -1,92 +1,103 @@
 /** @format */
 
 import React from 'react';
+import { login } from '../util/APIUtils';
+import { Link } from 'react-router-dom';
+import { ACCESS_TOKEN } from '../constants/index';
+
+import { Form, Input, Button, Icon, notification } from 'antd';
+const FormItem = Form.Item;
 
 class Login extends React.Component {
+  render() {
+    const AntWrappedLoginForm = Form.create()(LoginForm);
+    return (
+      <section>
+        <h1 className='page-title'>Login</h1>
+        <AntWrappedLoginForm onLogin={this.props.onLogin} />
+      </section>
+    );
+  }
+}
+
+class LoginForm extends React.Component {
   constructor(props) {
     super(props);
-
-    this.state = {
-      id: '',
-      pw: ''
-    };
-    this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleChange(e) {
-    const { name, value } = e.target;
-
-    this.setState({
-      [name]: value
+  handleSubmit(event) {
+    event.preventDefault();
+    this.props.form.validateFields((err, values) => {
+      if (!err) {
+        const loginRequest = Object.assign({}, values);
+        login(loginRequest)
+          .then(response => {
+            localStorage.setItem(ACCESS_TOKEN, response.accessToken);
+            this.props.onLogin();
+          })
+          .catch(error => {
+            if (error.result_code === 401) {
+              notification.error({
+                message: '졸업논문ing',
+                description:
+                  'Your Username or Password is incorrect. Please try again!'
+              });
+            } else {
+              notification.error({
+                message: '졸업논문ing',
+                description:
+                  error.description ||
+                  'Sorry! Something went wrong. Please try again!'
+              });
+            }
+          });
+      }
     });
   }
 
-  handleSubmit(e) {
-    //서버로 가입 양식 제출
-    e.preventDefault();
-    const { id, pw } = this.state;
-
-    const login_request = {
-      result_code: 'OK',
-      description: 'login_request',
-      data: {
-        id: this.state.id,
-        pw: this.state.pw
-      }
-    };
-
-    const loginrequest_info = {
-      method: 'POST',
-      body: JSON.stringify(login_request),
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    };
-
-    if (id && pw) {
-      fetch('http://127.0.0.1:8080/login', loginrequest_info)
-        .then(res => {
-          return res.json();
-        })
-        .then(json => {
-          if (json.result_code === 'OK') {
-            alert(
-              `Login successed, id = ${json.data.id}, pw = ${json.data.pw}`
-            );
-          } else {
-            alert(`Login failed ${json.description}`);
-          }
-        })
-        .then(this.props.history.push('/'));
-    } else {
-      alert('입력값을 확인해주세요');
-    }
-  }
-
   render() {
+    const { getFieldDecorator } = this.props.form;
+    console.log(this.props.form);
     return (
-      <section>
-        <form className='login-form' onSubmit={this.handleSubmit}>
-          <input
-            type='text'
-            className='id-input'
-            name='id'
-            value={this.state.id}
-            onChange={this.handleChange}
-            placeholder='학번'
-          />
-          <input
-            type='text'
-            className='pw-input'
-            name='pw'
-            value={this.state.pw}
-            onChange={this.handleChange}
-            placeholder='PW'
-          />
-          <button className='text-button'>login</button>
-        </form>
-      </section>
+      <Form onSubmit={this.handleSubmit} className='login-form'>
+        <FormItem>
+          {getFieldDecorator('username', {
+            rules: [{ required: true, message: 'Please input your Username' }]
+          })(
+            <Input
+              prefix={<Icon type='user' style={{ color: 'rgba(0,0,0,.25)' }} />}
+              size='large'
+              placeholder='Username'
+              name='username'
+            />
+          )}
+        </FormItem>
+        <FormItem>
+          {getFieldDecorator('password', {
+            rules: [{ required: true, message: 'Please input your Password' }]
+          })(
+            <Input
+              prefix={<Icon type='lock' style={{ color: 'rgba(0,0,0,.25)' }} />}
+              name='password'
+              type='password'
+              placeholder='Password'
+              size='large'
+            />
+          )}
+        </FormItem>
+        <FormItem>
+          <Button
+            type='primary'
+            htmlType='submit'
+            size='large'
+            className='login-form-button'
+          >
+            Login
+          </Button>
+          Or <Link to='/register'>register now!</Link>
+        </FormItem>
+      </Form>
     );
   }
 }
