@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @Controller
 public class S3UploaderController {
-	private final S3Uploader s3Uploader;
+	private final S3Uploader s3Uploader;	//test
 
     @GetMapping("j")
     public String index() {
