@@ -33,7 +33,7 @@ class UploadPaper extends Component {
     };
 
     console.log(uploadRequest);
-    uploadPaper(uploadRequest)
+    uploadPaper(formData)
       .then(response => {
         this.setState({
           fileList: [],
