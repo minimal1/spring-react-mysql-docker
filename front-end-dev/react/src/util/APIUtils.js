@@ -52,3 +52,11 @@ export function checkEmailAvailability(email) {
     method: 'GET'
   });
 }
+
+export function uploadPaper(uploadRequest) {
+  return request({
+    url: API_BASE_URL + '/upload',
+    method: 'POST',
+    data: JSON.stringify(uploadRequest)
+  });
+}

@@ -34,6 +34,11 @@ class Header extends React.Component {
         <nav>
           <ul className='nav-list'>
             <li className='list-item'>
+              <Link to='/upload' className='nav-link'>
+                Upload
+              </Link>
+            </li>
+            <li className='list-item'>
               <Link to='/' className='nav-link'>
                 About
               </Link>

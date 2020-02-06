@@ -1,3 +1,5 @@
+# @format
+
 version: '3.7'
 
 services:
@@ -6,38 +8,38 @@ services:
     build:
       context: front-end-dev
       dockerfile: Dockerfile-dev
-      args: 
-        REACT_APP_API_BASE_URL: http://127.0.0.1:8080/api
-    ports: 
-      - "80:3000"
+      args:
+        REACT_APP_API_BASE_URL: http://127.0.0.1:8080/
+    ports:
+      - '80:3000'
     restart: always
     # depends_on: back-end
-    networks: 
+    networks:
       - frontend
-    volumes: 
+    volumes:
       - ./front-end-dev/react/public:/usr/src/app/public
       - ./front-end-dev/react/src:/usr/src/app/src
     command: npm start
 
   back-end:
     container_name: back-end-dev
-    build: 
+    build:
       context: back-end-dev
       dockerfile: Dockerfile-dev
     restart: always
-    depends_on: 
+    depends_on:
       - db-dev # This service depends on mysql. Start that first.
     environment: # Pass environment variables to the service
       SPRING_DATASOURCE_URL: jdbc:mysql://db-dev:3306/minimal_db?useSSL=false&serverTimezone=UTC&useLegacyDatetimeCode=false
       SPRING_DATASOURCE_USERNAME: minimal
-      SPRING_DATASOURCE_PASSWORD: minimal 
-    ports: 
-      - "8080:8080"
+      SPRING_DATASOURCE_PASSWORD: minimal
+    ports:
+      - '8080:8080'
     volumes:
       - ./back-end-dev/app:/app
     working_dir: /app
     command: ./gradlew --project-cache-dir /tmp/gradle-cache bootRun
-    networks: 
+    networks:
       - backend
       - frontend
 
@@ -60,8 +62,7 @@ services:
 
 volumes:
   db-data:
-  
+
 networks:
   backend:
   frontend:
-  

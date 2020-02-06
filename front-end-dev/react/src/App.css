@@ -386,3 +386,10 @@ section.page-for-detail div {
   stroke: currentColor;
   margin-right: 5px;
 }
+
+.upload {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
