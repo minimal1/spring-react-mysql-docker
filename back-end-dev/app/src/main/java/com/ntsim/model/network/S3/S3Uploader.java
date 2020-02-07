@@ -26,13 +26,15 @@ public class S3Uploader {
 	private String bucket;
 
 	public String upload(MultipartFile multipartFile, String dirName) throws IOException {
+		log.info("upload start");
 		File uploadFile = convert(multipartFile)
 				.orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File로 전환이 실패했습니다."));
 
 		return upload(uploadFile, dirName);
 	}
 
-	private String upload(File uploadFile, String dirName) {
+	public String upload(File uploadFile, String dirName) {
+		System.out.println("aaa");
 		String fileName = dirName + "/" + uploadFile.getName();
 		String uploadImageUrl = putS3(uploadFile, fileName);
 		removeNewFile(uploadFile);

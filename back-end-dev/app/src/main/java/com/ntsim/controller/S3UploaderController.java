@@ -12,7 +12,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ntsim.model.network.S3.S3Uploader;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RequiredArgsConstructor
 @Controller
 public class S3UploaderController {
@@ -26,6 +28,7 @@ public class S3UploaderController {
     @PostMapping("/upload")
     @ResponseBody
     public String upload(@RequestParam("data") MultipartFile multipartFile) throws IOException {
+    	log.info("sssssssssssss");
         return s3Uploader.upload(multipartFile, "graduPdf");
     }
 }
