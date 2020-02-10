@@ -23,6 +23,20 @@ const request = options => {
     })
   );
 };
+const request_file = options => {
+  return fetch(options.url, options).then(response =>
+    response.json().then(json => {
+      if (!response.ok) {
+        return Promise.reject(json);
+      }
+
+      if (json.result_code !== 'OK') {
+        return Promise.reject(json);
+      }
+      return json;
+    })
+  );
+};
 
 export function login(loginRequest) {
   return request({
@@ -54,9 +68,9 @@ export function checkEmailAvailability(email) {
 }
 
 export function uploadPaper(uploadRequest) {
-  return request({
+  return request_file({
     url: API_BASE_URL + '/upload',
     method: 'POST',
-    data: uploadRequest
+    body: uploadRequest
   });
 }
