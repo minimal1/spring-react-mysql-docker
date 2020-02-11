@@ -15,8 +15,8 @@ import com.ntsim.model.network.S3.S3Uploader;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-@CrossOrigin(origins = "*")
 @Slf4j
+@CrossOrigin(origins = "*")
 @RequiredArgsConstructor
 @Controller
 public class S3UploaderController {
