@@ -12,6 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
+import com.ntsim.textrank.Summarizer;
+import com.ntsim.textrank.TextRank;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -33,10 +35,16 @@ public class S3Uploader {
 		return upload(uploadFile, dirName);
 	}
 
-	public String upload(File uploadFile, String dirName) {
+	public String upload(File uploadFile, String dirName) throws IOException {
 		System.out.println("aaa");
 		String fileName = dirName + "/" + uploadFile.getName();
 		String uploadImageUrl = putS3(uploadFile, fileName);
+		// TextRank 실시.
+		TextRank tr = new TextRank();
+        String text = tr.getText(uploadFile);
+        Summarizer summarizer = new Summarizer(text);
+        for(String sentence : summarizer.summarize())
+        	log.info(sentence);
 		removeNewFile(uploadFile);
 		return uploadImageUrl;
 	}

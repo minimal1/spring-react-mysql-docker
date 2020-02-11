@@ -16,11 +16,11 @@ public class TextRankTest
      * */
     public TextRankTest(String testName) throws IOException {
         super(testName);
-        TextRank tr = new TextRank();
-        String text = tr.getText();
-        Summarizer summarizer = new Summarizer(text);
-        for(String sentence : summarizer.summarize())
-        	System.out.println(sentence);
+//        TextRank tr = new TextRank();
+//        String text = tr.getText();
+//        Summarizer summarizer = new Summarizer(text);
+//        for(String sentence : summarizer.summarize())
+//        	System.out.println(sentence);
     }
 
     /**

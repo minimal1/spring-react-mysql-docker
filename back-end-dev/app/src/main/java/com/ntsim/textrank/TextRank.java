@@ -11,12 +11,12 @@ public class TextRank {
 	public TextRank() throws IOException {
 //		this.text = getText();
 	}
-	public String getText() throws IOException {
+	public String getText(File pdfFile) throws IOException {
 		/*
 		 * s3에서 가져온 파일들을 분석함.
 		 * */
-		File myFile = new File("src/main/resources/paper.pdf");
-        try (PDDocument doc = PDDocument.load(myFile)) {
+//		File myFile = new File("src/main/resources/paper.pdf");
+        try (PDDocument doc = PDDocument.load(pdfFile)) {
 
             PDFTextStripper stripper = new PDFTextStripper();
             /*
