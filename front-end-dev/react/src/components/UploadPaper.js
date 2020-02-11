@@ -32,7 +32,6 @@ class UploadPaper extends Component {
       data: formData
     };
 
-    console.log(uploadRequest);
     uploadPaper(formData)
       .then(response => {
         this.setState({
