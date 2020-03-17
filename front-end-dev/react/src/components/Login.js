@@ -30,11 +30,20 @@ class LoginForm extends React.Component {
     event.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        const loginRequest = Object.assign({}, values);
+        const loginRequest = {
+          result_code: 'OK',
+          description: 'login_request',
+          data: {
+            id: values.username,
+            pw: values.password
+          }
+        };
+        console.log(loginRequest);
         login(loginRequest)
           .then(response => {
-            localStorage.setItem(ACCESS_TOKEN, response.accessToken);
-            this.props.onLogin();
+            console.log(response);
+            localStorage.setItem(ACCESS_TOKEN, response.result_code);
+            this.props.history.push('/login');
           })
           .catch(error => {
             if (error.result_code === 401) {
@@ -58,7 +67,6 @@ class LoginForm extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    console.log(this.props.form);
     return (
       <Form onSubmit={this.handleSubmit} className='login-form'>
         <FormItem>
