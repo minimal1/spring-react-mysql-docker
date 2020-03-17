@@ -1,9 +1,10 @@
 /** @format */
 
 import React, { Component } from 'react';
-import { Upload, Button, DatePicker, message, Select} from 'antd';
+import { Form, Upload, Button, DatePicker, message, Select} from 'antd';
 import Icon from '@ant-design/icons';
 import { uploadPaper } from '../util/APIUtils';
+const FormItem = Form.Item;
 class UploadPaper extends Component {
   state = {
     fileList: [],
@@ -84,37 +85,43 @@ class UploadPaper extends Component {
 
     return (
       <main className='upload'>
-        <span>제출년도 : </span> 
-        <DatePicker onChange={this.yearChange} placeholder="Select Year" picker="year"/>
-        <span>카테고리 : </span>
-        <Select style={{ width: 200 }} onChange={this.categoryChange} placeholder="Select Category">
-          {categoryData.map(category => (
-            <Option key={category}>{category}</Option>
-          ))}
-        </Select>
-        <span>교수 : </span>
-        <Select style={{ width: 200 }} onChange={this.professorChange} placeholder="Select Professor">
-          {professorData.map(professor => (
-            <Option key={professor}>{professor}</Option>
-          ))}
-        </Select>
-        
-        <Upload {...props}>
-          <Button>
-            <Icon type='upload' /> Select File
-          </Button>
-        </Upload>
-        {/* <input type='file' onChange={this.handleChange} />
-        Select File */}
-        <Button
-          type='primary'
-          onClick={this.handleUpload}
-          disabled={fileList.length === 0}
-          loading={uploading}
-          style={{ marginTop: 16 }}
-        >
-          {uploading ? 'Uploading' : 'Start Uploading'}
-        </Button>
+        <Form>
+          <FormItem label='제출년도'>
+            <DatePicker onChange={this.yearChange} placeholder="Select Year" picker="year"/>
+          </FormItem>
+          <FormItem label='카테고리'>
+            <Select style={{ width: 200 }} onChange={this.categoryChange} placeholder="Select Category">
+              {categoryData.map(category => (
+                <Option key={category}>{category}</Option>
+              ))}
+            </Select>
+          </FormItem>
+          <FormItem label='담당교수'>
+            <Select style={{ width: 200 }} onChange={this.professorChange} placeholder="Select Professor">
+              {professorData.map(professor => (
+                <Option key={professor}>{professor}</Option>
+              ))}
+            </Select>
+          </FormItem>
+          <FormItem label='논문 업로드'>
+            <Upload {...props}>
+              <Button>
+                <Icon type='upload' /> Select File
+              </Button>
+            </Upload>
+          </FormItem>
+          <FormItem>
+            <Button
+              type='primary'
+              onClick={this.handleUpload}
+              disabled={fileList.length === 0}
+              loading={uploading}
+              style={{ marginTop: 16 }}
+            >
+              {uploading ? 'Uploading' : 'Start Uploading'}
+            </Button>
+          </FormItem>
+        </Form>
       </main>
     );
   }
