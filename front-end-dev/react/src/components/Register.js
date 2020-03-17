@@ -63,7 +63,6 @@ class Register extends React.Component {
       result_code: 'OK',
       description: 'register_request',
       data: {
-        name: this.state.name.value,
         id: this.state.username.value,
         email: this.state.email.value,
         pw: this.state.password.value
@@ -250,41 +249,10 @@ class Register extends React.Component {
     this.setState({
       username: {
         value: usernameValue,
-        validateStatus: 'validating',
+        validateStatus: 'success',
         errorMsg: null
       }
     });
-
-    // Last check for server side
-    checkUsernameAvailability(usernameValue)
-      .then(response => {
-        if (response.result_code === 'OK') {
-          this.setState({
-            username: {
-              value: usernameValue,
-              validateStatus: 'succeess',
-              errorMsg: null
-            }
-          });
-        } else {
-          this.setState({
-            username: {
-              value: usernameValue,
-              validateStatus: 'error',
-              errorMsg: 'This username is already taken'
-            }
-          });
-        }
-      })
-      .catch(error => {
-        this.setState({
-          username: {
-            value: usernameValue,
-            validateStatus: 'success',
-            errorMsg: null
-          }
-        });
-      });
   }
 
   validateEmailAvailability() {
@@ -304,40 +272,10 @@ class Register extends React.Component {
     this.setState({
       email: {
         value: emailValue,
-        validateStatus: 'validating',
+        validateStatus: 'success',
         errorMsg: null
       }
     });
-
-    checkEmailAvailability(emailValue)
-      .then(reponse => {
-        if (reponse.result_code === 'OK') {
-          this.setState({
-            email: {
-              value: emailValue,
-              validateStatus: 'success',
-              errorMsg: null
-            }
-          });
-        } else {
-          this.setState({
-            email: {
-              value: emailValue,
-              validateStatus: 'error',
-              errorMsg: 'This email is aleady registered'
-            }
-          });
-        }
-      })
-      .catch(error => {
-        this.setState({
-          email: {
-            value: emailValue,
-            validateStatus: 'success',
-            errorMsg: null
-          }
-        });
-      });
   }
 }
 

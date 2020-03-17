@@ -53,20 +53,6 @@ export function register(registerRequest) {
   });
 }
 
-export function checkUsernameAvailability(username) {
-  return request({
-    url: API_BASE_URL + '/user/checkUsernameAvailablity?username=' + username,
-    method: 'GET'
-  });
-}
-
-export function checkEmailAvailability(email) {
-  return request({
-    url: API_BASE_URL + '/user/checkEmailAvailability?email=' + email,
-    method: 'GET'
-  });
-}
-
 export function uploadPaper(uploadRequest) {
   return request_file({
     url: API_BASE_URL + '/upload',
