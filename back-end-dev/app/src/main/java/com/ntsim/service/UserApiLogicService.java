@@ -16,7 +16,8 @@ import com.ntsim.repository.UserRepository;
 public class UserApiLogicService {
 
 	boolean pwCheck = false;
-
+	String userEmail = "";
+	
 	@Autowired
 	private UserRepository userRepository;
 
@@ -44,6 +45,7 @@ public class UserApiLogicService {
 
 		Optional<User> userCheck = userRepository.findById(uRequest.getId());
 
+		
 		if(!userCheck.isPresent()) {
 			return Header.ERROR("존재하지 않는 아이디 입니다.");
 		}
@@ -51,7 +53,8 @@ public class UserApiLogicService {
 		
 		userCheck.ifPresent(user -> {
 			pwCheck = false;
-			
+			userEmail = "";
+			userEmail  = user.getUserEmail();
 			String pw = user.getUserPassword();
 			if(uRequest.getPw().equals(pw)) {
 				pwCheck = true;
@@ -60,7 +63,7 @@ public class UserApiLogicService {
 		
 		if(pwCheck) {
 			User user = User.builder().studentNumber(uRequest.getId()).userPassword(uRequest.getPw())
-					.userEmail(uRequest.getEmail()).build();
+					.userEmail(userEmail).build();
 			return response(user);
 		} else {
 			return Header.ERROR("비밀 번호가 일치하지 않습니다.");

@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class UserApiRequest {
-	private Integer id;
+	private String id;
 	
 	private String pw;
 	
