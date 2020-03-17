@@ -20,7 +20,7 @@ public class UserApiController {
 	@Autowired
 	private UserApiLogicService userApiLogicService;
 
-	@PostMapping("/signup")
+	@PostMapping("/register")
 	public Header<UserApiResponse> create(@RequestBody Header<UserApiRequest> userApiRequest) {
 
 		return userApiLogicService.create(userApiRequest);

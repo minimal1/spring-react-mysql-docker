@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 public class User {
 
 	@Id
-	private Integer studentNumber;
+	private String studentNumber;
 	
 	private String userPassword;
 	

@@ -30,7 +30,6 @@ public class S3UploaderController {
     @PostMapping("/upload")
     @ResponseBody
     public String upload(@RequestParam("data") MultipartFile multipartFile) throws IOException {
-    	log.info("sssssssssssss");
         return s3Uploader.upload(multipartFile, "graduPdf");
     }
 }

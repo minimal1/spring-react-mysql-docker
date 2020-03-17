@@ -31,27 +31,27 @@ class LoginForm extends React.Component {
     event.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        const loginRequest = Object.assign({}, values);
+        const loginRequest = {
+          result_code: 'OK',
+          description: 'login_request',
+          data: {
+            id: values.username,
+            pw: values.password
+          }
+        };
+
         login(loginRequest)
           .then(response => {
-            localStorage.setItem(ACCESS_TOKEN, response.accessToken);
+            localStorage.setItem(ACCESS_TOKEN, response.result_code);
             this.props.onLogin();
           })
           .catch(error => {
-            if (error.result_code === 401) {
-              notification.error({
-                message: '졸업논문ing',
-                description:
-                  'Your Username or Password is incorrect. Please try again!'
-              });
-            } else {
-              notification.error({
-                message: '졸업논문ing',
-                description:
-                  error.description ||
-                  'Sorry! Something went wrong. Please try again!'
-              });
-            }
+            notification.error({
+              message: '졸업논문ing',
+              description:
+                error.description ||
+                'Sorry! Something went wrong. Please try again!'
+            });
           });
       }
     });
@@ -59,7 +59,6 @@ class LoginForm extends React.Component {
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    console.log(this.props.form);
     return (
       <Form onSubmit={this.handleSubmit} className='login-form'>
         <FormItem>

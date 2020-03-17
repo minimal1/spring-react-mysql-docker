@@ -18,7 +18,7 @@ public class UserRepositoryTest extends HotSpringDockerApplicationTests{
 	@Test
 	public void create() {
 		User user = new User();
-		user.setStudentNumber(201402420);
+		user.setStudentNumber("201402420");
 		user.setUserPassword("1234");
 		user.setUserEmail("test@gmail.com");
 		
