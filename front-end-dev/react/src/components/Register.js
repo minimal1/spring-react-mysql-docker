@@ -1,11 +1,7 @@
 /** @format */
 
 import React from 'react';
-import {
-  register,
-  checkUsernameAvailability,
-  checkEmailAvailability
-} from '../util/APIUtils';
+import { register } from '../util/APIUtils';
 import { Link } from 'react-router-dom';
 import {
   USERNAME_MIN_LENGTH,
