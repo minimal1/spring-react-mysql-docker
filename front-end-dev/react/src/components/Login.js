@@ -5,7 +5,8 @@ import { login } from '../util/APIUtils';
 import { Link } from 'react-router-dom';
 import { ACCESS_TOKEN } from '../constants/index';
 
-import { Form, Input, Button, Icon, notification } from 'antd';
+import { Form, Input, Button, notification } from 'antd';
+import Icon from '@ant-design/icons';
 const FormItem = Form.Item;
 
 class Login extends React.Component {
