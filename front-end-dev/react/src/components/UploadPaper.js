@@ -8,7 +8,16 @@ const FormItem = Form.Item;
 class UploadPaper extends Component {
   state = {
     fileList: [],
-    uploading: false
+    uploading: false,
+    year: {
+      value : ''
+    },
+    category: {
+      value : ''
+    },
+    professor: {
+      value : ''
+    }
   };
 
   handleChange = e => {
@@ -18,9 +27,36 @@ class UploadPaper extends Component {
       fileList: [...prevState.fileList, value]
     }));
   };
+  handleYearChange(date, dateString){
+    console.log(dateString);
+    this.setState({
+      year: {
+        value: dateString
+      }
+    });
+    console.log(this.state.year.value);
+  }
+  handleCategoryChange(e){
+    console.log(e);
+    this.setState({
+      category: {
+        value: e
+      }
+    });
+    console.log(this.state);
+  }
+  handleProfessorChange(e){
+    console.log(e);
+    this.setState({
+      professor: {
+        value: e
+      }
+    });
+    console.log(this.state);
+  }
 
   handleUpload = () => {
-    const { fileList } = this.state;
+    const { fileList } = this.state.fileList;
     const formData = new FormData();
     formData.append('data', fileList[0]);
 
@@ -31,13 +67,27 @@ class UploadPaper extends Component {
     const uploadRequest = {
       result_code: 'OK',
       description: 'upload_paper',
-      data: formData
+      data: {
+        year : this.state.year.value,
+        category : this.state.category.value,
+        professor : this.state.professor.value,
+        formData : formData
+      }
     };
 
     uploadPaper(formData)
       .then(response => {
         this.setState({
           fileList: [],
+          year: {
+            value: ''
+          },
+          category: {
+            value: ''
+          },
+          professor: {
+            value: ''
+          },
           uploading: false
         });
         message.success('upload successfully');
@@ -49,15 +99,7 @@ class UploadPaper extends Component {
         message.error(`upload failed ${error.description}`);
       });
   };
-  yearChange(date, dateString) {
-    console.log(date, dateString);
-  }
-  categoryChange(value) {
-    console.log(`selected ${value}`);
-  }
-  professorChange(value) {
-    console.log(`selected ${value}`);
-  }
+
   render() {
     const { uploading, fileList } = this.state;
     const { Option } = Select;
@@ -87,19 +129,30 @@ class UploadPaper extends Component {
       <main className='upload'>
         <Form>
           <FormItem label='제출년도'>
-            <DatePicker onChange={this.yearChange} placeholder="Select Year" picker="year"/>
+            <DatePicker
+             onChange={(date, dateString) => this.handleYearChange(date, dateString)}
+             placeholder="Select Year"
+             picker="year"/>
           </FormItem>
           <FormItem label='카테고리'>
-            <Select style={{ width: 200 }} onChange={this.categoryChange} placeholder="Select Category">
+            <Select
+             value={this.state.category.value}
+             style={{ width: 200 }}
+             onChange={event => this.handleCategoryChange(event)}
+             placeholder="Select Category">
               {categoryData.map(category => (
-                <Option key={category}>{category}</Option>
+                <Option key={category} value={category}>{category}</Option>
               ))}
             </Select>
           </FormItem>
           <FormItem label='담당교수'>
-            <Select style={{ width: 200 }} onChange={this.professorChange} placeholder="Select Professor">
+            <Select
+             value={this.state.professor.value}
+             style={{ width: 200 }}
+             onChange={event => this.handleProfessorChange(event)}
+             placeholder="Select Professor">
               {professorData.map(professor => (
-                <Option key={professor}>{professor}</Option>
+                <Option key={professor} value={professor}>{professor}</Option>
               ))}
             </Select>
           </FormItem>
