@@ -11,11 +11,10 @@ const FormItem = Form.Item;
 
 class Login extends React.Component {
   render() {
-    const AntWrappedLoginForm = Form.create()(LoginForm);
     return (
       <section>
         <h1 className='page-title'>Login</h1>
-        <AntWrappedLoginForm onLogin={this.props.onLogin} />
+        <LoginForm onLogin={this.props.onLogin} />
       </section>
     );
   }
@@ -28,6 +27,7 @@ class LoginForm extends React.Component {
   }
 
   handleSubmit(event) {
+    console.log('HI');
     event.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
@@ -58,33 +58,30 @@ class LoginForm extends React.Component {
   }
 
   render() {
-    const { getFieldDecorator } = this.props.form;
     return (
       <Form onSubmit={this.handleSubmit} className='login-form'>
-        <FormItem>
-          {getFieldDecorator('username', {
-            rules: [{ required: true, message: 'Please input your Username' }]
-          })(
-            <Input
-              prefix={<Icon type='user' style={{ color: 'rgba(0,0,0,.25)' }} />}
-              size='large'
-              placeholder='Username'
-              name='username'
-            />
-          )}
+        <FormItem
+          name='username'
+          rules={[{ required: true, message: 'Please input your Username' }]}
+        >
+          <Input
+            prefix={<Icon type='user' style={{ color: 'rgba(0,0,0,.25)' }} />}
+            size='large'
+            placeholder='Username'
+            name='username'
+          />
         </FormItem>
-        <FormItem>
-          {getFieldDecorator('password', {
-            rules: [{ required: true, message: 'Please input your Password' }]
-          })(
-            <Input
-              prefix={<Icon type='lock' style={{ color: 'rgba(0,0,0,.25)' }} />}
-              name='password'
-              type='password'
-              placeholder='Password'
-              size='large'
-            />
-          )}
+        <FormItem
+          name='password'
+          rules={[{ required: true, message: 'Please input your Password' }]}
+        >
+          <Input
+            prefix={<Icon type='lock' style={{ color: 'rgba(0,0,0,.25)' }} />}
+            name='password'
+            type='password'
+            placeholder='Password'
+            size='large'
+          />
         </FormItem>
         <FormItem>
           <Button
