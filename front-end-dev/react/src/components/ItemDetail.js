@@ -10,6 +10,11 @@ class ItemDetail extends Component {
       itemId: this.props
     };
   }
+
+  componentDidMount() {
+    this.props.onAuth();
+  }
+
   render() {
     return (
       <section className='page-for-detail'>

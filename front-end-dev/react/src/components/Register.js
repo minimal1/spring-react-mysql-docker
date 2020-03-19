@@ -51,10 +51,8 @@ class Register extends React.Component {
     });
   }
 
-  handleSubmit(e) {
+  handleSubmit(values) {
     //서버로 가입 양식 제출
-    e.preventDefault();
-
     const registerRequest = {
       result_code: 'OK',
       description: 'register_request',
@@ -91,13 +89,16 @@ class Register extends React.Component {
       this.state.password.validateStatus === 'success'
     );
   }
+
+  componentDidMount() {
+    console.log('register');
+  }
   render() {
     return (
       <section>
         <h1 className='page-title'>Create your account</h1>
-        <Form onSubmit={this.handleSubmit} className='register-form'>
+        <Form onFinish={this.handleSubmit} className='register-form'>
           <FormItem
-            label='Username'
             hasFeedback
             validateStatus={this.state.username.validateStatus}
             help={this.state.username.errorMsg}
@@ -116,7 +117,6 @@ class Register extends React.Component {
             />
           </FormItem>
           <FormItem
-            label='Email'
             hasFeedback
             validateStatus={this.state.email.validateStatus}
             help={this.state.email.errorMsg}
@@ -134,7 +134,6 @@ class Register extends React.Component {
             />
           </FormItem>
           <FormItem
-            label='Password'
             hasFeedback
             validateStatus={this.state.password.validateStatus}
             help={this.state.password.errorMsg}
