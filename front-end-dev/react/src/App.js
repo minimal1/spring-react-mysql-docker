@@ -15,6 +15,7 @@ import './App.css';
 import UploadPaper from './components/UploadPaper';
 
 import { getCurrentUser } from './util/APIUtils';
+import { ACCESS_TOKEN } from './constants/index';
 
 class App extends React.Component {
   constructor(props) {
@@ -51,6 +52,27 @@ class App extends React.Component {
 
   componentDidMount() {
     this.loadCurrentUser();
+    console.log('Here');
+  }
+
+  handleLogout(
+    redirectTo = '/',
+    notificationType = 'success',
+    description = "You're successfully logged out."
+  ) {
+    localStorage.removeItem(ACCESS_TOKEN);
+
+    this.setState({
+      currentUser: null,
+      isAuthenticated: false
+    });
+
+    this.props.history.push(redirectTo);
+
+    notification[notificationType]({
+      message: 'Polling App',
+      description: description
+    });
   }
 
   handleLogin() {
@@ -65,15 +87,29 @@ class App extends React.Component {
   render() {
     return (
       <div className='website-main'>
-        <Header />
+        <Header
+          isAuthenticated={this.state.isAuthenticated}
+          onLogout={this.handleLogout}
+        />
         <Route exact path='/' component={Container} />
-        <Route path='/upload' component={UploadPaper} />
+        <Route
+          path='/upload'
+          render={props => (
+            <UploadPaper onAuth={this.loadCurrentUser} {...props} />
+          )}
+        />
         <Route
           path='/login'
           render={props => <Login onLogin={this.handleLogin} {...props} />}
         />
         <Route path='/register' component={Register} />
-        <Route path='/detail/:itemid' component={ItemDetail} />
+        <Route path='/profile' component={Login} />
+        <Route
+          path='/detail/:itemid'
+          render={props => (
+            <ItemDetail onAuth={this.loadCurrentUser} {...props} />
+          )}
+        />
       </div>
     );
   }

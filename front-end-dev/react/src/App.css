@@ -347,6 +347,7 @@ input[type='password']:focus {
 }
 
 .login-form-button {
+  margin-top: 20px;
   width: 100%;
 }
 /* Logion form end */
