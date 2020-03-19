@@ -7,6 +7,8 @@ const request = options => {
     'Content-Type': 'application/json'
   });
 
+  console.log(options);
+
   if (localStorage.getItem(ACCESS_TOKEN)) {
     headers.append(
       'Authorization',
@@ -70,11 +72,17 @@ export function register(registerRequest) {
     body: JSON.stringify(registerRequest)
   });
 }
-
-export function uploadPaper(uploadRequest) {
+export function uploadFile(formData){
   return request_file({
+    url: API_BASE_URL + '/upload_file',
+    method: 'POST',
+    body: formData
+  });
+}
+export function uploadPaper(uploadRequest) {
+  return request({
     url: API_BASE_URL + '/upload',
     method: 'POST',
-    body: uploadRequest
+    body: JSON.stringify(uploadRequest)
   });
 }

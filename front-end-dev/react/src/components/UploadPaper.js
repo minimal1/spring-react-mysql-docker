@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { Form, Upload, Button, DatePicker, message, Select} from 'antd';
 import Icon from '@ant-design/icons';
-import { uploadPaper } from '../util/APIUtils';
+import { uploadPaper, uploadFile } from '../util/APIUtils';
 const FormItem = Form.Item;
 class UploadPaper extends Component {
   state = {
@@ -28,37 +28,38 @@ class UploadPaper extends Component {
     }));
   };
   handleYearChange(date, dateString){
-    console.log(dateString);
     this.setState({
       year: {
         value: dateString
       }
     });
-    console.log(this.state.year.value);
+    // console.log(this.state);
   }
   handleCategoryChange(e){
-    console.log(e);
     this.setState({
       category: {
         value: e
       }
     });
-    console.log(this.state);
+    // console.log(this.state);
   }
   handleProfessorChange(e){
-    console.log(e);
     this.setState({
       professor: {
         value: e
       }
     });
-    console.log(this.state);
+    // console.log(this.state);
   }
 
   handleUpload = () => {
-    const { fileList } = this.state.fileList;
+    const { fileList } = this.state;
+    console.log(fileList);
     const formData = new FormData();
     formData.append('data', fileList[0]);
+    formData.append('year', this.state.year.value);
+    formData.append('category', this.state.category.value);
+    formData.append('professor', this.state.professor.value);
 
     this.setState({
       uploading: true
@@ -70,12 +71,10 @@ class UploadPaper extends Component {
       data: {
         year : this.state.year.value,
         category : this.state.category.value,
-        professor : this.state.professor.value,
-        formData : formData
+        professor : this.state.professor.value
       }
     };
-
-    uploadPaper(formData)
+    uploadFile(formData)
       .then(response => {
         this.setState({
           fileList: [],
@@ -131,6 +130,7 @@ class UploadPaper extends Component {
 
     return (
       <main className='upload'>
+        <h1 className='page-title'>Upload Paper</h1>
         <Form>
           <FormItem label='제출년도'>
             <DatePicker
@@ -140,7 +140,6 @@ class UploadPaper extends Component {
           </FormItem>
           <FormItem label='카테고리'>
             <Select
-             value={this.state.category.value}
              style={{ width: 200 }}
              onChange={event => this.handleCategoryChange(event)}
              placeholder="Select Category">
@@ -151,7 +150,6 @@ class UploadPaper extends Component {
           </FormItem>
           <FormItem label='담당교수'>
             <Select
-             value={this.state.professor.value}
              style={{ width: 200 }}
              onChange={event => this.handleProfessorChange(event)}
              placeholder="Select Professor">
