@@ -38,9 +38,9 @@ public class S3UploaderController {
     		@RequestParam("professor") String professor) throws IOException {
         return s3Uploader.upload_file(multipartfile, year, category, professor, "graduPdf");
     }
-    @PostMapping("/upload")
-    @ResponseBody
-    public String upload(@RequestBody Header<S3UploaderRequest> s3uploaderRequest) throws IOException {
-        return s3Uploader.upload(s3uploaderRequest);
-    }
+//    @PostMapping("/upload")
+//    @ResponseBody
+//    public String upload(@RequestBody Header<S3UploaderRequest> s3uploaderRequest) throws IOException {
+//        return s3Uploader.upload(s3uploaderRequest);
+//    }
 }

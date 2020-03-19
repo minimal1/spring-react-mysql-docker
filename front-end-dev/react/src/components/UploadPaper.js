@@ -3,7 +3,7 @@
 import React, { Component } from 'react';
 import { Form, Upload, Button, DatePicker, message, Select} from 'antd';
 import Icon from '@ant-design/icons';
-import { uploadPaper, uploadFile } from '../util/APIUtils';
+import { uploadFile } from '../util/APIUtils';
 const FormItem = Form.Item;
 class UploadPaper extends Component {
   state = {
