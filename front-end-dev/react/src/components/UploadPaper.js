@@ -20,6 +20,10 @@ class UploadPaper extends Component {
     }
   };
 
+  componentDidMount() {
+    this.props.onAuth();
+  }
+
   handleChange = e => {
     const value = e.target.files[0];
 
@@ -130,6 +134,7 @@ class UploadPaper extends Component {
 
     return (
       <main className='upload'>
+
         <h1 className='page-title'>Upload Paper</h1>
         <Form>
           <FormItem label='제출년도'>

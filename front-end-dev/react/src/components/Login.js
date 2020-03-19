@@ -6,10 +6,12 @@ import { Link } from 'react-router-dom';
 import { ACCESS_TOKEN } from '../constants/index';
 
 import { Form, Input, Button, notification } from 'antd';
-import Icon from '@ant-design/icons';
 const FormItem = Form.Item;
 
 class Login extends React.Component {
+  componentDidMount() {
+    console.log('login');
+  }
   render() {
     return (
       <section>
@@ -26,57 +28,46 @@ class LoginForm extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  handleSubmit(event) {
-    console.log('HI');
-    event.preventDefault();
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        const loginRequest = {
-          result_code: 'OK',
-          description: 'login_request',
-          data: {
-            id: values.username,
-            pw: values.password
-          }
-        };
-
-        login(loginRequest)
-          .then(response => {
-            localStorage.setItem(ACCESS_TOKEN, response.result_code);
-            this.props.onLogin();
-          })
-          .catch(error => {
-            notification.error({
-              message: '졸업논문ing',
-              description:
-                error.description ||
-                'Sorry! Something went wrong. Please try again!'
-            });
-          });
+  handleSubmit(values) {
+    const loginRequest = {
+      result_code: 'OK',
+      description: 'login_request',
+      data: {
+        id: values.username,
+        pw: values.password
       }
-    });
+    };
+    console.log(loginRequest);
+
+    login(loginRequest)
+      .then(response => {
+        localStorage.setItem(ACCESS_TOKEN, response.access_token);
+        this.props.onLogin();
+      })
+      .catch(error => {
+        notification.error({
+          message: '졸업논문ing',
+          description:
+            error.description ||
+            'Sorry! Something went wrong. Please try again!'
+        });
+      });
   }
 
   render() {
     return (
-      <Form onSubmit={this.handleSubmit} className='login-form'>
+      <Form onFinish={this.handleSubmit} className='login-form'>
         <FormItem
           name='username'
           rules={[{ required: true, message: 'Please input your Username' }]}
         >
-          <Input
-            prefix={<Icon type='user' style={{ color: 'rgba(0,0,0,.25)' }} />}
-            size='large'
-            placeholder='Username'
-            name='username'
-          />
+          <Input size='large' placeholder='Username' name='username' />
         </FormItem>
         <FormItem
           name='password'
           rules={[{ required: true, message: 'Please input your Password' }]}
         >
           <Input
-            prefix={<Icon type='lock' style={{ color: 'rgba(0,0,0,.25)' }} />}
             name='password'
             type='password'
             placeholder='Password'
