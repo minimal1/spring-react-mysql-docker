@@ -25,9 +25,9 @@ public class Redis {
 	}
 	
 	public static void set(final String key, final String value, RedisTemplate<Serializable, Serializable> redisTemplate) {
-		redisTemplate.execute(new RedisCallback<Object>() {
+		redisTemplate.execute(new RedisCallback<String>() {
 			@Override
-		public Object doInRedis(RedisConnection connection) throws DataAccessException {
+		public String doInRedis(RedisConnection connection) throws DataAccessException {
 			connection.set(key.getBytes(), value.getBytes());
 			return null;
 		}
@@ -35,9 +35,9 @@ public class Redis {
 	}
 	
 	public static void set(final String key, final String value, final long time, RedisTemplate<Serializable, Serializable> redisTemplate) {
-		redisTemplate.execute(new RedisCallback<Object>() {
+		redisTemplate.execute(new RedisCallback<String>() {
 			@Override
-		public Object doInRedis(RedisConnection connection) throws DataAccessException {
+		public String doInRedis(RedisConnection connection) throws DataAccessException {
 			connection.set(key.getBytes(), value.getBytes(), Expiration.milliseconds(time), SetOption.UPSERT);	
 			return null;
 		}

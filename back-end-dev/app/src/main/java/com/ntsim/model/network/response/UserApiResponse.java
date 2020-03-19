@@ -17,4 +17,5 @@ public class UserApiResponse {
 	
 	private String userEmail;
 
+	private String accesstoken;
 }

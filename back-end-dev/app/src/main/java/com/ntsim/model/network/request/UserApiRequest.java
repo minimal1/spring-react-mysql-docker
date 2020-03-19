@@ -15,4 +15,6 @@ public class UserApiRequest {
 	private String pw;
 	
 	private String email;
+	
+	private String accesstoken;
 }

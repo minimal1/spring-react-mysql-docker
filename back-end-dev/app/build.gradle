@@ -48,8 +48,12 @@ dependencies {
     implementation 'org.scala-lang:scala-library:2.13.1'
     implementation "kr.bydelta:koalanlp-hnn:2.1.4:assembly" 
 	implementation 'org.jgrapht:jgrapht-core:1.0.1' 
+	//Redis
 	compile('org.springframework.boot:spring-boot-starter-data-redis')
 	compile group: 'redis.clients', name: 'jedis', version: '2.9.0'
+	//JWT
+	compile 'io.jsonwebtoken:jjwt-api:0.10.5'
+	compile 'io.jsonwebtoken:jjwt-impl:0.10.5', 'io.jsonwebtoken:jjwt-jackson:0.10.5'
 }
 
 dependencyManagement {
