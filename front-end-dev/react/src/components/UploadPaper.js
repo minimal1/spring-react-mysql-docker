@@ -1,13 +1,23 @@
 /** @format */
 
 import React, { Component } from 'react';
-import { Upload, Button, DatePicker, message, Select } from 'antd';
+import { Form, Upload, Button, DatePicker, message, Select} from 'antd';
 import Icon from '@ant-design/icons';
-import { uploadPaper } from '../util/APIUtils';
+import { uploadPaper, uploadFile } from '../util/APIUtils';
+const FormItem = Form.Item;
 class UploadPaper extends Component {
   state = {
     fileList: [],
-    uploading: false
+    uploading: false,
+    year: {
+      value : ''
+    },
+    category: {
+      value : ''
+    },
+    professor: {
+      value : ''
+    }
   };
 
   componentDidMount() {
@@ -21,12 +31,39 @@ class UploadPaper extends Component {
       fileList: [...prevState.fileList, value]
     }));
   };
+  handleYearChange(date, dateString){
+    this.setState({
+      year: {
+        value: dateString
+      }
+    });
+    // console.log(this.state);
+  }
+  handleCategoryChange(e){
+    this.setState({
+      category: {
+        value: e
+      }
+    });
+    // console.log(this.state);
+  }
+  handleProfessorChange(e){
+    this.setState({
+      professor: {
+        value: e
+      }
+    });
+    // console.log(this.state);
+  }
 
   handleUpload = () => {
     const { fileList } = this.state;
     console.log(fileList);
     const formData = new FormData();
     formData.append('data', fileList[0]);
+    formData.append('year', this.state.year.value);
+    formData.append('category', this.state.category.value);
+    formData.append('professor', this.state.professor.value);
 
     this.setState({
       uploading: true
@@ -35,13 +72,25 @@ class UploadPaper extends Component {
     const uploadRequest = {
       result_code: 'OK',
       description: 'upload_paper',
-      data: formData
+      data: {
+        year : this.state.year.value,
+        category : this.state.category.value,
+        professor : this.state.professor.value
+      }
     };
-
-    uploadPaper(formData)
+    uploadFile(formData)
       .then(response => {
         this.setState({
           fileList: [],
+          year: {
+            value: ''
+          },
+          category: {
+            value: ''
+          },
+          professor: {
+            value: ''
+          },
           uploading: false
         });
         message.success('upload successfully');
@@ -53,27 +102,16 @@ class UploadPaper extends Component {
         message.error(`upload failed ${error.description}`);
       });
   };
-  yearChange(date, dateString) {
-    console.log(date, dateString);
-  }
-  categoryChange(value) {
-    console.log(`selected ${value}`);
-  }
-  professorChange(value) {
-    console.log(`selected ${value}`);
-  }
+
   render() {
     const { uploading, fileList } = this.state;
     const { Option } = Select;
-    const categoryData = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
-    const professorData = [
-      '김기일',
-      '윤청',
-      '김동일',
-      '김현수',
-      '권오석',
-      '류재철'
-    ];
+    const categoryData = ['AI', 'Application', 'Big Data', 'Data Mining', 'Deep Learning', 'Machine Learning', 'Smart'];
+    const professorData = ['강지훈', '고영준', '공은배', '권오석', '권택근', '김경섭',
+                          '김기일', '김동일','김상하', '김영국', '김현수', '김형식',
+                          '김형신', '남병규', '류재철', '박정희', '원유재', '이규철', 
+                          '이영석', '이철훈', '임성수', '장경선', '장진수', '정상근',
+                          '조은선', '진성일', '최훈'];
     const props = {
       onRemove: file => {
         this.setState(state => {
@@ -96,49 +134,54 @@ class UploadPaper extends Component {
 
     return (
       <main className='upload'>
-        <span>제출년도 : </span>
-        <DatePicker
-          onChange={this.yearChange}
-          placeholder='Select Year'
-          picker='year'
-        />
-        <span>카테고리 : </span>
-        <Select
-          style={{ width: 200 }}
-          onChange={this.categoryChange}
-          placeholder='Select Category'
-        >
-          {categoryData.map(category => (
-            <Option key={category}>{category}</Option>
-          ))}
-        </Select>
-        <span>교수 : </span>
-        <Select
-          style={{ width: 200 }}
-          onChange={this.professorChange}
-          placeholder='Select Professor'
-        >
-          {professorData.map(professor => (
-            <Option key={professor}>{professor}</Option>
-          ))}
-        </Select>
 
-        <Upload {...props}>
-          <Button>
-            <Icon type='upload' /> Select File
-          </Button>
-        </Upload>
-        {/* <input type='file' onChange={this.handleChange} />
-        Select File */}
-        <Button
-          type='primary'
-          onClick={this.handleUpload}
-          disabled={fileList.length === 0}
-          loading={uploading}
-          style={{ marginTop: 16 }}
-        >
-          {uploading ? 'Uploading' : 'Start Uploading'}
-        </Button>
+        <h1 className='page-title'>Upload Paper</h1>
+        <Form>
+          <FormItem label='제출년도'>
+            <DatePicker
+             onChange={(date, dateString) => this.handleYearChange(date, dateString)}
+             placeholder="Select Year"
+             picker="year"/>
+          </FormItem>
+          <FormItem label='카테고리'>
+            <Select
+             style={{ width: 200 }}
+             onChange={event => this.handleCategoryChange(event)}
+             placeholder="Select Category">
+              {categoryData.map(category => (
+                <Option key={category} value={category}>{category}</Option>
+              ))}
+            </Select>
+          </FormItem>
+          <FormItem label='담당교수'>
+            <Select
+             style={{ width: 200 }}
+             onChange={event => this.handleProfessorChange(event)}
+             placeholder="Select Professor">
+              {professorData.map(professor => (
+                <Option key={professor} value={professor}>{professor}</Option>
+              ))}
+            </Select>
+          </FormItem>
+          <FormItem label='논문 업로드'>
+            <Upload {...props}>
+              <Button>
+                <Icon type='upload' /> Select File
+              </Button>
+            </Upload>
+          </FormItem>
+          <FormItem>
+            <Button
+              type='primary'
+              onClick={this.handleUpload}
+              disabled={fileList.length === 0}
+              loading={uploading}
+              style={{ marginTop: 16 }}
+            >
+              {uploading ? 'Uploading' : 'Start Uploading'}
+            </Button>
+          </FormItem>
+        </Form>
       </main>
     );
   }
