@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { Component } from 'react';
-import { Upload, Button, DatePicker, message, Select} from 'antd';
+import { Upload, Button, DatePicker, message, Select } from 'antd';
 import Icon from '@ant-design/icons';
 import { uploadPaper } from '../util/APIUtils';
 class UploadPaper extends Component {
@@ -9,6 +9,10 @@ class UploadPaper extends Component {
     fileList: [],
     uploading: false
   };
+
+  componentDidMount() {
+    this.props.onAuth();
+  }
 
   handleChange = e => {
     const value = e.target.files[0];
@@ -20,6 +24,7 @@ class UploadPaper extends Component {
 
   handleUpload = () => {
     const { fileList } = this.state;
+    console.log(fileList);
     const formData = new FormData();
     formData.append('data', fileList[0]);
 
@@ -61,7 +66,14 @@ class UploadPaper extends Component {
     const { uploading, fileList } = this.state;
     const { Option } = Select;
     const categoryData = ['a', 'b', 'c', 'd', 'e', 'f', 'g'];
-    const professorData = ['김기일', '윤청', '김동일', '김현수', '권오석', '류재철'];
+    const professorData = [
+      '김기일',
+      '윤청',
+      '김동일',
+      '김현수',
+      '권오석',
+      '류재철'
+    ];
     const props = {
       onRemove: file => {
         this.setState(state => {
@@ -84,21 +96,33 @@ class UploadPaper extends Component {
 
     return (
       <main className='upload'>
-        <span>제출년도 : </span> 
-        <DatePicker onChange={this.yearChange} placeholder="Select Year" picker="year"/>
+        <span>제출년도 : </span>
+        <DatePicker
+          onChange={this.yearChange}
+          placeholder='Select Year'
+          picker='year'
+        />
         <span>카테고리 : </span>
-        <Select style={{ width: 200 }} onChange={this.categoryChange} placeholder="Select Category">
+        <Select
+          style={{ width: 200 }}
+          onChange={this.categoryChange}
+          placeholder='Select Category'
+        >
           {categoryData.map(category => (
             <Option key={category}>{category}</Option>
           ))}
         </Select>
         <span>교수 : </span>
-        <Select style={{ width: 200 }} onChange={this.professorChange} placeholder="Select Professor">
+        <Select
+          style={{ width: 200 }}
+          onChange={this.professorChange}
+          placeholder='Select Professor'
+        >
           {professorData.map(professor => (
             <Option key={professor}>{professor}</Option>
           ))}
         </Select>
-        
+
         <Upload {...props}>
           <Button>
             <Icon type='upload' /> Select File
