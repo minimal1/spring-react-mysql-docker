@@ -16,4 +16,6 @@ public class S3UploaderRequest {
 	private String category;
 	
 	private String professor;
+	
+	private String github;
 }
