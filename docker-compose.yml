@@ -46,7 +46,9 @@ services:
 
   db-dev:
     container_name: db-mysql
-    image: mysql:5.7
+    build:
+      context: db-data-dev
+      dockerfile: Dockerfile
     restart: always
     environment:
       MYSQL_DATABASE: minimal_db
@@ -57,7 +59,7 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - ./db-data-dev:/var/lib/mysql
+      - ./db-data-dev/db:/var/lib/mysql
     networks:
       - backend
 
