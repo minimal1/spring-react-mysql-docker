@@ -44,6 +44,11 @@ class Header extends React.Component {
                 </Link>
               </li>
               <li className='list-item'>
+                <Link to='/profile' className='nav-link'>
+                  Profile
+                </Link>
+              </li>
+              <li className='list-item'>
                 <a className='nav-link' onClick={this.handleLogout}>
                   Logout
                 </a>
