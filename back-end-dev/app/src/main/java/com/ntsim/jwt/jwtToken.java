@@ -1,5 +1,6 @@
 package com.ntsim.jwt;
 
+import java.io.Serializable;
 import java.security.Key;
 import java.util.Base64;
 import java.util.Date;
@@ -24,10 +25,10 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class jwtToken {
 
 	@Autowired
-	public RedisTemplate redisTemplate;
+	public RedisTemplate<Serializable, Serializable> redisTemplate;
 
 	private static final String headerString = "X-JWT";
-	private String secretKey = "GraduKey".trim();
+	private String secretKey = "qwertqwertqwertqwertqwert".trim();
 	private byte[] apiKeySecretBytes = Base64.getEncoder().encode(secretKey.getBytes());
 	private SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 	private final Key KEY = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());

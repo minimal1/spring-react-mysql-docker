@@ -1,9 +1,11 @@
 package com.ntsim.service;
 
+import java.io.Serializable;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -28,7 +30,7 @@ public class UserApiLogicService {
 	private jwtToken jwtToken;
 	
 	@Autowired
-	private RedisTemplate redisTemplate;
+	private RedisTemplate<Serializable, Serializable> redisTemplate;
 
 	public Header<UserApiResponse> create(@RequestBody Header<UserApiRequest> userApiRequest) {
 
@@ -45,6 +47,8 @@ public class UserApiLogicService {
 
 		User newUser = userRepository.save(user);
 
+		Redis.set("123", "123qwe", redisTemplate);
+		
 		return response(newUser);
 	}
 
@@ -75,6 +79,8 @@ public class UserApiLogicService {
 					.userEmail(userEmail).build();
 			String userToken = this.saveTokenInRedis(user);
 			return response(user,userToken);
+//			return Header.ERROR("비밀 번호가 일치하지 않습니다.");
+
 		} else {
 			return Header.ERROR("비밀 번호가 일치하지 않습니다.");
 		}
@@ -92,7 +98,7 @@ public class UserApiLogicService {
 	private Header<UserApiResponse> response(User user, String token) {
 
 		UserApiResponse userApiResponse = UserApiResponse.builder().studentNumber(user.getStudentNumber())
-				.userEmail(user.getUserEmail()).userPassword(user.getUserPassword()).accesstoken(token).build();
+				.userEmail(user.getUserEmail()).userPassword(user.getUserPassword()).accessToken(token).build();
 
 		return Header.OK(userApiResponse);
 
@@ -100,6 +106,7 @@ public class UserApiLogicService {
 	
 	private String saveTokenInRedis(User user) {
 		String userToken = jwtToken.getUserToken(user);
+		redisTemplate.setEnableTransactionSupport(true);
 		Redis.set(user.getStudentNumber(), userToken, redisTemplate);
 
 		return userToken;

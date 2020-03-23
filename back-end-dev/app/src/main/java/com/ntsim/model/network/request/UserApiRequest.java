@@ -16,5 +16,5 @@ public class UserApiRequest {
 	
 	private String email;
 	
-	private String accesstoken;
+	private String accessToken;
 }

@@ -8,7 +8,11 @@ import org.springframework.data.redis.connection.RedisStringCommands.SetOption;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.types.Expiration;
+import org.springframework.stereotype.Service;
 
+import lombok.extern.java.Log;
+
+@Service
 public class Redis {
 
 	public static String get(final String key, RedisTemplate<Serializable, Serializable> redisTemplate) {
@@ -25,6 +29,7 @@ public class Redis {
 	}
 	
 	public static void set(final String key, final String value, RedisTemplate<Serializable, Serializable> redisTemplate) {
+		
 		redisTemplate.execute(new RedisCallback<String>() {
 			@Override
 		public String doInRedis(RedisConnection connection) throws DataAccessException {
