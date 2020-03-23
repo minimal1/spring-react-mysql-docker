@@ -2,18 +2,13 @@
 
 import { API_BASE_URL, ACCESS_TOKEN } from '../constants';
 
-const request = options => {
+const request = (options, contentType = 'application/json') => {
   const headers = new Headers({
-    'Content-Type': 'application/json'
+    'Content-Type': contentType
   });
 
-  console.log(options);
-
   if (localStorage.getItem(ACCESS_TOKEN)) {
-    headers.append(
-      'Authorization',
-      'Bearer ' + localStorage.getItem(ACCESS_TOKEN)
-    );
+    headers.append('Authorization', localStorage.getItem(ACCESS_TOKEN));
   }
 
   const defaults = { headers: headers };
@@ -32,7 +27,19 @@ const request = options => {
     })
   );
 };
+
 const request_file = options => {
+  const headers = new Headers({
+    'Content-Type': 'multipart/form-data'
+  });
+
+  if (localStorage.getItem(ACCESS_TOKEN)) {
+    headers.append('Authorization', localStorage.getItem(ACCESS_TOKEN));
+  }
+
+  const defaults = { headers: headers };
+  options = Object.assign({}, defaults, options);
+
   return fetch(options.url, options).then(response =>
     response.json().then(json => {
       if (!response.ok) {
@@ -65,6 +72,7 @@ export function login(loginRequest) {
     body: JSON.stringify(loginRequest)
   });
 }
+
 export function register(registerRequest) {
   return request({
     url: API_BASE_URL + '/register',
@@ -72,17 +80,14 @@ export function register(registerRequest) {
     body: JSON.stringify(registerRequest)
   });
 }
-export function uploadFile(formData){
-  return request_file({
-    url: API_BASE_URL + '/upload_file',
-    method: 'POST',
-    body: formData
-  });
-}
-export function uploadPaper(uploadRequest) {
-  return request({
-    url: API_BASE_URL + '/upload',
-    method: 'POST',
-    body: JSON.stringify(uploadRequest)
-  });
+
+export function uploadFile(formData) {
+  return request(
+    {
+      url: API_BASE_URL + '/upload_file',
+      method: 'POST',
+      body: formData
+    },
+    'multipart/form-data'
+  );
 }
