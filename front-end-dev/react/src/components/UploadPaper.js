@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { Component } from 'react';
-import { Form, Upload, Button, DatePicker, message, Select} from 'antd';
+import { Form, Input, Upload, Button, DatePicker, message, Select} from 'antd';
 import Icon from '@ant-design/icons';
 import { uploadFile } from '../util/APIUtils';
 const FormItem = Form.Item;
@@ -17,6 +17,9 @@ class UploadPaper extends Component {
     },
     professor: {
       value : ''
+    },
+    github: {
+      value: ''
     }
   };
 
@@ -55,6 +58,15 @@ class UploadPaper extends Component {
     });
     // console.log(this.state);
   }
+  handleGithubChange(e){
+    // console.log(e.target.value);
+    this.setState({
+      github: {
+        value: e.target.value
+      }
+    });
+    console.log(this.state);
+  }
 
   handleUpload = () => {
     const { fileList } = this.state;
@@ -64,6 +76,7 @@ class UploadPaper extends Component {
     formData.append('year', this.state.year.value);
     formData.append('category', this.state.category.value);
     formData.append('professor', this.state.professor.value);
+    formData.append('github', this.state.github.value);
 
     this.setState({
       uploading: true
@@ -89,6 +102,9 @@ class UploadPaper extends Component {
             value: ''
           },
           professor: {
+            value: ''
+          },
+          github:{
             value: ''
           },
           uploading: false
@@ -169,6 +185,13 @@ class UploadPaper extends Component {
                 <Icon type='upload' /> Select File
               </Button>
             </Upload>
+          </FormItem>
+          <FormItem label='Github 주소'>
+            <Input
+              type='url'
+              placeholder='Enter Github Address'
+              onChange={event => this.handleGithubChange(event)}
+            />
           </FormItem>
           <FormItem>
             <Button
