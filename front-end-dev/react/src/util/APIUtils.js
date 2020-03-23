@@ -48,13 +48,15 @@ const request_file = options => {
 };
 
 export function getCurrentUser() {
-  if (!localStorage.getItem(ACCESS_TOKEN)) {
+  const access_token = localStorage.getItem(ACCESS_TOKEN);
+  if (!access_token) {
     return Promise.reject('No access token set.');
   }
 
   return request({
     url: API_BASE_URL + '/user/me',
-    method: 'GET'
+    method: 'POST',
+    body: JSON.stringify(access_token)
   });
 }
 
@@ -72,7 +74,7 @@ export function register(registerRequest) {
     body: JSON.stringify(registerRequest)
   });
 }
-export function uploadFile(formData){
+export function uploadFile(formData) {
   return request_file({
     url: API_BASE_URL + '/upload_file',
     method: 'POST',

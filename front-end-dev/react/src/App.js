@@ -29,7 +29,9 @@ class App extends React.Component {
 
     this.loadCurrentUser = this.loadCurrentUser.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
+
   loadCurrentUser() {
     this.setState({
       isLoading: true
@@ -52,7 +54,6 @@ class App extends React.Component {
 
   componentDidMount() {
     this.loadCurrentUser();
-    console.log('Here');
   }
 
   handleLogout(
@@ -61,7 +62,6 @@ class App extends React.Component {
     description = "You're successfully logged out."
   ) {
     localStorage.removeItem(ACCESS_TOKEN);
-
     this.setState({
       currentUser: null,
       isAuthenticated: false
