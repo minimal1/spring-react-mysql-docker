@@ -3,8 +3,10 @@ package com.ntsim.model.network.S3;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Optional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -17,6 +19,8 @@ import com.ntsim.model.entity.User;
 import com.ntsim.model.network.Header;
 import com.ntsim.model.network.request.S3UploaderRequest;
 import com.ntsim.model.network.request.UserApiRequest;
+import com.ntsim.model.network.response.S3UploaderResponse;
+import com.ntsim.service.PaperApiLogicService;
 import com.ntsim.textrank.Summarizer;
 import com.ntsim.textrank.TextRank;
 
@@ -29,17 +33,33 @@ import lombok.extern.slf4j.Slf4j;
 public class S3Uploader {
 	private final AmazonS3Client amazonS3Client;
 
+	@Autowired
+	private PaperApiLogicService paperApiLogicService;
+
 	@Value("${cloud.aws.s3.bucket}")
 	private String bucket;
-	public String upload_file(MultipartFile multipartFile,String year, String category, String professor, String dirName) throws IOException {
+	public Header<S3UploaderResponse> upload_file(MultipartFile multipartFile,String year, String category, String professor, String github, String dirName) throws IOException {
 		log.info("upload_file start");
-		System.out.println("Backend : " + year);
-		System.out.println("Backend : " + category);
-		System.out.println("Backend : " + professor);
+		log.info("Backend : " + year);
+		log.info("Backend : " + category);
+		log.info("Backend : " + professor);
+		log.info("Backend : " + github);
 		File uploadFile = convert(multipartFile)
 				.orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File로 전환이 실패했습니다."));
 
-		return upload(uploadFile, dirName);
+		log.info("TextRank Started");
+		String fileName = dirName + "/" + uploadFile.getName();
+		String uploadImageUrl = putS3(uploadFile, fileName);
+		
+		// TextRank 실시.
+		TextRank tr = new TextRank();
+        String text = tr.getText(uploadFile);
+        Summarizer summarizer = new Summarizer(text);
+        List<String> summary = summarizer.summarize();
+        for(String sentence : summary)
+        	log.info(sentence);
+        removeNewFile(uploadFile);
+        return paperApiLogicService.upload(fileName, year, category, professor, github, summary.get(0), summary.get(1), summary.get(2));
 	}
 //	public String upload(@RequestBody Header<S3UploaderRequest> s3uploaderRequest) throws IOException {
 //		S3UploaderRequest s3Request = s3uploaderRequest.getData();
@@ -53,19 +73,19 @@ public class S3Uploader {
 //		return "upload succes";
 //	}
 
-	public String upload(File uploadFile, String dirName) throws IOException {
-		System.out.println("TextRank Started");
-		String fileName = dirName + "/" + uploadFile.getName();
-		String uploadImageUrl = putS3(uploadFile, fileName);
-		// TextRank 실시.
-		TextRank tr = new TextRank();
-        String text = tr.getText(uploadFile);
-        Summarizer summarizer = new Summarizer(text);
-        for(String sentence : summarizer.summarize())
-        	log.info(sentence);
-		removeNewFile(uploadFile);
-		return uploadImageUrl;
-	}
+//	public String upload(File uploadFile, String dirName) throws IOException {
+//		System.out.println("TextRank Started");
+//		String fileName = dirName + "/" + uploadFile.getName();
+//		String uploadImageUrl = putS3(uploadFile, fileName);
+//		// TextRank 실시.
+//		TextRank tr = new TextRank();
+//        String text = tr.getText(uploadFile);
+//        Summarizer summarizer = new Summarizer(text);
+//        for(String sentence : summarizer.summarize())
+//        	log.info(sentence);
+//		removeNewFile(uploadFile);
+//		return uploadImageUrl;
+//	}
 
 	private String putS3(File uploadFile, String fileName) {
 		amazonS3Client.putObject(
