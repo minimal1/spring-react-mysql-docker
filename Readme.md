@@ -9,6 +9,6 @@ Version:
 
 Usage:
 * front-end coding -> ./front-end-dev/react
-* back-end conding -> ./back-end-dev/app
+* back-end coding -> ./back-end-dev/app
 
  docker-compose up
