@@ -1,26 +1,29 @@
 /** @format */
 
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { ACCESS_TOKEN } from '../constants/index';
 
 class Header extends React.Component {
   constructor(props) {
     super(props);
 
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
 
-  handleSubmit(event) {}
+  handleLogout(event) {
+    this.props.onLogout();
+  }
 
   render() {
+    const isAuthenticated = this.props.isAuthenticated;
     return (
       <header>
         <Link to='/' className='main-link img-link'>
           <img src='/imgs/icon-logo.JPEG' className='main-logo' />
         </Link>
 
-        <form className='search-form' onSubmit={this.handleSubmit}>
+        <form className='search-form' onSubmit={this.handleLogout}>
           <input
             type='text'
             className='search-keyword'
@@ -33,34 +36,47 @@ class Header extends React.Component {
         </form>
 
         <nav>
-          <ul className='nav-list'>
-            <li className='list-item'>
-              <Link to='/upload' className='nav-link'>
-                Upload
-              </Link>
-            </li>
-            <li className='list-item'>
+          {isAuthenticated ? (
+            <ul className='nav-list'>
+              <li className='list-item'>
+                <Link to='/upload' className='nav-link'>
+                  Upload
+                </Link>
+              </li>
+              <li className='list-item'>
+                <Link to='/profile' className='nav-link'>
+                  Profile
+                </Link>
+              </li>
+              <li className='list-item'>
+                <a className='nav-link' onClick={this.handleLogout}>
+                  Logout
+                </a>
+              </li>
+            </ul>
+          ) : (
+            <ul className='nav-list'>
+              <li className='list-item'>
+                <Link to='/login' className='nav-link'>
+                  Log In
+                </Link>
+              </li>
+              <li className='list-item'>
+                <Link to='/register' className='nav-link'>
+                  Register
+                </Link>
+              </li>
+            </ul>
+          )}
+          {/* <li className='list-item'>
               <Link to='/' className='nav-link'>
                 About
               </Link>
-            </li>
-
-            <li className='list-item'>
-              <Link to='/login' className='nav-link'>
-                Log In
-              </Link>
-            </li>
-
-            <li className='list-item'>
-              <Link to='/register' className='nav-link'>
-                Register
-              </Link>
-            </li>
-          </ul>
+            </li> */}
         </nav>
       </header>
     );
   }
 }
 
-export default Header;
+export default withRouter(Header);

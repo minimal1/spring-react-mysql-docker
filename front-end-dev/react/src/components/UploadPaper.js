@@ -1,28 +1,24 @@
 /** @format */
 
 import React, { Component } from 'react';
-import { Form, Upload, Button, DatePicker, message, Select} from 'antd';
+import { Form, Upload, Button, DatePicker, message, Select } from 'antd';
 import Icon from '@ant-design/icons';
-import { uploadPaper, uploadFile } from '../util/APIUtils';
+import { uploadFile } from '../util/APIUtils';
 const FormItem = Form.Item;
 class UploadPaper extends Component {
   state = {
     fileList: [],
     uploading: false,
     year: {
-      value : ''
+      value: ''
     },
     category: {
-      value : ''
+      value: ''
     },
     professor: {
-      value : ''
+      value: ''
     }
   };
-
-  componentDidMount() {
-    this.props.onAuth();
-  }
 
   handleChange = e => {
     const value = e.target.files[0];
@@ -31,7 +27,7 @@ class UploadPaper extends Component {
       fileList: [...prevState.fileList, value]
     }));
   };
-  handleYearChange(date, dateString){
+  handleYearChange(date, dateString) {
     this.setState({
       year: {
         value: dateString
@@ -39,7 +35,7 @@ class UploadPaper extends Component {
     });
     // console.log(this.state);
   }
-  handleCategoryChange(e){
+  handleCategoryChange(e) {
     this.setState({
       category: {
         value: e
@@ -47,7 +43,7 @@ class UploadPaper extends Component {
     });
     // console.log(this.state);
   }
-  handleProfessorChange(e){
+  handleProfessorChange(e) {
     this.setState({
       professor: {
         value: e
@@ -73,9 +69,9 @@ class UploadPaper extends Component {
       result_code: 'OK',
       description: 'upload_paper',
       data: {
-        year : this.state.year.value,
-        category : this.state.category.value,
-        professor : this.state.professor.value
+        year: this.state.year.value,
+        category: this.state.category.value,
+        professor: this.state.professor.value
       }
     };
     uploadFile(formData)
@@ -108,10 +104,10 @@ class UploadPaper extends Component {
     const { Option } = Select;
     const categoryData = ['AI', 'Application', 'Big Data', 'Data Mining', 'Deep Learning', 'Machine Learning', 'Smart'];
     const professorData = ['강지훈', '고영준', '공은배', '권오석', '권택근', '김경섭',
-                          '김기일', '김동일','김상하', '김영국', '김현수', '김형식',
-                          '김형신', '남병규', '류재철', '박정희', '원유재', '이규철', 
-                          '이영석', '이철훈', '임성수', '장경선', '장진수', '정상근',
-                          '조은선', '진성일', '최훈'];
+      '김기일', '김동일', '김상하', '김영국', '김현수', '김형식',
+      '김형신', '남병규', '류재철', '박정희', '원유재', '이규철',
+      '이영석', '이철훈', '임성수', '장경선', '장진수', '정상근',
+      '조은선', '진성일', '최훈'];
     const props = {
       onRemove: file => {
         this.setState(state => {
@@ -139,15 +135,15 @@ class UploadPaper extends Component {
         <Form>
           <FormItem label='제출년도'>
             <DatePicker
-             onChange={(date, dateString) => this.handleYearChange(date, dateString)}
-             placeholder="Select Year"
-             picker="year"/>
+              onChange={(date, dateString) => this.handleYearChange(date, dateString)}
+              placeholder="Select Year"
+              picker="year" />
           </FormItem>
           <FormItem label='카테고리'>
             <Select
-             style={{ width: 200 }}
-             onChange={event => this.handleCategoryChange(event)}
-             placeholder="Select Category">
+              style={{ width: 200 }}
+              onChange={event => this.handleCategoryChange(event)}
+              placeholder="Select Category">
               {categoryData.map(category => (
                 <Option key={category} value={category}>{category}</Option>
               ))}
@@ -155,9 +151,9 @@ class UploadPaper extends Component {
           </FormItem>
           <FormItem label='담당교수'>
             <Select
-             style={{ width: 200 }}
-             onChange={event => this.handleProfessorChange(event)}
-             placeholder="Select Professor">
+              style={{ width: 200 }}
+              onChange={event => this.handleProfessorChange(event)}
+              placeholder="Select Professor">
               {professorData.map(professor => (
                 <Option key={professor} value={professor}>{professor}</Option>
               ))}

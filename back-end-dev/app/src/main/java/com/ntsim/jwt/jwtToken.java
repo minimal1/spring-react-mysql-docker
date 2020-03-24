@@ -8,11 +8,14 @@ import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.crypto.spec.SecretKeySpec;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 
+import com.ntsim.config.interceptor.JwtAuthInterceptor;
 import com.ntsim.model.entity.User;
 import com.ntsim.redis.Redis;
 
@@ -20,8 +23,10 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
+import lombok.NoArgsConstructor;
 
 @Component
+@NoArgsConstructor
 public class jwtToken {
 
 	@Autowired
@@ -32,6 +37,8 @@ public class jwtToken {
 	private byte[] apiKeySecretBytes = Base64.getEncoder().encode(secretKey.getBytes());
 	private SignatureAlgorithm signatureAlgorithm = SignatureAlgorithm.HS256;
 	private final Key KEY = new SecretKeySpec(apiKeySecretBytes, signatureAlgorithm.getJcaName());
+
+	private Logger logger = LoggerFactory.getLogger(jwtToken.class);
 
 	// make JWT token
 	public String getUserToken(User user) {

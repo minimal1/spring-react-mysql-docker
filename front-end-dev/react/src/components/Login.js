@@ -41,7 +41,8 @@ class LoginForm extends React.Component {
 
     login(loginRequest)
       .then(response => {
-        localStorage.setItem(ACCESS_TOKEN, response.access_token);
+        console.log("response", response);
+        localStorage.setItem(ACCESS_TOKEN, response.data.access_token);
         this.props.onLogin();
       })
       .catch(error => {

@@ -31,7 +31,7 @@ public class Redisconfig {
 		standConfig.setHostName("db-redis");
 		standConfig.setPort(6379);
 		JedisClientConfigurationBuilder jedisConfig = JedisClientConfiguration.builder();
-		jedisConfig.connectTimeout(Duration.ofSeconds(2000));
+//		jedisConfig.connectTimeout(Duration.ofSeconds(2000));
 		jedisPoolConfig.setMaxTotal(30);
 		jedisPoolConfig.setMaxIdle(10);
 		jedisConfig.usePooling().poolConfig(jedisPoolConfig);

@@ -41,17 +41,17 @@ public class S3Uploader {
 
 		return upload(uploadFile, dirName);
 	}
-	public String upload(@RequestBody Header<S3UploaderRequest> s3uploaderRequest) throws IOException {
-		S3UploaderRequest s3Request = s3uploaderRequest.getData();
-		String year = s3Request.getYear();
-		String category = s3Request.getCategory();
-		String professor = s3Request.getProfessor();
-		System.out.println("Backend : " + year);
-		System.out.println("Backend : " + category);
-		System.out.println("Backend : " + professor);
-
-		return "upload succes";
-	}
+//	public String upload(@RequestBody Header<S3UploaderRequest> s3uploaderRequest) throws IOException {
+//		S3UploaderRequest s3Request = s3uploaderRequest.getData();
+//		String year = s3Request.getYear();
+//		String category = s3Request.getCategory();
+//		String professor = s3Request.getProfessor();
+//		System.out.println("Backend : " + year);
+//		System.out.println("Backend : " + category);
+//		System.out.println("Backend : " + professor);
+//
+//		return "upload succes";
+//	}
 
 	public String upload(File uploadFile, String dirName) throws IOException {
 		System.out.println("TextRank Started");

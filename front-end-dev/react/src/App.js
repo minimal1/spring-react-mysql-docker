@@ -16,6 +16,7 @@ import UploadPaper from './components/UploadPaper';
 
 import { getCurrentUser } from './util/APIUtils';
 import { ACCESS_TOKEN } from './constants/index';
+import AuthRoute from './components/AuthRoute';
 
 class App extends React.Component {
   constructor(props) {
@@ -29,7 +30,9 @@ class App extends React.Component {
 
     this.loadCurrentUser = this.loadCurrentUser.bind(this);
     this.handleLogin = this.handleLogin.bind(this);
+    this.handleLogout = this.handleLogout.bind(this);
   }
+
   loadCurrentUser() {
     this.setState({
       isLoading: true
@@ -45,6 +48,7 @@ class App extends React.Component {
       })
       .catch(error => {
         this.setState({
+          isAuthenticated: false,
           isLoading: false
         });
       });
@@ -52,7 +56,6 @@ class App extends React.Component {
 
   componentDidMount() {
     this.loadCurrentUser();
-    console.log('Here');
   }
 
   handleLogout(
@@ -61,7 +64,6 @@ class App extends React.Component {
     description = "You're successfully logged out."
   ) {
     localStorage.removeItem(ACCESS_TOKEN);
-
     this.setState({
       currentUser: null,
       isAuthenticated: false
@@ -92,23 +94,25 @@ class App extends React.Component {
           onLogout={this.handleLogout}
         />
         <Route exact path='/' component={Container} />
-        <Route
+        <AuthRoute
+          isAuthenticated={this.state.isAuthenticated}
           path='/upload'
-          render={props => (
-            <UploadPaper onAuth={this.loadCurrentUser} {...props} />
-          )}
+          render={props => <UploadPaper {...props} />}
         />
         <Route
           path='/login'
           render={props => <Login onLogin={this.handleLogin} {...props} />}
         />
         <Route path='/register' component={Register} />
-        <Route path='/profile' component={Login} />
-        <Route
+        <AuthRoute
+          isAuthenticated={this.state.isAuthenticated}
+          path='/profile'
+          component={Login}
+        />
+        <AuthRoute
+          isAuthenticated={this.state.isAuthenticated}
           path='/detail/:itemid'
-          render={props => (
-            <ItemDetail onAuth={this.loadCurrentUser} {...props} />
-          )}
+          render={props => <ItemDetail {...props} />}
         />
       </div>
     );
