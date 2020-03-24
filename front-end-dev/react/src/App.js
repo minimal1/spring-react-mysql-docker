@@ -48,6 +48,7 @@ class App extends React.Component {
       })
       .catch(error => {
         this.setState({
+          isAuthenticated: false,
           isLoading: false
         });
       });

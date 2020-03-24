@@ -1,7 +1,12 @@
 package com.ntsim.controller;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,6 +25,8 @@ public class UserApiController {
 	@Autowired
 	private UserApiLogicService userApiLogicService;
 
+	private Logger logger = LoggerFactory.getLogger(UserApiController.class);
+	
 	@PostMapping("/register")
 	public Header<UserApiResponse> create(@RequestBody Header<UserApiRequest> userApiRequest) {
 
@@ -30,4 +37,11 @@ public class UserApiController {
 	public Header<UserApiResponse> login(@RequestBody Header<UserApiRequest> userApiRequest) {
 		return userApiLogicService.login(userApiRequest);
 	}
+	
+	@GetMapping("/user/me")
+	public Header<UserApiResponse> validate(HttpServletRequest request){
+		return userApiLogicService.validate(request);
+	}
+	
+	
 }

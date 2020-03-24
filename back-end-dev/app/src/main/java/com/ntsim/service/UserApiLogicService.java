@@ -1,17 +1,30 @@
 package com.ntsim.service;
 
+import java.io.Serializable;
 import java.util.Optional;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import com.ntsim.config.interceptor.JwtAuthInterceptor;
+import com.ntsim.jwt.jwtToken;
 import com.ntsim.model.entity.User;
 import com.ntsim.model.network.Header;
 import com.ntsim.model.network.request.UserApiRequest;
 import com.ntsim.model.network.response.UserApiResponse;
+import com.ntsim.redis.Redis;
 import com.ntsim.repository.UserRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class UserApiLogicService {
 
@@ -20,7 +33,25 @@ public class UserApiLogicService {
 	
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private jwtToken jwtToken;
+	
+	@Autowired
+	private RedisTemplate<Serializable, Serializable> redisTemplate;
 
+	private Logger logger = LoggerFactory.getLogger(UserApiLogicService.class);
+	
+	public Header<UserApiResponse> validate(HttpServletRequest request){
+		
+		String accessToken = request.getHeader("authorization");
+		String userId = jwtToken.getUserUID(accessToken);
+		String userEmail = jwtToken.getUserEmail(accessToken);
+		
+		User user = User.builder().studentNumber(userId).userEmail(userEmail).build();
+		return response(user);
+	}
+	
 	public Header<UserApiResponse> create(@RequestBody Header<UserApiRequest> userApiRequest) {
 
 		UserApiRequest uRequest = userApiRequest.getData();
@@ -64,7 +95,9 @@ public class UserApiLogicService {
 		if(pwCheck) {
 			User user = User.builder().studentNumber(uRequest.getId()).userPassword(uRequest.getPw())
 					.userEmail(userEmail).build();
-			return response(user);
+			String userToken = this.saveTokenInRedis(user);
+			
+			return response(user,userToken);
 		} else {
 			return Header.ERROR("비밀 번호가 일치하지 않습니다.");
 		}
@@ -77,6 +110,22 @@ public class UserApiLogicService {
 
 		return Header.OK(userApiResponse);
 
+	}
+	
+	private Header<UserApiResponse> response(User user, String token) {
+
+		UserApiResponse userApiResponse = UserApiResponse.builder().studentNumber(user.getStudentNumber())
+				.userEmail(user.getUserEmail()).userPassword(user.getUserPassword()).accessToken(token).build();
+
+		return Header.OK(userApiResponse);
+
+	}
+	
+	private String saveTokenInRedis(User user) {
+		String userToken = jwtToken.getUserToken(user);
+		Redis.set(user.getStudentNumber(), userToken, redisTemplate);
+
+		return userToken;
 	}
 
 }
