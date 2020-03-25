@@ -1,22 +1,23 @@
 /** @format */
 
-import React from 'react';
-import { withRouter, Route } from 'react-router-dom';
-import { notification } from 'antd';
+import React from "react";
+import { withRouter, Route } from "react-router-dom";
+import { notification } from "antd";
 
-import Header from './components/Header';
-import Container from './components/Container';
-import Upload from './components/UploadPaper';
-import Login from './components/Login';
-import Register from './components/Register';
-import ItemDetail from './components/ItemDetail';
+import Header from "./components/Header";
+import Container from "./components/Container";
+import Upload from "./components/UploadPaper";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import ItemDetail from "./components/ItemDetail";
 
-import './App.css';
-import UploadPaper from './components/UploadPaper';
+import "./App.css";
+import UploadPaper from "./components/UploadPaper";
 
-import { getCurrentUser } from './util/APIUtils';
-import { ACCESS_TOKEN } from './constants/index';
-import AuthRoute from './components/AuthRoute';
+import { getCurrentUser } from "./util/APIUtils";
+import { ACCESS_TOKEN } from "./constants/index";
+import AuthRoute from "./components/AuthRoute";
+import Profile from "./components/Profile";
 
 class App extends React.Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class App extends React.Component {
     this.state = {
       currentUser: null,
       isAuthenticated: false,
-      isLoading: false
+      isLoading: false,
     };
 
     this.loadCurrentUser = this.loadCurrentUser.bind(this);
@@ -35,21 +36,21 @@ class App extends React.Component {
 
   loadCurrentUser() {
     this.setState({
-      isLoading: true
+      isLoading: true,
     });
 
     getCurrentUser()
-      .then(response => {
+      .then((response) => {
         this.setState({
           currentUser: response,
           isAuthenticated: true,
-          isLoading: false
+          isLoading: false,
         });
       })
-      .catch(error => {
+      .catch((error) => {
         this.setState({
           isAuthenticated: false,
-          isLoading: false
+          isLoading: false,
         });
       });
   }
@@ -59,31 +60,31 @@ class App extends React.Component {
   }
 
   handleLogout(
-    redirectTo = '/',
-    notificationType = 'success',
+    redirectTo = "/",
+    notificationType = "success",
     description = "You're successfully logged out."
   ) {
     localStorage.removeItem(ACCESS_TOKEN);
     this.setState({
       currentUser: null,
-      isAuthenticated: false
+      isAuthenticated: false,
     });
 
     this.props.history.push(redirectTo);
 
     notification[notificationType]({
-      message: 'Polling App',
-      description: description
+      message: "Polling App",
+      description: description,
     });
   }
 
   handleLogin() {
     notification.success({
-      message: '졸업작품ing',
-      description: "You're successfully logged in."
+      message: "졸업작품ing",
+      description: "You're successfully logged in.",
     });
     this.loadCurrentUser();
-    this.props.history.push('/');
+    this.props.history.push("/");
   }
 
   render() {
@@ -97,22 +98,22 @@ class App extends React.Component {
         <AuthRoute
           isAuthenticated={this.state.isAuthenticated}
           path='/upload'
-          render={props => <UploadPaper {...props} />}
+          render={(props) => <UploadPaper {...props} />}
         />
         <Route
           path='/login'
-          render={props => <Login onLogin={this.handleLogin} {...props} />}
+          render={(props) => <Login onLogin={this.handleLogin} {...props} />}
         />
         <Route path='/register' component={Register} />
         <AuthRoute
           isAuthenticated={this.state.isAuthenticated}
           path='/profile'
-          component={Login}
+          component={Profile}
         />
         <AuthRoute
           isAuthenticated={this.state.isAuthenticated}
           path='/detail/:itemid'
-          render={props => <ItemDetail {...props} />}
+          render={(props) => <ItemDetail {...props} />}
         />
       </div>
     );
