@@ -1,17 +1,14 @@
 /** @format */
 
-import React from 'react';
-import { login } from '../util/APIUtils';
-import { Link } from 'react-router-dom';
-import { ACCESS_TOKEN } from '../constants/index';
+import React from "react";
+import { login } from "../util/APIUtils";
+import { Link } from "react-router-dom";
+import { ACCESS_TOKEN } from "../constants/index";
 
-import { Form, Input, Button, notification } from 'antd';
+import { Form, Input, Button, notification } from "antd";
 const FormItem = Form.Item;
 
 class Login extends React.Component {
-  componentDidMount() {
-    console.log('login');
-  }
   render() {
     return (
       <section>
@@ -30,27 +27,25 @@ class LoginForm extends React.Component {
 
   handleSubmit(values) {
     const loginRequest = {
-      result_code: 'OK',
-      description: 'login_request',
+      result_code: "OK",
+      description: "login_request",
       data: {
         id: values.username,
-        pw: values.password
-      }
+        pw: values.password,
+      },
     };
-    console.log(loginRequest);
 
     login(loginRequest)
-      .then(response => {
-        console.log("response", response);
+      .then((response) => {
         localStorage.setItem(ACCESS_TOKEN, response.data.access_token);
         this.props.onLogin();
       })
-      .catch(error => {
+      .catch((error) => {
         notification.error({
-          message: '졸업논문ing',
+          message: "졸업논문ing",
           description:
             error.description ||
-            'Sorry! Something went wrong. Please try again!'
+            "Sorry! Something went wrong. Please try again!",
         });
       });
   }
@@ -60,13 +55,13 @@ class LoginForm extends React.Component {
       <Form onFinish={this.handleSubmit} className='login-form'>
         <FormItem
           name='username'
-          rules={[{ required: true, message: 'Please input your Username' }]}
+          rules={[{ required: true, message: "Please input your Username" }]}
         >
           <Input size='large' placeholder='Username' name='username' />
         </FormItem>
         <FormItem
           name='password'
-          rules={[{ required: true, message: 'Please input your Password' }]}
+          rules={[{ required: true, message: "Please input your Password" }]}
         >
           <Input
             name='password'

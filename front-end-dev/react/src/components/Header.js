@@ -1,8 +1,8 @@
 /** @format */
 
-import React from 'react';
-import { Link, withRouter } from 'react-router-dom';
-import { ACCESS_TOKEN } from '../constants/index';
+import React from "react";
+import { Link, withRouter } from "react-router-dom";
+import { ACCESS_TOKEN } from "../constants/index";
 
 class Header extends React.Component {
   constructor(props) {
@@ -20,7 +20,7 @@ class Header extends React.Component {
     return (
       <header>
         <Link to='/' className='main-link img-link'>
-          <img src='/imgs/icon-logo.JPEG' className='main-logo' />
+          <img src='/imgs/icon-logo.png' className='main-logo' />
         </Link>
 
         <form className='search-form' onSubmit={this.handleLogout}>

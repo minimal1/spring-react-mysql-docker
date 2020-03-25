@@ -1,7 +1,7 @@
 /** @format */
 
-import React, { Component } from 'react';
-import { Route, Redirect } from 'react-router-dom';
+import React, { Component } from "react";
+import { Route, Redirect } from "react-router-dom";
 
 const AuthRoute = ({
   isAuthenticated,
@@ -12,7 +12,7 @@ const AuthRoute = ({
   return (
     <Route
       {...rest}
-      render={props =>
+      render={(props) =>
         isAuthenticated ? (
           render ? (
             render(props)
@@ -21,7 +21,7 @@ const AuthRoute = ({
           )
         ) : (
           <Redirect
-            to={{ pathname: '/login', state: { from: props.location } }}
+            to={{ pathname: "/login", state: { from: props.location } }}
           />
         )
       }

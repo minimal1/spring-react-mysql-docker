@@ -42,7 +42,10 @@ class App extends React.Component {
     getCurrentUser()
       .then((response) => {
         this.setState({
-          currentUser: response,
+          currentUser: {
+            student_number: response.data.student_number,
+            email: response.data.user_email,
+          },
           isAuthenticated: true,
           isLoading: false,
         });
@@ -108,7 +111,13 @@ class App extends React.Component {
         <AuthRoute
           isAuthenticated={this.state.isAuthenticated}
           path='/profile'
-          component={Profile}
+          render={(props) => (
+            <Profile
+              loadCurrentUser={this.loadCurrentUser}
+              currentUser={this.state.currentUser}
+              {...props}
+            />
+          )}
         />
         <AuthRoute
           isAuthenticated={this.state.isAuthenticated}
