@@ -2,7 +2,6 @@
 
 import React, { Component } from "react";
 import { Form, Input, Button, notification } from "antd";
-import { Redirect, withRouter } from "react-router-dom";
 import { changePassword } from "../util/APIUtils";
 const FormItem = Form.Item;
 class Profile extends Component {
@@ -69,14 +68,14 @@ class Profile extends Component {
           <FormItem label='Email'>
             <span className='ant-form-text'>{email}</span>
           </FormItem>
-          <FormItem label='Current Password'>
+          <FormItem name='old_password' label='Current Password'>
             <Input
               type='password'
               placeholder='Enter Current Password'
               name='oldPassword'
             />
           </FormItem>
-          <FormItem label='New Password'>
+          <FormItem name='new_password' label='New Password'>
             <Input
               type='password'
               placeholder='Enter New Password'
@@ -94,4 +93,4 @@ class Profile extends Component {
   }
 }
 
-export default withRouter(Profile);
+export default Profile;

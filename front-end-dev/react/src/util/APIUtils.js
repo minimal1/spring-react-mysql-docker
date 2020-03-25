@@ -84,7 +84,7 @@ export const changePassword = (changePasswordRequest) => {
     {
       url: API_BASE_URL + "/changePassword",
       method: "POST",
-      body: changePasswordRequest,
+      body: JSON.stringify(changePasswordRequest),
     },
     "JSON"
   );

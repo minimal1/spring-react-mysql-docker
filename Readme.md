@@ -23,7 +23,7 @@ Pages:
 - [ ] Search
 - [x] Login
 - [x] Register
-- [ ] Profile
+- [x] Profile
 - [x] Upload
 - [ ] PaperDetail
 - [ ] EditPaper

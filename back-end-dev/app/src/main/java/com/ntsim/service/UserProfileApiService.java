@@ -31,8 +31,8 @@ public class UserProfileApiService {
 
 		// check old PW
 		userCheck.ifPresent(user -> {
-			if (user.getUserPassword().equals(uRequest.getNewPassword())) {
-				pwCheck = true;
+			if (user.getUserPassword().equals(uRequest.getOldPassword())) {
+        pwCheck = true;
 			}
 		});
 
