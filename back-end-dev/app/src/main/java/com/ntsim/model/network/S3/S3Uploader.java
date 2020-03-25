@@ -38,7 +38,7 @@ public class S3Uploader {
 
 	@Value("${cloud.aws.s3.bucket}")
 	private String bucket;
-	public Header<S3UploaderResponse> upload_file(MultipartFile multipartFile,String year, String category, String professor, String github, String dirName) throws IOException {
+	public Header<S3UploaderResponse> upload_file(MultipartFile multipartFile,String year, String category, String professor, String github, String studentNumber, String dirName) throws IOException {
 		log.info("upload_file start");
 		log.info("Backend : " + year);
 		log.info("Backend : " + category);
@@ -59,7 +59,7 @@ public class S3Uploader {
         for(String sentence : summary)
         	log.info(sentence);
         removeNewFile(uploadFile);
-        return paperApiLogicService.upload(fileName, year, category, professor, github, summary.get(0), summary.get(1), summary.get(2));
+        return paperApiLogicService.upload(fileName, year, category, professor, github, summary.get(0), summary.get(1), summary.get(2), studentNumber);
 	}
 //	public String upload(@RequestBody Header<S3UploaderRequest> s3uploaderRequest) throws IOException {
 //		S3UploaderRequest s3Request = s3uploaderRequest.getData();

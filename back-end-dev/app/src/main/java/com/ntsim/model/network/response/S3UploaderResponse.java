@@ -27,4 +27,5 @@ public class S3UploaderResponse {
 	// 설명 3
 	private String description_3;
 
+	
 }
