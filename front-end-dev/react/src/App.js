@@ -52,13 +52,8 @@ class App extends React.Component {
       })
       .catch((error) => {
         this.setState({
-<<<<<<< HEAD
-          isAuthenticated: true,
-          isLoading: false
-=======
           isAuthenticated: false,
           isLoading: false,
->>>>>>> 5d6d04d9cba893733439a4fb926a2cd80311ab51
         });
       });
   }
