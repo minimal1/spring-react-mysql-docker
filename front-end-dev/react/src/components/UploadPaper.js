@@ -23,15 +23,8 @@ class UploadPaper extends Component {
     },
   };
 
-<<<<<<< HEAD
-  componentDidMount() {
-    // this.props.onAuth();
-  }
 
-  handleChange = e => {
-=======
   handleChange = (e) => {
->>>>>>> 5d6d04d9cba893733439a4fb926a2cd80311ab51
     const value = e.target.files[0];
 
     this.setState((prevState) => ({

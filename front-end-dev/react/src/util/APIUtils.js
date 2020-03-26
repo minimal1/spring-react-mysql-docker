@@ -46,6 +46,15 @@ export const getCurrentUser = () => {
   );
 };
 
+export function getAllPaper() {
+  return request({
+    url: API_BASE_URL + '/getAllPaper',
+    method: 'GET'
+  },
+  "JSON"
+  );
+}
+
 export const login = (loginRequest) => {
   return request(
     {
