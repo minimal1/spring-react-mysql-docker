@@ -55,6 +55,16 @@ export function getAllPaper() {
   );
 }
 
+export function getPaperDetail(paperDetailRequest) {
+  return request({
+    url: API_BASE_URL + '/getPaperDetail',
+    method: 'POST',
+    body: JSON.stringify(paperDetailRequest),
+  },
+  "JSON"
+  );
+}
+
 export const login = (loginRequest) => {
   return request(
     {

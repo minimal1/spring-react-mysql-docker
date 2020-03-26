@@ -16,13 +16,10 @@ class InfiniteList extends React.Component {
 			<div className='infinite-list'>
 				<ul>
 					{paperList.map(p => (<Item
+											id={p.id}
 											keyName={p.key_name}
 											github={p.github}
-											category={p.category}
-											professor={p.professor}
 											description_1={p.description_1}
-											description_2={p.description_2}
-											description_3={p.description_3}
 										/>))}
 				</ul>
 			</div>

@@ -1,7 +1,7 @@
 /** @format */
 
 import React, { Component } from 'react';
-
+import { getAllPaper } from '../util/APIUtils';
 class ItemDetail extends Component {
   constructor(props) {
     super(props);
@@ -11,6 +11,28 @@ class ItemDetail extends Component {
     };
   }
 
+  componentDidMount() {
+    const detailRequest = {
+      result_code: "OK",
+      description: "detail_paper",
+      data: {
+        paper_id : this.state.itemId.match.params.itemid
+      },
+    };
+    console.log(this.state.itemId.match.params.itemid)
+    getPaperDetail(detailRequest)
+    .then(response => {
+      console.log("success")
+    })
+    .catch(error => {
+      notification.error({
+        message: 'Paper Detail 반환 실패',
+        description:
+          error.description ||
+          'Sorry! Something went wrong. Please try again!'
+      });
+    });
+  }
   render() {
     return (
       <section className='page-for-detail'>
