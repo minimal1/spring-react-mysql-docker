@@ -46,24 +46,26 @@ export const getCurrentUser = () => {
   );
 };
 
-export function getAllPaper() {
-  return request({
-    url: API_BASE_URL + '/getAllPaper',
-    method: 'GET'
-  },
-  "JSON"
+export const getAllPaper = () => {
+  return request(
+    {
+      url: API_BASE_URL + "/getAllPaper",
+      method: "GET",
+    },
+    "JSON"
   );
-}
+};
 
-export function getPaperDetail(paperDetailRequest) {
-  return request({
-    url: API_BASE_URL + '/getPaperDetail',
-    method: 'POST',
-    body: JSON.stringify(paperDetailRequest),
-  },
-  "JSON"
+export const getPaperDetail = (paperDetailRequest) => {
+  return request(
+    {
+      url: API_BASE_URL + "/getPaperDetail",
+      method: "POST",
+      body: JSON.stringify(paperDetailRequest),
+    },
+    "JSON"
   );
-}
+};
 
 export const login = (loginRequest) => {
   return request(

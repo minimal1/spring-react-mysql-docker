@@ -17,7 +17,7 @@ import UploadPaper from "./components/UploadPaper";
 import { getCurrentUser } from "./util/APIUtils";
 import { ACCESS_TOKEN } from "./constants/index";
 import AuthRoute from "./components/AuthRoute";
-import Profile from "./components/Profile";
+import Mypage from "./components/Mypage";
 
 class App extends React.Component {
   constructor(props) {
@@ -110,9 +110,9 @@ class App extends React.Component {
         <Route path='/register' component={Register} />
         <AuthRoute
           isAuthenticated={this.state.isAuthenticated}
-          path='/profile'
+          path='/mypage'
           render={(props) => (
-            <Profile
+            <Mypage
               loadCurrentUser={this.loadCurrentUser}
               currentUser={this.state.currentUser}
               {...props}

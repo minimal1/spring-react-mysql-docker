@@ -6,23 +6,25 @@ import Icon from "@ant-design/icons";
 import { uploadFile } from "../util/APIUtils";
 const FormItem = Form.Item;
 class UploadPaper extends Component {
-  state = {
-    fileList: [],
-    uploading: false,
-    year: {
-      value: "",
-    },
-    category: {
-      value: "",
-    },
-    professor: {
-      value: "",
-    },
-    github: {
-      value: "",
-    },
-  };
-
+  constructor(props) {
+    super(props);
+    this.state = {
+      fileList: [],
+      uploading: false,
+      year: {
+        value: "",
+      },
+      category: {
+        value: "",
+      },
+      professor: {
+        value: "",
+      },
+      github: {
+        value: "",
+      },
+    };
+  }
 
   handleChange = (e) => {
     const value = e.target.files[0];
@@ -31,6 +33,7 @@ class UploadPaper extends Component {
       fileList: [...prevState.fileList, value],
     }));
   };
+
   handleYearChange(date, dateString) {
     this.setState({
       year: {
@@ -38,6 +41,7 @@ class UploadPaper extends Component {
       },
     });
   }
+
   handleCategoryChange(e) {
     this.setState({
       category: {
@@ -73,15 +77,6 @@ class UploadPaper extends Component {
       uploading: true,
     });
 
-    const uploadRequest = {
-      result_code: "OK",
-      description: "upload_paper",
-      data: {
-        year: this.state.year.value,
-        category: this.state.category.value,
-        professor: this.state.professor.value,
-      },
-    };
     uploadFile(formData)
       .then((response) => {
         this.setState({
@@ -211,7 +206,7 @@ class UploadPaper extends Component {
             </Select>
           </FormItem>
           <FormItem label='논문 업로드'>
-            <Upload {...props}>
+            <Upload {...props} accept='application/pdf'>
               <Button>
                 <Icon type='upload' /> Select File
               </Button>

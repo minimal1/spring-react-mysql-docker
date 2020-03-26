@@ -4,7 +4,7 @@ import React, { Component } from "react";
 import { Form, Input, Button, notification } from "antd";
 import { changePassword } from "../util/APIUtils";
 const FormItem = Form.Item;
-class Profile extends Component {
+class Mypage extends Component {
   constructor(props) {
     super(props);
 
@@ -59,8 +59,8 @@ class Profile extends Component {
     } = this.props;
 
     return (
-      <main className='profile'>
-        <h1 className='page-title'>Profile</h1>
+      <main className='mypage'>
+        <h1 className='page-title'>Mypage</h1>
         <Form onFinish={this.handleSubmit}>
           <Form.Item label='Student Number'>
             <span className='ant-form-text'>{student_number}</span>
@@ -93,4 +93,4 @@ class Profile extends Component {
   }
 }
 
-export default Profile;
+export default Mypage;

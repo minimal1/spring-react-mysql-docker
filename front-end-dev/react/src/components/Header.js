@@ -44,8 +44,8 @@ class Header extends React.Component {
                 </Link>
               </li>
               <li className='list-item'>
-                <Link to='/profile' className='nav-link'>
-                  Profile
+                <Link to='/mypage' className='nav-link'>
+                  Mypage
                 </Link>
               </li>
               <li className='list-item'>
@@ -68,11 +68,6 @@ class Header extends React.Component {
               </li>
             </ul>
           )}
-          {/* <li className='list-item'>
-              <Link to='/' className='nav-link'>
-                About
-              </Link>
-            </li> */}
         </nav>
       </header>
     );
