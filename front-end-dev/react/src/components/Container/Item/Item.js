@@ -3,6 +3,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 class Item extends React.Component {
+  constructor(props) {
+		super(props);
+		this.state = {};
+  }
+  
   render() {
     return (
       <div className='paper-item'>
@@ -18,6 +23,8 @@ class Item extends React.Component {
           <p className='paper-abstract'>
             We investigate conditional adversarial networks as a general-purpose
             solution to image-to-image translation problems.
+
+
           </p>
         </div>
 

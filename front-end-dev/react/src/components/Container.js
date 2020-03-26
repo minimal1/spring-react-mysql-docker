@@ -20,7 +20,7 @@ class Container extends React.Component {
     getAllPaper()
     .then(response => {
         this.setState({
-          all_paper: response.data,
+          all_paper: response.data.all_paper,
         })
     })
     .catch(error => {

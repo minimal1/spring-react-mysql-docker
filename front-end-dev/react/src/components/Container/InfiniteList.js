@@ -9,7 +9,7 @@ class InfiniteList extends React.Component {
 		this.state = {};
 	}
 	render() {
-		const paperList = this.props.allPaper.all_paper;
+		const paperList = this.props.allPaper;
 		console.log(paperList)
 		console.log(typeof(paperList))
 		return (
