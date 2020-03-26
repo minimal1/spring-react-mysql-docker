@@ -18,12 +18,10 @@ public class UserProfileApiService {
 	private UserRepository userRepository;
 
 	private boolean pwCheck = false;
-	private String newPw = "";
 
 	public Header<UserProfileApiResponse> modifiProfile(String accessToken,
 			Header<UserProfileApiRequest> userApiRequest) {
 		pwCheck = false;
-		newPw = "";
 
 		UserProfileApiRequest uRequest = userApiRequest.getData();
 
@@ -32,7 +30,7 @@ public class UserProfileApiService {
 		// check old PW
 		userCheck.ifPresent(user -> {
 			if (user.getUserPassword().equals(uRequest.getOldPassword())) {
-        pwCheck = true;
+				pwCheck = true;
 			}
 		});
 

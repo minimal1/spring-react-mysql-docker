@@ -9,16 +9,12 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.ntsim.model.entity.User;
 import com.ntsim.model.network.Header;
-import com.ntsim.model.network.request.S3UploaderRequest;
-import com.ntsim.model.network.request.UserApiRequest;
 import com.ntsim.model.network.response.S3UploaderResponse;
 import com.ntsim.service.PaperApiLogicService;
 import com.ntsim.textrank.Summarizer;

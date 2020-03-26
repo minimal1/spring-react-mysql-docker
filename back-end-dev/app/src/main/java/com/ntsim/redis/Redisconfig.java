@@ -1,7 +1,6 @@
 package com.ntsim.redis;
 
 import java.io.Serializable;
-import java.time.Duration;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;

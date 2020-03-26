@@ -25,8 +25,6 @@ public class UserApiController {
 	@Autowired
 	private UserApiLogicService userApiLogicService;
 
-	private Logger logger = LoggerFactory.getLogger(UserApiController.class);
-	
 	@PostMapping("/register")
 	public Header<UserApiResponse> create(@RequestBody Header<UserApiRequest> userApiRequest) {
 

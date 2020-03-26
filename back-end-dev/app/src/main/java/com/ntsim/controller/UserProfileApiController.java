@@ -10,9 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ntsim.model.network.Header;
-import com.ntsim.model.network.request.UserApiRequest;
 import com.ntsim.model.network.request.UserProfileApiRequest;
-import com.ntsim.model.network.response.UserApiResponse;
 import com.ntsim.model.network.response.UserProfileApiResponse;
 import com.ntsim.service.UserProfileApiService;
 

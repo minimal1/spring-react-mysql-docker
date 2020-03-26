@@ -9,11 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import com.ntsim.config.interceptor.JwtAuthInterceptor;
 import com.ntsim.jwt.jwtToken;
 import com.ntsim.model.entity.User;
 import com.ntsim.model.network.Header;
