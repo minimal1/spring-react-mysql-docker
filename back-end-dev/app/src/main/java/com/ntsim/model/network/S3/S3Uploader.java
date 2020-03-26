@@ -9,16 +9,12 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import com.ntsim.model.entity.User;
 import com.ntsim.model.network.Header;
-import com.ntsim.model.network.request.S3UploaderRequest;
-import com.ntsim.model.network.request.UserApiRequest;
 import com.ntsim.model.network.response.S3UploaderResponse;
 import com.ntsim.service.PaperApiLogicService;
 import com.ntsim.textrank.Summarizer;
@@ -38,7 +34,7 @@ public class S3Uploader {
 
 	@Value("${cloud.aws.s3.bucket}")
 	private String bucket;
-	public Header<S3UploaderResponse> upload_file(MultipartFile multipartFile,String year, String category, String professor, String github, String dirName) throws IOException {
+	public Header<S3UploaderResponse> upload_file(MultipartFile multipartFile,String year, String category, String professor, String github, String studentNumber, String dirName) throws IOException {
 		log.info("upload_file start");
 		log.info("Backend : " + year);
 		log.info("Backend : " + category);
@@ -59,7 +55,7 @@ public class S3Uploader {
         for(String sentence : summary)
         	log.info(sentence);
         removeNewFile(uploadFile);
-        return paperApiLogicService.upload(fileName, year, category, professor, github, summary.get(0), summary.get(1), summary.get(2));
+        return paperApiLogicService.upload(fileName, year, category, professor, github, summary.get(0), summary.get(1), summary.get(2), studentNumber);
 	}
 //	public String upload(@RequestBody Header<S3UploaderRequest> s3uploaderRequest) throws IOException {
 //		S3UploaderRequest s3Request = s3uploaderRequest.getData();

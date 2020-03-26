@@ -1,16 +1,16 @@
 /** @format */
 
-import React from 'react';
-import { register } from '../util/APIUtils';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { register } from "../util/APIUtils";
+import { Link } from "react-router-dom";
 import {
   USERNAME_MIN_LENGTH,
   USERNAME_MAX_LENGTH,
   PASSWORD_MIN_LENGTH,
-  PASSWORD_MAX_LENGTH
-} from '../constants/index';
+  PASSWORD_MAX_LENGTH,
+} from "../constants/index";
 
-import { Form, Input, Button, notification } from 'antd';
+import { Form, Input, Button, notification } from "antd";
 const FormItem = Form.Item;
 
 class Register extends React.Component {
@@ -19,14 +19,14 @@ class Register extends React.Component {
 
     this.state = {
       username: {
-        value: ''
+        value: "",
       },
       email: {
-        value: ''
+        value: "",
       },
       password: {
-        value: ''
-      }
+        value: "",
+      },
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -46,53 +46,50 @@ class Register extends React.Component {
     this.setState({
       [inputName]: {
         value: inputValue,
-        ...validationFunc(inputValue)
-      }
+        ...validationFunc(inputValue),
+      },
     });
   }
 
   handleSubmit(values) {
     //서버로 가입 양식 제출
     const registerRequest = {
-      result_code: 'OK',
-      description: 'register_request',
+      result_code: "OK",
+      description: "register_request",
       data: {
         id: this.state.username.value,
         email: this.state.email.value,
-        pw: this.state.password.value
-      }
+        pw: this.state.password.value,
+      },
     };
 
     register(registerRequest)
-      .then(response => {
+      .then((response) => {
         notification.success({
-          message: '졸업논문ing',
+          message: "졸업논문ing",
           description:
-            'Thank you! You"re successfully registered. Please Login to continue!'
+            'Thank you! You"re successfully registered. Please Login to continue!',
         });
-        this.props.history.push('/login');
+        this.props.history.push("/login");
       })
-      .catch(error => {
+      .catch((error) => {
         notification.error({
-          message: '졸업논문ing',
+          message: "졸업논문ing",
           description:
             error.description ||
-            'Sorry! Something went wrong. Please try again!'
+            "Sorry! Something went wrong. Please try again!",
         });
       });
   }
 
   isFormInvalid() {
     return !(
-      this.state.username.validateStatus === 'success' &&
-      this.state.email.validateStatus === 'success' &&
-      this.state.password.validateStatus === 'success'
+      this.state.username.validateStatus === "success" &&
+      this.state.email.validateStatus === "success" &&
+      this.state.password.validateStatus === "success"
     );
   }
 
-  componentDidMount() {
-    console.log('register');
-  }
   render() {
     return (
       <section>
@@ -111,7 +108,7 @@ class Register extends React.Component {
               placeholder='Your student ID'
               value={this.state.username.value}
               onBlur={this.validateUsernameAvailability}
-              onChange={event =>
+              onChange={(event) =>
                 this.handleChange(event, this.validateUsername)
               }
             />
@@ -130,7 +127,7 @@ class Register extends React.Component {
               placeholder='Your email'
               value={this.state.email.value}
               onBlur={this.validateEmailAvailability}
-              onChange={event => this.handleChange(event, this.validateEmail)}
+              onChange={(event) => this.handleChange(event, this.validateEmail)}
             />
           </FormItem>
           <FormItem
@@ -146,7 +143,7 @@ class Register extends React.Component {
               autoComplete='off'
               placeholder='A password between 6 to 20 characters'
               value={this.state.password.value}
-              onChange={event =>
+              onChange={(event) =>
                 this.handleChange(event, this.validatePassword)
               }
             />
@@ -168,60 +165,60 @@ class Register extends React.Component {
     );
   }
 
-  validateUsername = username => {
+  validateUsername = (username) => {
     if (username.length < USERNAME_MIN_LENGTH) {
       return {
-        validateStatus: 'error',
-        errorMsg: `Username is too short (Minimum ${USERNAME_MIN_LENGTH} characters needed.)`
+        validateStatus: "error",
+        errorMsg: `Username is too short (Minimum ${USERNAME_MIN_LENGTH} characters needed.)`,
       };
     } else if (username.length > USERNAME_MAX_LENGTH) {
       return {
-        validateStatus: 'error',
-        errorMsg: `Username is too long (Maximum ${USERNAME_MAX_LENGTH} characters needed.)`
+        validateStatus: "error",
+        errorMsg: `Username is too long (Maximum ${USERNAME_MAX_LENGTH} characters needed.)`,
       };
     } else {
       return {
         validateStatus: null,
-        errorMsg: null
+        errorMsg: null,
       };
     }
   };
 
-  validateEmail = email => {
+  validateEmail = (email) => {
     if (!email) {
       return {
-        validateStatus: 'error',
-        errorMsg: 'Email may not be empty'
+        validateStatus: "error",
+        errorMsg: "Email may not be empty",
       };
     }
 
-    const EMAIL_REGEX = RegExp('[^@ ]+@[^@ ]+\\.[^@ ]+');
+    const EMAIL_REGEX = RegExp("[^@ ]+@[^@ ]+\\.[^@ ]+");
 
     if (!EMAIL_REGEX.test(email)) {
       return {
-        validateStatus: 'error',
-        errorMsg: 'Email not valid'
+        validateStatus: "error",
+        errorMsg: "Email not valid",
       };
     }
 
     return { validateStatus: null, errorMsg: null };
   };
 
-  validatePassword = password => {
+  validatePassword = (password) => {
     if (password.length < PASSWORD_MIN_LENGTH) {
       return {
-        validateStatus: 'error',
-        errorMsg: `Password is too shart (Minimum ${PASSWORD_MIN_LENGTH} characters needed.)`
+        validateStatus: "error",
+        errorMsg: `Password is too shart (Minimum ${PASSWORD_MIN_LENGTH} characters needed.)`,
       };
     } else if (password.length > PASSWORD_MAX_LENGTH) {
       return {
-        validateStatus: 'error',
-        errorMsg: `Password is too long (Maximum ${PASSWORD_MAX_LENGTH} characters allowed.)`
+        validateStatus: "error",
+        errorMsg: `Password is too long (Maximum ${PASSWORD_MAX_LENGTH} characters allowed.)`,
       };
     } else {
       return {
-        validateStatus: 'success',
-        errorMsg: null
+        validateStatus: "success",
+        errorMsg: null,
       };
     }
   };
@@ -231,12 +228,12 @@ class Register extends React.Component {
     const usernameValue = this.state.username.value;
     const usernameValidation = this.validateUsername(usernameValue);
 
-    if (usernameValidation.validateStatus === 'error') {
+    if (usernameValidation.validateStatus === "error") {
       this.setState({
         username: {
           value: usernameValue,
-          ...usernameValidation
-        }
+          ...usernameValidation,
+        },
       });
       return;
     }
@@ -244,9 +241,9 @@ class Register extends React.Component {
     this.setState({
       username: {
         value: usernameValue,
-        validateStatus: 'success',
-        errorMsg: null
-      }
+        validateStatus: "success",
+        errorMsg: null,
+      },
     });
   }
 
@@ -254,12 +251,12 @@ class Register extends React.Component {
     const emailValue = this.state.email.value;
     const emailValidation = this.validateEmail(emailValue);
 
-    if (emailValidation.validateStatus === 'error') {
+    if (emailValidation.validateStatus === "error") {
       this.setState({
         email: {
           value: emailValue,
-          ...emailValidation
-        }
+          ...emailValidation,
+        },
       });
       return;
     }
@@ -267,9 +264,9 @@ class Register extends React.Component {
     this.setState({
       email: {
         value: emailValue,
-        validateStatus: 'success',
-        errorMsg: null
-      }
+        validateStatus: "success",
+        errorMsg: null,
+      },
     });
   }
 }

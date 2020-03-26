@@ -31,6 +31,7 @@ public class Paper {
 	private String description_2;
 	// 설명 3
 	private String description_3;
-	
+	// 작성자
+	private String studentNumber;
 	
 }

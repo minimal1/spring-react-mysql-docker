@@ -1,119 +1,122 @@
 /** @format */
 
-import React, { Component } from 'react';
-import { Form, Input, Upload, Button, DatePicker, message, Select} from 'antd';
-import Icon from '@ant-design/icons';
-import { uploadFile } from '../util/APIUtils';
+import React, { Component } from "react";
+import { Form, Input, Upload, Button, DatePicker, message, Select } from "antd";
+import Icon from "@ant-design/icons";
+import { uploadFile } from "../util/APIUtils";
 const FormItem = Form.Item;
 class UploadPaper extends Component {
   state = {
     fileList: [],
     uploading: false,
     year: {
-      value : ''
+      value: "",
     },
     category: {
-      value : ''
+      value: "",
     },
     professor: {
-      value : ''
+      value: "",
     },
     github: {
-      value: ''
-    }
+      value: "",
+    },
   };
 
+<<<<<<< HEAD
   componentDidMount() {
     // this.props.onAuth();
   }
 
   handleChange = e => {
+=======
+  handleChange = (e) => {
+>>>>>>> 5d6d04d9cba893733439a4fb926a2cd80311ab51
     const value = e.target.files[0];
 
-    this.setState(prevState => ({
-      fileList: [...prevState.fileList, value]
+    this.setState((prevState) => ({
+      fileList: [...prevState.fileList, value],
     }));
   };
-  handleYearChange(date, dateString){
+  handleYearChange(date, dateString) {
     this.setState({
       year: {
-        value: dateString
-      }
+        value: dateString,
+      },
     });
     // console.log(this.state);
   }
-  handleCategoryChange(e){
+  handleCategoryChange(e) {
     this.setState({
       category: {
-        value: e
-      }
+        value: e,
+      },
     });
     // console.log(this.state);
   }
-  handleProfessorChange(e){
+  handleProfessorChange(e) {
     this.setState({
       professor: {
-        value: e
-      }
+        value: e,
+      },
     });
     // console.log(this.state);
   }
-  handleGithubChange(e){
+  handleGithubChange(e) {
     // console.log(e.target.value);
     this.setState({
       github: {
-        value: e.target.value
-      }
+        value: e.target.value,
+      },
     });
     console.log(this.state);
   }
 
   handleUpload = () => {
     const { fileList } = this.state;
-    console.log(fileList);
     const formData = new FormData();
-    formData.append('data', fileList[0]);
-    formData.append('year', this.state.year.value);
-    formData.append('category', this.state.category.value);
-    formData.append('professor', this.state.professor.value);
-    formData.append('github', this.state.github.value);
+    formData.append("data", fileList[0]);
+    formData.append("year", this.state.year.value);
+    formData.append("category", this.state.category.value);
+    formData.append("professor", this.state.professor.value);
+    formData.append("github", this.state.github.value);
 
     this.setState({
-      uploading: true
+      uploading: true,
     });
 
     const uploadRequest = {
-      result_code: 'OK',
-      description: 'upload_paper',
+      result_code: "OK",
+      description: "upload_paper",
       data: {
-        year : this.state.year.value,
-        category : this.state.category.value,
-        professor : this.state.professor.value
-      }
+        year: this.state.year.value,
+        category: this.state.category.value,
+        professor: this.state.professor.value,
+      },
     };
     uploadFile(formData)
-      .then(response => {
+      .then((response) => {
         this.setState({
           fileList: [],
           year: {
-            value: ''
+            value: "",
           },
           category: {
-            value: ''
+            value: "",
           },
           professor: {
-            value: ''
+            value: "",
           },
-          github:{
-            value: ''
+          github: {
+            value: "",
           },
-          uploading: false
+          uploading: false,
         });
-        message.success('upload successfully');
+        message.success("upload successfully");
       })
-      .catch(error => {
+      .catch((error) => {
         this.setState({
-          uploading: false
+          uploading: false,
         });
         message.error(`upload failed ${error.description}`);
       });
@@ -122,60 +125,100 @@ class UploadPaper extends Component {
   render() {
     const { uploading, fileList } = this.state;
     const { Option } = Select;
-    const categoryData = ['AI', 'Application', 'Big Data', 'Data Mining', 'Deep Learning', 'Machine Learning', 'Smart'];
-    const professorData = ['강지훈', '고영준', '공은배', '권오석', '권택근', '김경섭',
-                          '김기일', '김동일','김상하', '김영국', '김현수', '김형식',
-                          '김형신', '남병규', '류재철', '박정희', '원유재', '이규철', 
-                          '이영석', '이철훈', '임성수', '장경선', '장진수', '정상근',
-                          '조은선', '진성일', '최훈'];
+    const categoryData = [
+      "AI",
+      "Application",
+      "Big Data",
+      "Data Mining",
+      "Deep Learning",
+      "Machine Learning",
+      "Smart",
+    ];
+    const professorData = [
+      "강지훈",
+      "고영준",
+      "공은배",
+      "권오석",
+      "권택근",
+      "김경섭",
+      "김기일",
+      "김동일",
+      "김상하",
+      "김영국",
+      "김현수",
+      "김형식",
+      "김형신",
+      "남병규",
+      "류재철",
+      "박정희",
+      "원유재",
+      "이규철",
+      "이영석",
+      "이철훈",
+      "임성수",
+      "장경선",
+      "장진수",
+      "정상근",
+      "조은선",
+      "진성일",
+      "최훈",
+    ];
     const props = {
-      onRemove: file => {
-        this.setState(state => {
+      onRemove: (file) => {
+        this.setState((state) => {
           const index = state.fileList.indexOf(file);
           const newFileList = state.fileList.slice();
           newFileList.splice(index, 1);
           return {
-            fileList: newFileList
+            fileList: newFileList,
           };
         });
       },
-      beforeUpload: file => {
-        this.setState(state => ({
-          fileList: [...state.fileList, file]
+      beforeUpload: (file) => {
+        this.setState((state) => ({
+          fileList: [...state.fileList, file],
         }));
         return false;
       },
-      fileList
+      fileList,
     };
 
     return (
       <main className='upload'>
-
         <h1 className='page-title'>Upload Paper</h1>
         <Form>
           <FormItem label='제출년도'>
             <DatePicker
-             onChange={(date, dateString) => this.handleYearChange(date, dateString)}
-             placeholder="Select Year"
-             picker="year"/>
+              onChange={(date, dateString) =>
+                this.handleYearChange(date, dateString)
+              }
+              placeholder='Select Year'
+              picker='year'
+            />
           </FormItem>
           <FormItem label='카테고리'>
             <Select
-             style={{ width: 200 }}
-             onChange={event => this.handleCategoryChange(event)}
-             placeholder="Select Category">
-              {categoryData.map(category => (
-                <Option key={category} value={category}>{category}</Option>
+              style={{ width: 200 }}
+              onChange={(event) => this.handleCategoryChange(event)}
+              placeholder='Select Category'
+            >
+              {categoryData.map((category) => (
+                <Option key={category} value={category}>
+                  {category}
+                </Option>
               ))}
             </Select>
           </FormItem>
           <FormItem label='담당교수'>
             <Select
-             style={{ width: 200 }}
-             onChange={event => this.handleProfessorChange(event)}
-             placeholder="Select Professor">
-              {professorData.map(professor => (
-                <Option key={professor} value={professor}>{professor}</Option>
+              style={{ width: 200 }}
+              onChange={(event) => this.handleProfessorChange(event)}
+              placeholder='Select Professor'
+            >
+              {professorData.map((professor) => (
+                <Option key={professor} value={professor}>
+                  {professor}
+                </Option>
               ))}
             </Select>
           </FormItem>
@@ -190,7 +233,7 @@ class UploadPaper extends Component {
             <Input
               type='url'
               placeholder='Enter Github Address'
-              onChange={event => this.handleGithubChange(event)}
+              onChange={(event) => this.handleGithubChange(event)}
             />
           </FormItem>
           <FormItem>
@@ -201,7 +244,7 @@ class UploadPaper extends Component {
               loading={uploading}
               style={{ marginTop: 16 }}
             >
-              {uploading ? 'Uploading' : 'Start Uploading'}
+              {uploading ? "Uploading" : "Start Uploading"}
             </Button>
           </FormItem>
         </Form>
