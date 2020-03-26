@@ -24,7 +24,7 @@ class UploadPaper extends Component {
   };
 
   componentDidMount() {
-    this.props.onAuth();
+    // this.props.onAuth();
   }
 
   handleChange = e => {

@@ -16,6 +16,7 @@ const request = (options, contentType = 'application/json') => {
 
   return fetch(options.url, options).then(response =>
     response.json().then(json => {
+      console.log(`Response Data : ${json}`)
       if (!response.ok) {
         return Promise.reject(json);
       }
@@ -29,16 +30,6 @@ const request = (options, contentType = 'application/json') => {
 };
 
 const request_file = options => {
-  const headers = new Headers({
-    'Content-Type': 'multipart/form-data'
-  });
-
-  if (localStorage.getItem(ACCESS_TOKEN)) {
-    headers.append('Authorization', localStorage.getItem(ACCESS_TOKEN));
-  }
-
-  const defaults = { headers: headers };
-  options = Object.assign({}, defaults, options);
 
   return fetch(options.url, options).then(response =>
     response.json().then(json => {
@@ -65,6 +56,13 @@ export function getCurrentUser() {
   });
 }
 
+export function getAllPaper() {
+  return request({
+    url: API_BASE_URL + '/getAllPaper',
+    method: 'GET'
+  })
+}
+
 export function login(loginRequest) {
   return request({
     url: API_BASE_URL + '/login',
@@ -72,6 +70,7 @@ export function login(loginRequest) {
     body: JSON.stringify(loginRequest)
   });
 }
+
 
 export function register(registerRequest) {
   return request({
@@ -82,12 +81,10 @@ export function register(registerRequest) {
 }
 
 export function uploadFile(formData) {
-  return request(
+  return request_file(
     {
       url: API_BASE_URL + '/upload_file',
       method: 'POST',
       body: formData
-    },
-    'multipart/form-data'
-  );
+    }  );
 }
