@@ -31,11 +31,6 @@ public class S3UploaderController {
 	private jwtToken jwtToken;
 	
 	private final S3Uploader s3Uploader;
-	
-    @GetMapping("j")
-    public String index() {
-        return "home";
-    }
     
     @PostMapping("/upload_file")
     @ResponseBody
