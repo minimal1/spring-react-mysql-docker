@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.ntsim.model.entity.Paper;
 
 @Repository
-public interface PaperRepository extends JpaRepository<Paper, String>{
+public interface PaperRepository extends JpaRepository<Paper, Long>{
 
 }
