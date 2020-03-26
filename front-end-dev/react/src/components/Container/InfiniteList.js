@@ -10,8 +10,6 @@ class InfiniteList extends React.Component {
 	}
 	render() {
 		const paperList = this.props.allPaper;
-		console.log(paperList)
-		console.log(typeof(paperList))
 		return (
 			<div className='infinite-list'>
 				<ul>

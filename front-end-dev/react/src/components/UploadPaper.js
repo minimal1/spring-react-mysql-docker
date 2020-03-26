@@ -37,7 +37,6 @@ class UploadPaper extends Component {
         value: dateString,
       },
     });
-    // console.log(this.state);
   }
   handleCategoryChange(e) {
     this.setState({
@@ -45,7 +44,6 @@ class UploadPaper extends Component {
         value: e,
       },
     });
-    // console.log(this.state);
   }
   handleProfessorChange(e) {
     this.setState({
@@ -53,16 +51,13 @@ class UploadPaper extends Component {
         value: e,
       },
     });
-    // console.log(this.state);
   }
   handleGithubChange(e) {
-    // console.log(e.target.value);
     this.setState({
       github: {
         value: e.target.value,
       },
     });
-    console.log(this.state);
   }
 
   handleUpload = () => {
