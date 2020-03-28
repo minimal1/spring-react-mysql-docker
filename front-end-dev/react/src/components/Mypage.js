@@ -2,20 +2,40 @@
 
 import React, { Component } from "react";
 import { Form, Input, Button, notification } from "antd";
-import { changePassword } from "../util/APIUtils";
+import { changePassword, getMyPaper } from "../util/APIUtils";
+import InfiniteList from "./Container/InfiniteList";
 const FormItem = Form.Item;
 class Mypage extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      old_password: "",
-      new_password: "",
+      all_paper: [],
+      isLoading: false,
     };
   }
 
   componentDidMount() {
-    // this.props.loadCurrentUser();
+    this.setState({
+      isLoading: true,
+    });
+
+    getMyPaper()
+      .then((response) => {
+        this.setState({
+          all_paper:
+            response.data.my_paper === undefined ? [] : response.data.my_paper,
+          isLoading: false,
+        });
+      })
+      .catch((error) => {
+        notification.error({
+          message: "Paper 리스트 반환 실패",
+          description:
+            error.description ||
+            "Sorry! Something went wrong. Please try again!",
+        });
+      });
   }
 
   handleSubmit = (values) => {
@@ -60,7 +80,7 @@ class Mypage extends Component {
 
     return (
       <main className='mypage'>
-        <h1 className='page-title'>Mypage</h1>
+        <h1 className='page-title'>My page</h1>
         <Form onFinish={this.handleSubmit}>
           <Form.Item label='Student Number'>
             <span className='ant-form-text'>{student_number}</span>
@@ -88,6 +108,9 @@ class Mypage extends Component {
             </Button>
           </FormItem>
         </Form>
+
+        <h1 className='page-title'>My List</h1>
+        <InfiniteList allPaper={this.state.all_paper} />
       </main>
     );
   }

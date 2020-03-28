@@ -56,6 +56,16 @@ export const getAllPaper = () => {
   );
 };
 
+export const getMyPaper = () => {
+  return request(
+    {
+      url: API_BASE_URL + "/getMyPaper",
+      method: "GET",
+    },
+    "JSON"
+  );
+};
+
 export const getPaperDetail = (paperDetailRequest) => {
   return request(
     {
@@ -106,6 +116,28 @@ export const changePassword = (changePasswordRequest) => {
       url: API_BASE_URL + "/changePassword",
       method: "POST",
       body: JSON.stringify(changePasswordRequest),
+    },
+    "JSON"
+  );
+};
+
+export const editPaper = (editPaperRequest) => {
+  return request(
+    {
+      url: API_BASE_URL + "/editPaperDone/" + editPaperRequest.data.paper_id,
+      method: "POST",
+      body: JSON.stringify(editPaperRequest),
+    },
+    "JSON"
+  );
+};
+
+export const deletePaper = (deletePaperRequest) => {
+  return request(
+    {
+      url: API_BASE_URL + "/deleteMyPaper",
+      method: "POST",
+      body: JSON.stringify(deletePaperRequest),
     },
     "JSON"
   );

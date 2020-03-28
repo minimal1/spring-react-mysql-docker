@@ -4,6 +4,8 @@ import React, { Component } from "react";
 import { Form, Input, Upload, Button, DatePicker, message, Select } from "antd";
 import Icon from "@ant-design/icons";
 import { uploadFile } from "../util/APIUtils";
+import { categoryData, professorData } from "../constants/index";
+
 const FormItem = Form.Item;
 class UploadPaper extends Component {
   constructor(props) {
@@ -108,44 +110,7 @@ class UploadPaper extends Component {
   render() {
     const { uploading, fileList } = this.state;
     const { Option } = Select;
-    const categoryData = [
-      "AI",
-      "Application",
-      "Big Data",
-      "Data Mining",
-      "Deep Learning",
-      "Machine Learning",
-      "Smart",
-    ];
-    const professorData = [
-      "강지훈",
-      "고영준",
-      "공은배",
-      "권오석",
-      "권택근",
-      "김경섭",
-      "김기일",
-      "김동일",
-      "김상하",
-      "김영국",
-      "김현수",
-      "김형식",
-      "김형신",
-      "남병규",
-      "류재철",
-      "박정희",
-      "원유재",
-      "이규철",
-      "이영석",
-      "이철훈",
-      "임성수",
-      "장경선",
-      "장진수",
-      "정상근",
-      "조은선",
-      "진성일",
-      "최훈",
-    ];
+
     const props = {
       onRemove: (file) => {
         this.setState((state) => {

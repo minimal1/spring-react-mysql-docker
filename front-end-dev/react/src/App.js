@@ -18,6 +18,7 @@ import { getCurrentUser } from "./util/APIUtils";
 import { ACCESS_TOKEN } from "./constants/index";
 import AuthRoute from "./components/AuthRoute";
 import Mypage from "./components/Mypage";
+import ItemEdit from "./components/ItemEdit";
 
 class App extends React.Component {
   constructor(props) {
@@ -123,6 +124,11 @@ class App extends React.Component {
           isAuthenticated={this.state.isAuthenticated}
           path='/detail/:itemid'
           render={(props) => <ItemDetail {...props} />}
+        />
+        <AuthRoute
+          isAuthenticated={this.state.isAuthenticated}
+          path='/editPaper/:itemid/'
+          render={(props) => <ItemEdit {...props} />}
         />
       </div>
     );
