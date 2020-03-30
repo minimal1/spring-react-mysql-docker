@@ -66,42 +66,52 @@ class ItemEdit extends Component {
     });
   };
 
-  handleYearChange(date, dateString) {
+  handleYearChange = (date, dateString) => {
     this.setState({
       year: dateString,
     });
-  }
+  };
 
-  handleCategoryChange(e) {
+  handleCategoryChange = (e) => {
     this.setState({
       category: e,
     });
-  }
-  handleProfessorChange(e) {
+  };
+  handleProfessorChange = (e) => {
     this.setState({
       professor: e,
     });
-  }
+  };
 
-  handleGithubChange(e) {
+  handleGithubChange = (e) => {
     this.setState({
       github: e.target.value,
     });
-  }
+  };
 
   handleSubmit = (e) => {
-    const data = this.state;
-
-    console.log(data);
+    const data = {
+      new_github: this.state.github,
+      new_year: this.state.year,
+      new_professor: this.state.professor,
+      new_description_1: this.state.description_1,
+      new_description_2: this.state.description_2,
+      new_description_3: this.state.description_3,
+      new_category: this.state.category,
+    };
 
     const editPaperRequest = {
       result_code: "OK",
-      description: "Request delete this paper",
+      description: "Request Edit this paper",
       data,
     };
 
-    editPaper(editPaperRequest)
+    editPaper(editPaperRequest, this.state.paper_id)
       .then((response) => {
+        notification.success({
+          message: "수정 성공!",
+          description: "You successfully edited it.",
+        });
         this.props.history.push(`/detail/${this.state.paper_id}`);
       })
       .catch((error) => {
@@ -125,8 +135,9 @@ class ItemEdit extends Component {
 
     deletePaper(deletePaperRequest)
       .then((response) => {
-        notification.ok({
+        notification.success({
           message: "삭제 성공!",
+          description: "You successfully deleted it.",
         });
 
         this.props.history.push("/");
@@ -145,30 +156,22 @@ class ItemEdit extends Component {
     const yearFormat = "YYYY";
 
     const { Option } = Select;
-    const {
-      keyName,
-      year,
-      github,
-      category,
-      professor,
-      description_1,
-      description_2,
-      description_3,
-    } = this.state;
 
     return (
       <main className='editPaper'>
         <Form onFinish={this.handleSubmit}>
           <FormItem label='제목'>
-            <span className='ant-form-text'>{keyName}</span>
+            <span className='ant-form-text'>{this.state.keyName}</span>
           </FormItem>
 
           <FormItem label='제출년도'>
             <DatePicker
-              onChange={(date, dateString) =>
-                this.handleYearChange(date, dateString)
+              onChange={this.handleYearChange}
+              value={
+                "" !== this.state.year
+                  ? moment(this.state.year, yearFormat)
+                  : ""
               }
-              value={moment(year, yearFormat)}
               placeholder='Select Year'
               picker='year'
             />
@@ -178,7 +181,7 @@ class ItemEdit extends Component {
               style={{ width: 200 }}
               placeholder='Select Category'
               onChange={this.handleCategoryChange}
-              value={category}
+              value={this.state.category}
             >
               {categoryData.map((item) => (
                 <Option key={item} value={item}>
@@ -190,7 +193,7 @@ class ItemEdit extends Component {
           <FormItem label='담당교수'>
             <Select
               onChange={this.handleProfessorChange}
-              value={professor}
+              value={this.state.professor}
               style={{ width: 200 }}
               placeholder='Select Professor'
             >
@@ -203,7 +206,7 @@ class ItemEdit extends Component {
           </FormItem>
           <FormItem label='Description'>
             <Input.TextArea
-              value={description_1}
+              value={this.state.description_1}
               onChange={this.handleChange}
               name='description_1'
               placeholder='Enter Description'
@@ -215,7 +218,7 @@ class ItemEdit extends Component {
               placeholder='Enter Github Address'
               name='github'
               onChange={this.handleChange}
-              value={github}
+              value={this.state.github}
             />
           </FormItem>
           <FormItem>

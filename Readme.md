@@ -19,11 +19,11 @@ docker-compose up
 
 Pages:
 
-- [ ] Home
+- [x] Home
 - [ ] Search
 - [x] Login
 - [x] Register
 - [x] Profile
 - [x] Upload
-- [ ] PaperDetail
-- [ ] EditPaper
+- [x] PaperDetail
+- [x] EditPaper

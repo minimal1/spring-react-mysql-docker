@@ -84,7 +84,9 @@ class ItemDetail extends Component {
           <div className='detail-for-code'>
             <h1>Code</h1>
             <hr />
-            <a href={`${this.state.github}`}>Click here for the code</a>
+            <a href={`${this.state.github}`} target='_blank'>
+              Click here for the code
+            </a>
           </div>
           <div className='detail-for-tasks'>
             <h1>Top 3 Main Points</h1>

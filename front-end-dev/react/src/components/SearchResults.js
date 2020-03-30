@@ -1,14 +1,57 @@
 /** @format */
 
-import React from 'react';
+import React from "react";
 
-import ResultItem from './ResultItem';
+import ResultItem from "./ResultItem";
+import InfiniteList from "./Container/InfiniteList";
+import Loading from "./Container/Loading";
 
 class SearchResults extends React.Component {
-	render() {
-		// 리스트
-		return <section></section>;
-	}
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      all_paper: [],
+      isLoading: false,
+    };
+  }
+
+  componentDidMount() {
+    // this.setState({
+    //   isLoading: true,
+    // });
+    // getAllPaper()
+    //   .then((response) => {
+    //     this.setState({
+    //       all_paper: response.data.all_paper,
+    //       isLoading: false,
+    //     });
+    //   })
+    //   .catch((error) => {
+    //     notification.error({
+    //       message: "Paper 리스트 반환 실패",
+    //       description:
+    //         error.description ||
+    //         "Sorry! Something went wrong. Please try again!",
+    //     });
+    //   });
+  }
+
+  render() {
+    const {
+      match: {
+        params: { query },
+      },
+    } = this.props;
+
+    return (
+      <section>
+        <h4>{query}</h4>
+        <InfiniteList allPaper={this.state.all_paper} />
+        <Loading onLoading={this.state.isLoading} />
+      </section>
+    );
+  }
 }
 
 export default SearchResults;
