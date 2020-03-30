@@ -98,6 +98,7 @@ class UploadPaper extends Component {
           uploading: false,
         });
         message.success("upload successfully");
+        this.props.history.push(`/detail/${response.data.paper_id}`);
       })
       .catch((error) => {
         this.setState({

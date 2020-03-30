@@ -19,6 +19,7 @@ import { ACCESS_TOKEN } from "./constants/index";
 import AuthRoute from "./components/AuthRoute";
 import Mypage from "./components/Mypage";
 import ItemEdit from "./components/ItemEdit";
+import SearchResults from "./components/SearchResults";
 
 class App extends React.Component {
   constructor(props) {
@@ -99,16 +100,19 @@ class App extends React.Component {
           onLogout={this.handleLogout}
         />
         <Route exact path='/' component={Container} />
-        <AuthRoute
-          isAuthenticated={this.state.isAuthenticated}
-          path='/upload'
-          render={(props) => <UploadPaper {...props} />}
-        />
+        <Route path='/result/:query' component={SearchResults} />
+
         <Route
           path='/login'
           render={(props) => <Login onLogin={this.handleLogin} {...props} />}
         />
         <Route path='/register' component={Register} />
+
+        <AuthRoute
+          isAuthenticated={this.state.isAuthenticated}
+          path='/upload'
+          render={(props) => <UploadPaper {...props} />}
+        />
         <AuthRoute
           isAuthenticated={this.state.isAuthenticated}
           path='/mypage'
@@ -120,6 +124,7 @@ class App extends React.Component {
             />
           )}
         />
+
         <AuthRoute
           isAuthenticated={this.state.isAuthenticated}
           path='/detail/:itemid'

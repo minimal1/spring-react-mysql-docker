@@ -1,36 +1,56 @@
 /** @format */
 
 import React from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link, withRouter, Redirect } from "react-router-dom";
 import { ACCESS_TOKEN } from "../constants/index";
 
 class Header extends React.Component {
   constructor(props) {
     super(props);
 
-    this.handleLogout = this.handleLogout.bind(this);
+    this.state = {
+      searchQuery: "",
+    };
   }
 
-  handleLogout(event) {
+  handleChange = (e) => {
+    const {
+      target: { value },
+    } = e;
+
+    this.setState({
+      searchQuery: value,
+    });
+  };
+
+  handleLogout = (e) => {
     this.props.onLogout();
-  }
+  };
+
+  handleSubmit = () => {
+    const query = this.state.searchQuery;
+    this.props.history.push(`/result/${query}`);
+  };
 
   render() {
     const isAuthenticated = this.props.isAuthenticated;
+
     return (
       <header>
         <Link to='/' className='main-link img-link'>
           <img src='/imgs/icon-logo.png' className='main-logo' />
         </Link>
 
-        <form className='search-form' onSubmit={this.handleLogout}>
+        <form className='search-form'>
           <input
             type='text'
             className='search-keyword'
             placeholder='Search for papers'
+            onChange={this.handleChange}
+            value={this.state.searchQuery}
           />
 
-          <button className='search-button'>
+          <button className='search-button' onClick={this.handleSubmit}>
             <img src='/imgs/icon-search.png' className='icon-search' />
           </button>
         </form>

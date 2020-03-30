@@ -24,8 +24,12 @@ public class TextRank {
              */
             stripper.setSortByPosition(true);
             stripper.setLineSeparator(" ");
+            String match = "[·]";
             String text = stripper.getText(doc);
-
+            text = text.replaceAll(match, "\n");
+            text = text.replaceAll("\\.\\s+", ".\n");
+            text = text.replaceAll("\\s\\s\\s+", "\n");
+            
             return text;
         }
 	}

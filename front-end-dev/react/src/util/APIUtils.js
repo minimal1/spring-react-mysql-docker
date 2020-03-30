@@ -121,10 +121,10 @@ export const changePassword = (changePasswordRequest) => {
   );
 };
 
-export const editPaper = (editPaperRequest) => {
+export const editPaper = (editPaperRequest, paper_id) => {
   return request(
     {
-      url: API_BASE_URL + "/editPaperDone/" + editPaperRequest.data.paper_id,
+      url: API_BASE_URL + "/editPaperDone/" + paper_id,
       method: "POST",
       body: JSON.stringify(editPaperRequest),
     },
