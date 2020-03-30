@@ -6,7 +6,6 @@ import { notification } from "antd";
 
 import Header from "./components/Header";
 import Container from "./components/Container";
-import Upload from "./components/UploadPaper";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import ItemDetail from "./components/ItemDetail";

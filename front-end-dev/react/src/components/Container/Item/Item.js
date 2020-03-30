@@ -9,17 +9,17 @@ class Item extends React.Component {
   }
 
   render() {
-    const { id, keyName, github, description_1 } = this.props;
+    const { id, thumbnail, title, keyName, github, description_1 } = this.props;
 
     return (
       <div className='paper-item'>
         <Link to={`/detail/${id}/`} className='img-link'>
-          <img className='paper-img' src='/imgs/icon-logo.JPEG' />
+          <img className='paper-img' src={thumbnail} />
         </Link>
 
         <div className='paper-introduction'>
           <Link to={`/detail/${id}/`} className='paper-title'>
-            Image-to-Image Translation with Conditional Adversarial Networks
+            {title}
           </Link>
 
           <p className='paper-abstract'>{description_1}</p>

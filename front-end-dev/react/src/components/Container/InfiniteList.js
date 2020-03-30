@@ -17,6 +17,8 @@ class InfiniteList extends React.Component {
             <li key={p.id}>
               <Item
                 id={p.id}
+                thumbnail={p.thumbnail}
+                title={p.title}
                 keyName={p.key_name}
                 github={p.github}
                 description_1={p.description_1}

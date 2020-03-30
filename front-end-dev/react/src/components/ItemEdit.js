@@ -38,7 +38,7 @@ class ItemEdit extends Component {
     getPaperDetail(detailRequest)
       .then((response) => {
         this.setState({
-          keyName: response.data.key_name,
+          title: response.data.title,
           year: response.data.year,
           github: response.data.github,
           category: response.data.category,
@@ -161,7 +161,7 @@ class ItemEdit extends Component {
       <main className='editPaper'>
         <Form onFinish={this.handleSubmit}>
           <FormItem label='제목'>
-            <span className='ant-form-text'>{this.state.keyName}</span>
+            <span className='ant-form-text'>{this.state.title}</span>
           </FormItem>
 
           <FormItem label='제출년도'>

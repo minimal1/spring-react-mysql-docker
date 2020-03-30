@@ -11,6 +11,7 @@ class ItemDetail extends Component {
 
     this.state = {
       itemId: this.props.match.params.itemid,
+      title: "",
       keyName: "",
       year: "",
       github: "",
@@ -33,6 +34,7 @@ class ItemDetail extends Component {
     getPaperDetail(detailRequest)
       .then((response) => {
         this.setState({
+          title: response.data.title,
           keyName: response.data.key_name,
           year: response.data.year,
           github: response.data.github,
@@ -56,9 +58,7 @@ class ItemDetail extends Component {
     return (
       <section className='page-for-detail'>
         <div className='detail-for-paper'>
-          <h1>
-            Image-to-Image Translation with Conditional Adversarial Networks
-          </h1>
+          <h1>{this.state.title}</h1>
           <span>
             {this.state.year} / {this.state.category} / {this.state.professor}
           </span>
