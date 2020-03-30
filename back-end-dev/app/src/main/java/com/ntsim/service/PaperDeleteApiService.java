@@ -15,19 +15,24 @@ public class PaperDeleteApiService {
 
 	@Autowired
 	private PaperRepository paperRepository;
-	
+
+	private boolean paperDeleted = false;
+
 	public Header deleteMyPaper(Header<PaperDeleteRequest> paperDeleteRequest) {
-
+		paperDeleted = false;
 		PaperDeleteRequest request = paperDeleteRequest.getData();
-		
+
 		Optional<Paper> paperCheck = paperRepository.findById(request.getPaperId());
-		
-		paperCheck.map(paper -> {
+
+		paperCheck.ifPresent(paper -> {
 			paperRepository.delete(paper);
+			paperDeleted = true;
+		});
+
+		if(paperDeleted) {
 			return Header.OK();
-		}).orElseGet(() -> Header.ERROR("데이터 없음"));
-
-		return null;
+		} else {
+			return Header.ERROR("해당 논문은 이미 삭제된 논문입니다.");
+		}
 	}
-
 }
