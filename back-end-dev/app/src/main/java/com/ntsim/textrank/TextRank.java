@@ -26,8 +26,12 @@ public class TextRank {
 //            stripper.setStartPage(6);
 //            stripper.setEndPage(10);
             stripper.setLineSeparator(" ");
+            String match = "[·]";
             String text = stripper.getText(doc);
-
+            text = text.replaceAll(match, "\n");
+            text = text.replaceAll("\\.\\s+", ".\n");
+            text = text.replaceAll("\\s\\s\\s+", "\n");
+            
             return text;
         }
 	}
