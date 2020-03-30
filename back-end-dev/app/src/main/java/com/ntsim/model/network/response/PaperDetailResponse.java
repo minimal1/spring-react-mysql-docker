@@ -28,5 +28,7 @@ public class PaperDetailResponse {
 	private String description_3;
 	// 작성자 아이디
 	private String studentNumber;
+	
+	private String title;
 
 }

@@ -24,6 +24,7 @@ public class TextRank {
              */
             stripper.setSortByPosition(true);
             stripper.setLineSeparator(" ");
+            stripper.setStartPage(2);
             String match = "[·]";
             String text = stripper.getText(doc);
             text = text.replaceAll(match, "\n");

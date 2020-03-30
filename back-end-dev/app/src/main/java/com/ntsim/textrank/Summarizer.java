@@ -31,9 +31,10 @@ public class Summarizer {
         final Map<String, List<String>> extractedSentences = sentenceSource.getExtractedSentences();
 
         final GraphBuilder graphBuilder = new GraphBuilder(extractedSentences);
-
-        return new SentenceRanker(sentences, graphBuilder.build()).getRankedSentences()
+        final List<String> sentenceRanker = new SentenceRanker(sentences, graphBuilder.build()).getRankedSentences()
                 .stream().map(Map.Entry::getKey).collect(Collectors.toList());
+        sentenceRanker.add(sentences.get(0));
+        return sentenceRanker;
     }
 }
 

@@ -28,7 +28,7 @@ public class PaperDetailService {
 				.github(paper.getGithub()).year(paper.getYear()).category(paper.getCategory())
 				.professor(paper.getProfessor()).description_1(paper.getDescription_1())
 				.description_2(paper.getDescription_2()).description_3(paper.getDescription_3())
-				.studentNumber(paper.getStudentNumber()).build();
+				.studentNumber(paper.getStudentNumber()).title(paper.getTitle()).build();
 
 		return Header.OK(paperDetailResponse);
 
