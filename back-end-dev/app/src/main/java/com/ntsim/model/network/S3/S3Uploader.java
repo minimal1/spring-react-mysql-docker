@@ -1,11 +1,18 @@
 package com.ntsim.model.network.S3;
 
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import javax.imageio.ImageIO;
+
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.rendering.ImageType;
+import org.apache.pdfbox.rendering.PDFRenderer;
+import org.apache.pdfbox.tools.imageio.ImageIOUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -34,7 +41,9 @@ public class S3Uploader {
 
 	@Value("${cloud.aws.s3.bucket}")
 	private String bucket;
-	public Header<S3UploaderResponse> upload_file(MultipartFile multipartFile,String year, String category, String professor, String github, String studentNumber, String dirName) throws IOException {
+
+	public Header<S3UploaderResponse> upload_file(MultipartFile multipartFile, String year, String category,
+			String professor, String github, String studentNumber, String dirName) throws IOException {
 		log.info("upload_file start");
 		log.info("Backend : " + year);
 		log.info("Backend : " + category);
@@ -46,17 +55,40 @@ public class S3Uploader {
 		log.info("TextRank Started");
 		String fileName = dirName + "/" + uploadFile.getName();
 		String uploadImageUrl = putS3(uploadFile, fileName);
-		
+
+		String uploadThumbNail = saveThumbNail(uploadFile, "graduThumbNail/" + uploadFile.getName()+".png");
+
 		// TextRank 실시.
 		TextRank tr = new TextRank();
-        String text = tr.getText(uploadFile);
-        Summarizer summarizer = new Summarizer(text);
-        List<String> summary = summarizer.summarize();
-        for(String sentence : summary)
-        	log.info(sentence);
-        removeNewFile(uploadFile);
-        return paperApiLogicService.upload(fileName, year, category, professor, github, summary.get(0), summary.get(1), summary.get(2), studentNumber);
+		String text = tr.getText(uploadFile);
+		Summarizer summarizer = new Summarizer(text);
+		List<String> summary = summarizer.summarize();
+		for (String sentence : summary)
+			log.info(sentence);
+		removeNewFile(uploadFile);
+		return paperApiLogicService.upload(fileName, year, category, professor, github, summary.get(0), summary.get(1),
+				summary.get(2), studentNumber, uploadThumbNail);
 	}
+
+	private String saveThumbNail(File file, String fileName) {
+		String resultUrl = "";
+		try (final PDDocument document = PDDocument.load(file)) {
+			PDFRenderer pdfRenderer = new PDFRenderer(document);
+
+			BufferedImage bi = pdfRenderer.renderImageWithDPI(0, 300);
+			File outputfile = new File("tempImage.png");
+			ImageIO.write(bi, "png", outputfile);
+			log.info(outputfile.getAbsolutePath());
+			resultUrl = putS3(outputfile, fileName);
+			log.info(outputfile.toString());
+			outputfile.delete();
+
+		} catch (IOException e) {
+			System.err.println("Exception while trying to create pdf document - " + e);
+		}
+		return resultUrl;
+	}
+
 //	public String upload(@RequestBody Header<S3UploaderRequest> s3uploaderRequest) throws IOException {
 //		S3UploaderRequest s3Request = s3uploaderRequest.getData();
 //		String year = s3Request.getYear();

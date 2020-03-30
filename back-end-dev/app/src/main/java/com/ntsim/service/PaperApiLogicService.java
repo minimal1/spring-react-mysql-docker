@@ -14,7 +14,7 @@ public class PaperApiLogicService {
 	private PaperRepository paperRepository;
 	
 	public Header<S3UploaderResponse> upload(String key, String year, String category,String professor,
-			String github, String description_1, String description_2, String description_3, String studentNumber) {
+			String github, String description_1, String description_2, String description_3, String studentNumber, String uploadThumbNail) {
 		Paper paper = Paper.builder()
 				.keyName(key)
 				.github(github)
@@ -25,6 +25,7 @@ public class PaperApiLogicService {
 				.description_2(description_2)
 				.description_3(description_3)
 				.studentNumber(studentNumber)
+				.thumbnail(uploadThumbNail)
 				.build();
 		
 		Paper newPaper = paperRepository.save(paper);

@@ -39,4 +39,6 @@ public class Paper {
 	// 작성자
 	private String studentNumber;
 	
+	private String thumbnail;
+	
 }
