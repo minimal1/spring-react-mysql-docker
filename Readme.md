@@ -27,3 +27,13 @@ Pages:
 - [x] Upload
 - [x] PaperDetail
 - [x] EditPaper
+
+Remained:
+- [ ] Search function
+- [ ] Filter function
+- [ ] Thumbnail image
+- [ ] Hashtag function
+- [ ] Like, view count function
+- [ ] UI refactoring
+- [ ] Back End code refactoring
+- [ ] Front End code refactoring
