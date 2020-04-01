@@ -44,6 +44,9 @@ public class PaperSearchService {
 
 		List<Paper> desc3Result = paperRepository.findByDescription3Contains(str);
 		List<PaperForSearch> desc3ForSearch = new ArrayList<PaperForSearch>();
+		
+		List<Paper> titleResult = paperRepository.findByTitleContains(str);
+		List<PaperForSearch> titleForSearch = new ArrayList<PaperForSearch>();
 
 		Map<Long, PaperForSearch> countingMap = new HashMap<Long, PaperForSearch>();
 
@@ -76,6 +79,16 @@ public class PaperSearchService {
 
 			desc3ForSearch.add(tempPaper);
 		}
+		
+		for (Paper paper : titleResult) {
+			PaperForSearch tempPaper = PaperForSearch.builder().id(paper.getId()).keyName(paper.getKeyName()).year(paper.getYear())
+					.github(paper.getGithub()).category(paper.getCategory()).professor(paper.getProfessor())
+					.studentNumber(paper.getStudentNumber()).description1(paper.getDescription1())
+					.description2(paper.getDescription2()).description3(paper.getDescription3())
+					.thumbnail(paper.getThumbnail()).title(paper.getTitle()).count(1).build();
+
+			titleForSearch.add(tempPaper);
+		}
 
 		for (PaperForSearch paper : desc1ForSearch) {
 			countingMap.put(paper.getId(), paper);
@@ -98,11 +111,18 @@ public class PaperSearchService {
 				countingMap.put(paper.getId(), paper);
 			}
 		}
+		
+		for (PaperForSearch paper : titleForSearch) {
+			if (countingMap.containsKey(paper.getId())) {
+				PaperForSearch tempPaperCount = countingMap.get(paper.getId());
+				tempPaperCount.setCount(tempPaperCount.getCount() + 1);
+			} else {
+				countingMap.put(paper.getId(), paper);
+			}
+		}
 
 		countingMap.values().forEach((value) -> resultList.add(value));
 
-		log.info(resultList.get(0) + "");
-		
 		return resultList;
 	}
 
