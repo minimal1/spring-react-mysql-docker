@@ -62,6 +62,7 @@ class ItemDetail extends Component {
           <span>
             {this.state.year} / {this.state.category} / {this.state.professor}
           </span>
+          <br />
           <p className='detail-for-abstract'>{this.state.description_1}</p>
           <a
             href={`https://gradubucket.s3.ap-northeast-2.amazonaws.com/${this.state.keyName}`}

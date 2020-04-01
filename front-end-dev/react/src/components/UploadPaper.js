@@ -19,9 +19,6 @@ class UploadPaper extends Component {
       category: {
         value: "",
       },
-      professor: {
-        value: "",
-      },
       github: {
         value: "",
       },
@@ -51,13 +48,6 @@ class UploadPaper extends Component {
       },
     });
   }
-  handleProfessorChange(e) {
-    this.setState({
-      professor: {
-        value: e,
-      },
-    });
-  }
   handleGithubChange(e) {
     this.setState({
       github: {
@@ -72,7 +62,6 @@ class UploadPaper extends Component {
     formData.append("data", fileList[0]);
     formData.append("year", this.state.year.value);
     formData.append("category", this.state.category.value);
-    formData.append("professor", this.state.professor.value);
     formData.append("github", this.state.github.value);
 
     this.setState({
@@ -87,9 +76,6 @@ class UploadPaper extends Component {
             value: "",
           },
           category: {
-            value: "",
-          },
-          professor: {
             value: "",
           },
           github: {
@@ -154,19 +140,6 @@ class UploadPaper extends Component {
               {categoryData.map((category) => (
                 <Option key={category} value={category}>
                   {category}
-                </Option>
-              ))}
-            </Select>
-          </FormItem>
-          <FormItem label='담당교수'>
-            <Select
-              style={{ width: 200 }}
-              onChange={(event) => this.handleProfessorChange(event)}
-              placeholder='Select Professor'
-            >
-              {professorData.map((professor) => (
-                <Option key={professor} value={professor}>
-                  {professor}
                 </Option>
               ))}
             </Select>

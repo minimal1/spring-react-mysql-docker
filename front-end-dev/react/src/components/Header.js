@@ -27,8 +27,11 @@ class Header extends React.Component {
     this.props.onLogout();
   };
 
-  handleSubmit = () => {
+  handleSubmit = (e) => {
+    e.preventDefault();
+
     const query = this.state.searchQuery;
+    console.log(query);
     this.props.history.push(`/result/${query}`);
   };
 
@@ -47,7 +50,7 @@ class Header extends React.Component {
             className='search-keyword'
             placeholder='Search for papers'
             onChange={this.handleChange}
-            value={this.state.searchQuery}
+            value={this.searchQuery}
           />
 
           <button className='search-button' onClick={this.handleSubmit}>

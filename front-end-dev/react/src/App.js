@@ -77,7 +77,7 @@ class App extends React.Component {
     this.props.history.push(redirectTo);
 
     notification[notificationType]({
-      message: "Polling App",
+      message: "졸업작품ing",
       description: description,
     });
   }
