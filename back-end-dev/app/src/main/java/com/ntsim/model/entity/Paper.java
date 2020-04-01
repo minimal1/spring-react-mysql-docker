@@ -43,4 +43,6 @@ public class Paper {
 	
 	private String title;
 	
+	private String hashtag;
+	
 }

@@ -27,4 +27,6 @@ public class PaperEditResponse {
 	private String description_3;
 	// 작성자
 	private String studentNumber;
+	
+	private String hashtag;
 }

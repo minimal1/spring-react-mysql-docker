@@ -25,4 +25,6 @@ public class PaperEditDoneRequest {
 	private String newDescription_2;
 	// 설명 3
 	private String newDescription_3;
+	
+	private String newHashtag;
 }

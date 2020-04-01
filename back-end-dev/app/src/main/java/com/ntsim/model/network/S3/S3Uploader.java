@@ -68,7 +68,7 @@ public class S3Uploader {
 			log.info(sentence);
 		removeNewFile(uploadFile);
 		return paperApiLogicService.upload(fileName, year, category, summary.get(4), github, summary.get(0), summary.get(1),
-				summary.get(2), studentNumber, uploadThumbNail, summary.get(3));
+				summary.get(2), studentNumber, uploadThumbNail, summary.get(3), summary.get(5));
 	}
 
 	private String saveThumbNail(File file, String fileName) {
