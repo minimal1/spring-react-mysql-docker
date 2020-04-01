@@ -39,6 +39,7 @@ public class PaperEditApiService {
 			paper.setDescription2(uRequest.getNewDescription_2());
 			paper.setDescription3(uRequest.getNewDescription_3());
 			paper.setGithub(uRequest.getNewGithub());
+			paper.setHashtag(uRequest.getNewHashtag());
 			
 			return paper;
 		}).map(paper -> paperRepository.save(paper)).map(paper -> Header.OK()).orElseGet(() -> Header.ERROR("데이터 없음"));
@@ -49,7 +50,7 @@ public class PaperEditApiService {
 		PaperEditResponse paperEditResponse = PaperEditResponse.builder().github(paper.getGithub())
 				.year(paper.getYear()).category(paper.getCategory()).professor(paper.getProfessor())
 				.description1(paper.getDescription1()).description2(paper.getDescription2())
-				.description3(paper.getDescription3()).studentNumber(paper.getStudentNumber()).build();
+				.description3(paper.getDescription3()).studentNumber(paper.getStudentNumber()).hashtag(paper.getHashtag()).build();
 
 		return Header.OK(paperEditResponse);
 	}

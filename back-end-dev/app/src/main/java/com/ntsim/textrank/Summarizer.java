@@ -1,6 +1,7 @@
 package com.ntsim.textrank;
 
 import com.ntsim.textrank.graph.GraphBuilder;
+import com.ntsim.textrank.hashtag.Hashtag;
 import com.ntsim.textrank.sentence.SentenceSource;
 import com.ntsim.textrank.sentence.ranker.SentenceRanker;
 
@@ -21,6 +22,7 @@ public class Summarizer {
     	 * */
         final SentenceSource sentenceSource = new SentenceSource(content);
         
+        
         /*
          * sentences -> SentenceSplitter를 활용하여 분리한 모든 문장들.
          * extractedSentences -> 문장과 문장에 포함된 단어들로 이루어진 Map 형태의 변수.
@@ -29,14 +31,30 @@ public class Summarizer {
          * */
         final List<String> sentences = sentenceSource.getSentences();
         final Map<String, List<String>> extractedSentences = sentenceSource.getExtractedSentences();
+        final Hashtag hashtag = new Hashtag(extractedSentences);
+        List<String> hashtag_list = hashtag.getHashtag();
 
         final GraphBuilder graphBuilder = new GraphBuilder(extractedSentences);
         final List<String> sentenceRanker = new SentenceRanker(sentences, graphBuilder.build()).getRankedSentences()
                 .stream().map(Map.Entry::getKey).collect(Collectors.toList());
+        
+        String title = sentences.get(0);
+        String professor = sentences.get(2);
+        List<String> extracted_hashtag = new ArrayList<String>();
+        for(String tag : hashtag_list) {
+        	if(title.contains(tag)) {
+        		extracted_hashtag.add(tag);
+        	}
+        	if(extracted_hashtag.size() == 3) {
+        		break;
+        	}
+        }
         // add Title of the paper
-        sentenceRanker.add(sentences.get(0));
+        sentenceRanker.add(title);
         // add professor
-        sentenceRanker.add(sentences.get(2));
+        sentenceRanker.add(professor);
+        // add hashtag
+        sentenceRanker.add(String.join("/", extracted_hashtag));
         return sentenceRanker;
     }
 }

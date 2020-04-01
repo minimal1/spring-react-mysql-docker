@@ -30,5 +30,6 @@ public class PaperDetailResponse {
 	private String studentNumber;
 	
 	private String title;
+	private String hashtag;
 
 }

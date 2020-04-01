@@ -20,7 +20,7 @@ docker-compose up
 Pages:
 
 - [x] Home
-- [ ] Search
+- [x] Search
 - [x] Login
 - [x] Register
 - [x] Profile
@@ -29,9 +29,9 @@ Pages:
 - [x] EditPaper
 
 Remained(2020.03.31) :
-- [ ] Search function
+- [x] Search function
 - [ ] Filter function
-- [ ] Thumbnail image
+- [x] Thumbnail image
 - [ ] Hashtag function
 - [ ] Like, view count function
 - [ ] UI refactoring

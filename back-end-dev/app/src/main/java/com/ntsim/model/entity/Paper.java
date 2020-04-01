@@ -45,5 +45,6 @@ public class Paper {
 	
 	private String thumbnail;
 
-	private String title;	
+	private String title;
+	private String hashtag;
 }
