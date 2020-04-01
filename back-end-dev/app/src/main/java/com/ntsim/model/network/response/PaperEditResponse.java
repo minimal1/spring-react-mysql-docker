@@ -20,11 +20,11 @@ public class PaperEditResponse {
 	// 담당교수.
 	private String professor;
 	// 설명 1
-	private String description_1;
+	private String description1;
 	// 설명 2
-	private String description_2;
+	private String description2;
 	// 설명 3
-	private String description_3;
+	private String description3;
 	// 작성자
 	private String studentNumber;
 }

@@ -40,9 +40,9 @@ class ItemDetail extends Component {
           github: response.data.github,
           category: response.data.category,
           professor: response.data.professor,
-          description_1: response.data.description_1,
-          description_2: response.data.description_2,
-          description_3: response.data.description_3,
+          description_1: response.data.description1,
+          description_2: response.data.description2,
+          description_3: response.data.description3,
         });
       })
       .catch((error) => {

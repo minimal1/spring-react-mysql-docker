@@ -10,4 +10,7 @@ import com.ntsim.model.entity.Paper;
 @Repository
 public interface PaperRepository extends JpaRepository<Paper, Long>{
 	List<Paper> findByStudentNumber(String studentNumber);
+	List<Paper> findByDescription1Contains(String str);
+//	List<Paper> findByDescription2Contains(String str);
+//	List<Paper> findByDescription3Contains(String str);
 }

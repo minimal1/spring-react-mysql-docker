@@ -35,9 +35,9 @@ public class PaperEditApiService {
 			paper.setCategory(uRequest.getNewCategory());
 			paper.setYear(uRequest.getNewYear());
 			paper.setProfessor(uRequest.getNewProfessor());
-			paper.setDescription_1(uRequest.getNewDescription_1());
-			paper.setDescription_2(uRequest.getNewDescription_2());
-			paper.setDescription_3(uRequest.getNewDescription_3());
+			paper.setDescription1(uRequest.getNewDescription_1());
+			paper.setDescription2(uRequest.getNewDescription_2());
+			paper.setDescription3(uRequest.getNewDescription_3());
 			paper.setGithub(uRequest.getNewGithub());
 			
 			return paper;
@@ -48,8 +48,8 @@ public class PaperEditApiService {
 
 		PaperEditResponse paperEditResponse = PaperEditResponse.builder().github(paper.getGithub())
 				.year(paper.getYear()).category(paper.getCategory()).professor(paper.getProfessor())
-				.description_1(paper.getDescription_1()).description_2(paper.getDescription_2())
-				.description_3(paper.getDescription_3()).studentNumber(paper.getStudentNumber()).build();
+				.description1(paper.getDescription1()).description2(paper.getDescription2())
+				.description3(paper.getDescription3()).studentNumber(paper.getStudentNumber()).build();
 
 		return Header.OK(paperEditResponse);
 	}
