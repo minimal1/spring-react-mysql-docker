@@ -1,5 +1,7 @@
 package com.ntsim.model.network.S3;
 
+import java.awt.Color;
+import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -75,12 +77,13 @@ public class S3Uploader {
 		try (final PDDocument document = PDDocument.load(file)) {
 			PDFRenderer pdfRenderer = new PDFRenderer(document);
 
-			BufferedImage bi = pdfRenderer.renderImageWithDPI(0, 300);
+			BufferedImage p1Image = pdfRenderer.renderImageWithDPI(0, 300);
+			BufferedImage p2Image = pdfRenderer.renderImageWithDPI(1, 300);
+			BufferedImage joinedImage = joinBufferedImage(p1Image, p2Image);
+			
 			File outputfile = new File("tempImage.png");
-			ImageIO.write(bi, "png", outputfile);
-			log.info(outputfile.getAbsolutePath());
+			ImageIO.write(joinedImage, "png", outputfile);
 			resultUrl = putS3(outputfile, fileName);
-			log.info(outputfile.toString());
 			outputfile.delete();
 
 		} catch (IOException e) {
@@ -89,32 +92,27 @@ public class S3Uploader {
 		return resultUrl;
 	}
 
-//	public String upload(@RequestBody Header<S3UploaderRequest> s3uploaderRequest) throws IOException {
-//		S3UploaderRequest s3Request = s3uploaderRequest.getData();
-//		String year = s3Request.getYear();
-//		String category = s3Request.getCategory();
-//		String professor = s3Request.getProfessor();
-//		System.out.println("Backend : " + year);
-//		System.out.println("Backend : " + category);
-//		System.out.println("Backend : " + professor);
-//
-//		return "upload succes";
-//	}
+	public static BufferedImage joinBufferedImage(BufferedImage img1,BufferedImage img2) {
 
-//	public String upload(File uploadFile, String dirName) throws IOException {
-//		System.out.println("TextRank Started");
-//		String fileName = dirName + "/" + uploadFile.getName();
-//		String uploadImageUrl = putS3(uploadFile, fileName);
-//		// TextRank 실시.
-//		TextRank tr = new TextRank();
-//        String text = tr.getText(uploadFile);
-//        Summarizer summarizer = new Summarizer(text);
-//        for(String sentence : summarizer.summarize())
-//        	log.info(sentence);
-//		removeNewFile(uploadFile);
-//		return uploadImageUrl;
-//	}
-
+        //do some calculate first
+        int offset  = 5;
+        int wid = img1.getWidth()+img2.getWidth()+offset;
+        int height = Math.max(img1.getHeight(),img2.getHeight())+offset;
+        //create a new buffer and draw two image into the new image
+        BufferedImage newImage = new BufferedImage(wid,height, BufferedImage.TYPE_INT_ARGB);
+        Graphics2D g2 = newImage.createGraphics();
+        Color oldColor = g2.getColor();
+        //fill background
+        g2.setPaint(Color.WHITE);
+        g2.fillRect(0, 0, wid, height);
+        //draw image
+        g2.setColor(oldColor);
+        g2.drawImage(img1, null, 0, 0);
+        g2.drawImage(img2, null, img1.getWidth()+offset, 0);
+        g2.dispose();
+        return newImage;
+    }
+	
 	private String putS3(File uploadFile, String fileName) {
 		amazonS3Client.putObject(
 				new PutObjectRequest(bucket, fileName, uploadFile).withCannedAcl(CannedAccessControlList.PublicRead));
