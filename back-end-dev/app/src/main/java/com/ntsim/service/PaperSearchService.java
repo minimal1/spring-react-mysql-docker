@@ -15,6 +15,9 @@ import com.ntsim.model.network.request.PaperSearchRequest;
 import com.ntsim.model.network.response.PaperSearchResponse;
 import com.ntsim.repository.PaperRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class PaperSearchService {
 
@@ -45,8 +48,7 @@ public class PaperSearchService {
 		Map<Long, PaperForSearch> countingMap = new HashMap<Long, PaperForSearch>();
 
 		for (Paper paper : desc1Result) {
-			PaperForSearch tempPaper = new PaperForSearch();
-			tempPaper.builder().id(paper.getId()).keyName(paper.getKeyName()).year(paper.getYear())
+			PaperForSearch tempPaper = PaperForSearch.builder().id(paper.getId()).keyName(paper.getKeyName()).year(paper.getYear())
 					.github(paper.getGithub()).category(paper.getCategory()).professor(paper.getProfessor())
 					.studentNumber(paper.getStudentNumber()).description1(paper.getDescription1())
 					.description2(paper.getDescription2()).description3(paper.getDescription3())
@@ -56,8 +58,7 @@ public class PaperSearchService {
 		}
 
 		for (Paper paper : desc2Result) {
-			PaperForSearch tempPaper = new PaperForSearch();
-			tempPaper.builder().id(paper.getId()).keyName(paper.getKeyName()).year(paper.getYear())
+			PaperForSearch tempPaper = PaperForSearch.builder().id(paper.getId()).keyName(paper.getKeyName()).year(paper.getYear())
 					.github(paper.getGithub()).category(paper.getCategory()).professor(paper.getProfessor())
 					.studentNumber(paper.getStudentNumber()).description1(paper.getDescription1())
 					.description2(paper.getDescription2()).description3(paper.getDescription3())
@@ -67,8 +68,7 @@ public class PaperSearchService {
 		}
 
 		for (Paper paper : desc3Result) {
-			PaperForSearch tempPaper = new PaperForSearch();
-			tempPaper.builder().id(paper.getId()).keyName(paper.getKeyName()).year(paper.getYear())
+			PaperForSearch tempPaper = PaperForSearch.builder().id(paper.getId()).keyName(paper.getKeyName()).year(paper.getYear())
 					.github(paper.getGithub()).category(paper.getCategory()).professor(paper.getProfessor())
 					.studentNumber(paper.getStudentNumber()).description1(paper.getDescription1())
 					.description2(paper.getDescription2()).description3(paper.getDescription3())
@@ -80,7 +80,7 @@ public class PaperSearchService {
 		for (PaperForSearch paper : desc1ForSearch) {
 			countingMap.put(paper.getId(), paper);
 		}
-
+		
 		for (PaperForSearch paper : desc2ForSearch) {
 			if (countingMap.containsKey(paper.getId())) {
 				PaperForSearch tempPaperCount = countingMap.get(paper.getId());
@@ -100,6 +100,8 @@ public class PaperSearchService {
 		}
 
 		countingMap.values().forEach((value) -> resultList.add(value));
+
+		log.info(resultList.get(0) + "");
 		
 		return resultList;
 	}
