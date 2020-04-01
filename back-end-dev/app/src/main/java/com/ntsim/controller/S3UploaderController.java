@@ -37,7 +37,6 @@ public class S3UploaderController {
     public Header<S3UploaderResponse> upload_file(@RequestParam("data") MultipartFile multipartfile,
     		@RequestParam("year") String year,
     		@RequestParam("category") String category,
-    		@RequestParam("professor") String professor,
     		@RequestParam("github") String github,
     		HttpServletRequest request) throws IOException {
 
@@ -45,7 +44,7 @@ public class S3UploaderController {
     	String studentNumber = jwtToken.getUserUID(accessedToken);
     	
     	
-        return s3Uploader.upload_file(multipartfile, year, category, professor, github, studentNumber, "graduPdf");
+        return s3Uploader.upload_file(multipartfile, year, category, github, studentNumber, "graduPdf");
     }
 //    @PostMapping("/upload")
 //    @ResponseBody

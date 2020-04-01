@@ -33,7 +33,10 @@ public class Summarizer {
         final GraphBuilder graphBuilder = new GraphBuilder(extractedSentences);
         final List<String> sentenceRanker = new SentenceRanker(sentences, graphBuilder.build()).getRankedSentences()
                 .stream().map(Map.Entry::getKey).collect(Collectors.toList());
+        // add Title of the paper
         sentenceRanker.add(sentences.get(0));
+        // add professor
+        sentenceRanker.add(sentences.get(2));
         return sentenceRanker;
     }
 }

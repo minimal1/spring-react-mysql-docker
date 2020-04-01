@@ -43,11 +43,10 @@ public class S3Uploader {
 	private String bucket;
 
 	public Header<S3UploaderResponse> upload_file(MultipartFile multipartFile, String year, String category,
-			String professor, String github, String studentNumber, String dirName) throws IOException {
+			String github, String studentNumber, String dirName) throws IOException {
 		log.info("upload_file start");
 		log.info("Backend : " + year);
 		log.info("Backend : " + category);
-		log.info("Backend : " + professor);
 		log.info("Backend : " + github);
 		File uploadFile = convert(multipartFile)
 				.orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File로 전환이 실패했습니다."));
@@ -66,7 +65,7 @@ public class S3Uploader {
 		for (String sentence : summary)
 			log.info(sentence);
 		removeNewFile(uploadFile);
-		return paperApiLogicService.upload(fileName, year, category, professor, github, summary.get(0), summary.get(1),
+		return paperApiLogicService.upload(fileName, year, category, summary.get(4), github, summary.get(0), summary.get(1),
 				summary.get(2), studentNumber, uploadThumbNail, summary.get(3));
 	}
 
