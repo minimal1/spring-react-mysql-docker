@@ -2,7 +2,7 @@ package com.ntsim.model.network.response;
 
 import java.util.List;
 
-import com.ntsim.model.entity.Paper;
+import com.ntsim.model.entity.PaperForSearch;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -14,6 +14,6 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class PaperSearchResponse {
-	private List<Paper> searchedPaper;
+	private List<PaperForSearch> searchedPaper;
 
 }
