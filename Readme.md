@@ -28,7 +28,7 @@ Pages:
 - [x] PaperDetail
 - [x] EditPaper
 
-Remained(2020.03.31):
+Remained(2020.03.31) :
 - [ ] Search function
 - [ ] Filter function
 - [ ] Thumbnail image
