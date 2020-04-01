@@ -142,3 +142,14 @@ export const deletePaper = (deletePaperRequest) => {
     "JSON"
   );
 };
+
+export const searchPaper = (searchRequest) => {
+  return request(
+    {
+      url: API_BASE_URL + "/searchPaper",
+      method: "POST",
+      body: JSON.stringify(searchRequest),
+    },
+    "JSON"
+  );
+};

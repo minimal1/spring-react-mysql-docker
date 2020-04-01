@@ -27,8 +27,11 @@ class Header extends React.Component {
     this.props.onLogout();
   };
 
-  handleSubmit = () => {
+  handleSubmit = (e) => {
+    e.preventDefault();
+
     const query = this.state.searchQuery;
+    console.log(query);
     this.props.history.push(`/result/${query}`);
   };
 
@@ -36,59 +39,63 @@ class Header extends React.Component {
     const isAuthenticated = this.props.isAuthenticated;
 
     return (
-      <header>
-        <Link to='/' className='main-link img-link'>
-          <img src='/imgs/icon-logo.png' className='main-logo' />
-        </Link>
+      <header className='header'>
+        <div className='header__wrapper'>
+          <div className='header__column'>
+            <Link to='/' className='header-link'>
+              <img src='/imgs/icon-logo.png' className='header__logo' />
+            </Link>
+          </div>
+          <div className='header__column'>
+            <form className='header__from'>
+              <input
+                type='text'
+                className='search-keyword'
+                placeholder='Search for papers'
+                onChange={this.handleChange}
+                value={this.searchQuery}
+              />
 
-        <form className='search-form'>
-          <input
-            type='text'
-            className='search-keyword'
-            placeholder='Search for papers'
-            onChange={this.handleChange}
-            value={this.state.searchQuery}
-          />
-
-          <button className='search-button' onClick={this.handleSubmit}>
-            <img src='/imgs/icon-search.png' className='icon-search' />
-          </button>
-        </form>
-
-        <nav>
-          {isAuthenticated ? (
-            <ul className='nav-list'>
-              <li className='list-item'>
-                <Link to='/upload' className='nav-link'>
-                  Upload
-                </Link>
-              </li>
-              <li className='list-item'>
-                <Link to='/mypage' className='nav-link'>
-                  Mypage
-                </Link>
-              </li>
-              <li className='list-item'>
-                <a className='nav-link' onClick={this.handleLogout}>
-                  Logout
-                </a>
-              </li>
-            </ul>
-          ) : (
-            <ul className='nav-list'>
-              <li className='list-item'>
-                <Link to='/login' className='nav-link'>
-                  Log In
-                </Link>
-              </li>
-              <li className='list-item'>
-                <Link to='/register' className='nav-link'>
-                  Register
-                </Link>
-              </li>
-            </ul>
-          )}
-        </nav>
+              <button className='search-button' onClick={this.handleSubmit}>
+                <img src='/imgs/icon-search.png' className='icon-search' />
+              </button>
+            </form>
+          </div>
+          <div className='header__column'>
+            {isAuthenticated ? (
+              <ul className='header__list'>
+                <li>
+                  <Link to='/upload' className='header__link'>
+                    Upload
+                  </Link>
+                </li>
+                <li>
+                  <Link to='/mypage' className='header__link'>
+                    Mypage
+                  </Link>
+                </li>
+                <li>
+                  <a className='header__link' onClick={this.handleLogout}>
+                    Logout
+                  </a>
+                </li>
+              </ul>
+            ) : (
+              <ul className='header__list'>
+                <li>
+                  <Link to='/login' className='header__link'>
+                    Log In
+                  </Link>
+                </li>
+                <li>
+                  <Link to='/register' className='header__link'>
+                    Register
+                  </Link>
+                </li>
+              </ul>
+            )}
+          </div>
+        </div>
       </header>
     );
   }

@@ -10,15 +10,14 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import ItemDetail from "./components/ItemDetail";
 
-import "./App.css";
-import UploadPaper from "./components/UploadPaper";
+import UploadPaper from "./components/pages/UploadPaper";
 
 import { getCurrentUser } from "./util/APIUtils";
 import { ACCESS_TOKEN } from "./constants/index";
 import AuthRoute from "./components/AuthRoute";
 import Mypage from "./components/Mypage";
 import ItemEdit from "./components/ItemEdit";
-import SearchResults from "./components/SearchResults";
+import SearchResults from "./components/pages/SearchResults";
 
 class App extends React.Component {
   constructor(props) {
@@ -77,7 +76,7 @@ class App extends React.Component {
     this.props.history.push(redirectTo);
 
     notification[notificationType]({
-      message: "Polling App",
+      message: "졸업작품ing",
       description: description,
     });
   }

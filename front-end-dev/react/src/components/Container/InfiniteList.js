@@ -21,7 +21,7 @@ class InfiniteList extends React.Component {
                 title={p.title}
                 keyName={p.key_name}
                 github={p.github}
-                description_1={p.description_1}
+                description_1={p.description1}
               />
             </li>
           ))}
