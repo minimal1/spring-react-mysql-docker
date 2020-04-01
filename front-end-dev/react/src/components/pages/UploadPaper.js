@@ -3,8 +3,8 @@
 import React, { Component } from "react";
 import { Form, Input, Upload, Button, DatePicker, message, Select } from "antd";
 import Icon from "@ant-design/icons";
-import { uploadFile } from "../util/APIUtils";
-import { categoryData, professorData } from "../constants/index";
+import { uploadFile } from "../../util/APIUtils";
+import { categoryData, professorData } from "../../constants/index";
 
 const FormItem = Form.Item;
 class UploadPaper extends Component {

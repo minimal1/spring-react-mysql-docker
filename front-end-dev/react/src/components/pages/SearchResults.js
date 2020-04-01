@@ -2,18 +2,18 @@
 
 import React from "react";
 
-import ResultItem from "./ResultItem";
-import InfiniteList from "./Container/InfiniteList";
-import Loading from "./Container/Loading";
+import ResultItem from "../ResultItem";
+import InfiniteList from "../Container/InfiniteList";
+import Loading from "../Container/Loading";
 import { notification } from "antd";
-import { searchPaper } from "../util/APIUtils";
+import { searchPaper } from "../../util/APIUtils";
 
 class SearchResults extends React.Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      all_paper: [],
+      searched_list: [],
       isLoading: false,
     };
   }
@@ -39,8 +39,9 @@ class SearchResults extends React.Component {
 
     searchPaper(searchRequest)
       .then((response) => {
+        console.log(response);
         this.setState({
-          all_paper: response.data.all_paper,
+          searched_list: response.data.searched_list,
           isLoading: false,
         });
       })
@@ -63,7 +64,7 @@ class SearchResults extends React.Component {
     return (
       <section>
         <h4>Search : {query}</h4>
-        <InfiniteList allPaper={this.state.all_paper} />
+        <InfiniteList allPaper={this.state.searched_list} />
         <Loading onLoading={this.state.isLoading} />
       </section>
     );
