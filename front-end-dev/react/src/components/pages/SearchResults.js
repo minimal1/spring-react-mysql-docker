@@ -13,12 +13,33 @@ class SearchResults extends React.Component {
     super(props);
 
     this.state = {
-      searched_list: [],
+      searched_paper: [],
       isLoading: false,
     };
   }
 
   componentDidMount() {
+    this.searching();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    const {
+      match: {
+        params: { query: prevQuery },
+      },
+    } = prevProps;
+
+    const {
+      match: {
+        params: { query },
+      },
+    } = this.props;
+
+    if (prevQuery !== query) {
+      this.searching();
+    }
+  }
+  searching = () => {
     this.setState({
       isLoading: true,
     });
@@ -39,13 +60,16 @@ class SearchResults extends React.Component {
 
     searchPaper(searchRequest)
       .then((response) => {
-        console.log(response);
         this.setState({
-          searched_list: response.data.searched_list,
+          searched_paper: response.data.searched_paper,
           isLoading: false,
         });
       })
       .catch((error) => {
+        this.setState({
+          isLoading: false,
+        });
+
         notification.error({
           message: "Paper 리스트 반환 실패",
           description:
@@ -53,7 +77,7 @@ class SearchResults extends React.Component {
             "Sorry! Something went wrong. Please try again!",
         });
       });
-  }
+  };
 
   render() {
     const {
@@ -61,10 +85,11 @@ class SearchResults extends React.Component {
         params: { query },
       },
     } = this.props;
+
     return (
       <section>
         <h4>Search : {query}</h4>
-        <InfiniteList allPaper={this.state.searched_list} />
+        <InfiniteList allPaper={this.state.searched_paper} />
         <Loading onLoading={this.state.isLoading} />
       </section>
     );

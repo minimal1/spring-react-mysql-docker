@@ -1,7 +1,65 @@
 /** @format */
 
 .header {
-  background-color: #f2f2f2;
-  margin-bottom: 50px;
-  padding: 10px;
+  width: 100%;
+  padding: 0px 10px;
+  position: fixed;
+  top: 0px;
+  left: 0px;
+}
+
+.header__wrapper {
+  padding: 10px 30px;
+  max-width: 1200px;
+  margin: 0px auto;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  align-items: center;
+}
+
+.header__column:nth-child(2) {
+  width: 100%;
+  justify-self: center;
+}
+.header__column:last-child {
+  justify-self: end;
+}
+
+.header__column .header__link {
+  font-size: 14px;
+  color: #444444;
+}
+
+.header__column .header__logo {
+  width: 40px;
+  height: 40px;
+}
+
+.header__column .header__form {
+  width: 100%;
+}
+
+.header__form input {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  font-size: 14px;
+  color: #444444;
+  font-weight: 600;
+  border-radius: 5px;
+}
+.header__form input::placeholder {
+  font-weight: 300;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.header__column .header__list {
+  display: flex;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+.header__list li {
+  margin-left: 15px;
 }

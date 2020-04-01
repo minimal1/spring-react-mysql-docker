@@ -31,7 +31,6 @@ class Header extends React.Component {
     e.preventDefault();
 
     const query = this.state.searchQuery;
-    console.log(query);
     this.props.history.push(`/result/${query}`);
   };
 
@@ -42,12 +41,12 @@ class Header extends React.Component {
       <header className='header'>
         <div className='header__wrapper'>
           <div className='header__column'>
-            <Link to='/' className='header-link'>
+            <Link to='/' className='header__link link'>
               <img src='/imgs/icon-logo.png' className='header__logo' />
             </Link>
           </div>
           <div className='header__column'>
-            <form className='header__from'>
+            <form className='header__form' onSubmit={this.handleSubmit}>
               <input
                 type='text'
                 className='search-keyword'
@@ -55,27 +54,23 @@ class Header extends React.Component {
                 onChange={this.handleChange}
                 value={this.searchQuery}
               />
-
-              <button className='search-button' onClick={this.handleSubmit}>
-                <img src='/imgs/icon-search.png' className='icon-search' />
-              </button>
             </form>
           </div>
           <div className='header__column'>
             {isAuthenticated ? (
               <ul className='header__list'>
                 <li>
-                  <Link to='/upload' className='header__link'>
+                  <Link to='/upload' className='header__link link'>
                     Upload
                   </Link>
                 </li>
                 <li>
-                  <Link to='/mypage' className='header__link'>
+                  <Link to='/mypage' className='header__link link'>
                     Mypage
                   </Link>
                 </li>
                 <li>
-                  <a className='header__link' onClick={this.handleLogout}>
+                  <a className='header__link link' onClick={this.handleLogout}>
                     Logout
                   </a>
                 </li>
@@ -83,12 +78,12 @@ class Header extends React.Component {
             ) : (
               <ul className='header__list'>
                 <li>
-                  <Link to='/login' className='header__link'>
+                  <Link to='/login' className='header__link link'>
                     Log In
                   </Link>
                 </li>
                 <li>
-                  <Link to='/register' className='header__link'>
+                  <Link to='/register' className='header__link link'>
                     Register
                   </Link>
                 </li>
