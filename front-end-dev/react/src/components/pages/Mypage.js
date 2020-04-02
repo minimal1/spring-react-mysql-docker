@@ -2,8 +2,9 @@
 
 import React, { Component } from "react";
 import { Form, Input, Button, notification } from "antd";
-import { changePassword, getMyPaper } from "../util/APIUtils";
-import InfiniteList from "./Container/InfiniteList";
+
+import { changePassword, getMyPaper } from "../../util/APIUtils";
+import InfiniteList from "../partials/InfiniteList";
 const FormItem = Form.Item;
 class Mypage extends Component {
   constructor(props) {

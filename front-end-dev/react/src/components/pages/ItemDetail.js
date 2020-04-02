@@ -1,9 +1,10 @@
 /** @format */
 
 import React, { Component } from "react";
-import { getPaperDetail } from "../util/APIUtils";
 import { notification } from "antd";
 import { Link } from "react-router-dom";
+
+import { getPaperDetail } from "../../util/APIUtils";
 
 class ItemDetail extends Component {
   constructor(props) {
@@ -56,7 +57,7 @@ class ItemDetail extends Component {
   }
   render() {
     return (
-      <section className='page-for-detail'>
+      <main className='page-for-detail'>
         <div className='detail-for-paper'>
           <h1>{this.state.title}</h1>
           <span>
@@ -85,7 +86,7 @@ class ItemDetail extends Component {
           <div className='detail-for-code'>
             <h1>Code</h1>
             <hr />
-            <a href={`${this.state.github}`} target='_blank'>
+            <a href={`https://${this.state.github}`} target='_blank'>
               Click here for the code
             </a>
           </div>
@@ -107,7 +108,7 @@ class ItemDetail extends Component {
         <Link to={`/editPaper/${this.state.itemId}`} className='img-link'>
           Edit paper
         </Link>
-      </section>
+      </main>
     );
   }
 }

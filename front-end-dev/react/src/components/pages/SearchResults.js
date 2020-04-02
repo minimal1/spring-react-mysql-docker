@@ -1,11 +1,10 @@
 /** @format */
 
 import React from "react";
-
-import ResultItem from "../ResultItem";
-import InfiniteList from "../Container/InfiniteList";
-import Loading from "../Container/Loading";
 import { notification } from "antd";
+
+import InfiniteList from "../partials/InfiniteList";
+import Loading from "../partials/Loading";
 import { searchPaper } from "../../util/APIUtils";
 
 class SearchResults extends React.Component {
@@ -87,11 +86,11 @@ class SearchResults extends React.Component {
     } = this.props;
 
     return (
-      <section>
+      <main className='search'>
         <h4>Search : {query}</h4>
         <InfiniteList allPaper={this.state.searched_paper} />
         <Loading onLoading={this.state.isLoading} />
-      </section>
+      </main>
     );
   }
 }

@@ -1,0 +1,73 @@
+/** @format */
+.item-list {
+  width: 100%;
+  display: flex;
+}
+
+.item {
+  padding: 10px;
+  max-width: 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.item--overay {
+  display: none;
+}
+
+.item .item__thumbnail {
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+}
+
+.item .item__row {
+  padding: 0 15px;
+}
+
+.item .item__title {
+  display: block;
+  color: #444444;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.item .item__title:hover {
+}
+
+.item .item__column {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.item .item__interests {
+  display: flex;
+}
+
+.item__interests li {
+  margin-right: 7px;
+}
+
+.item .item__hashtags {
+  display: flex;
+}
+
+.item .item__hashtag {
+  margin-right: 7px;
+}
+
+.item .item__hashtag:last-child {
+  margin-right: 0px;
+}
+
+.item__hashtag a {
+  color: rgba(0, 0, 0, 0.3);
+}
+.item__hashtag a:hover {
+  color: rgba(0, 0, 0, 0.7);
+}

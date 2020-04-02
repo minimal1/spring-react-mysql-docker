@@ -1,11 +1,11 @@
 /** @format */
 
 import React from "react";
-import Title from "./Container/Title";
-import InfiniteList from "./Container/InfiniteList";
-import Loading from "./Container/Loading";
-import { getAllPaper } from "../util/APIUtils";
 import { notification } from "antd";
+
+import InfiniteList from "./partials/InfiniteList";
+import Loading from "./partials/Loading";
+import { getAllPaper } from "../util/APIUtils";
 
 class Container extends React.Component {
   constructor(props) {
@@ -41,10 +41,10 @@ class Container extends React.Component {
 
   render() {
     return (
-      <section>
+      <main className='main'>
         <InfiniteList allPaper={this.state.all_paper} />
         <Loading onLoading={this.state.isLoading} />
-      </section>
+      </main>
     );
   }
 }

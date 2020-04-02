@@ -1,12 +1,18 @@
 /** @format */
 
 import React, { Component } from "react";
-import { Form, Input, Button, DatePicker, message, Select } from "antd";
-import { getPaperDetail, editPaper, deletePaper } from "../util/APIUtils";
-import { notification } from "antd";
-import { categoryData, professorData } from "../constants/index";
+import { Form, Input, Button, DatePicker, Select, notification } from "antd";
 import moment from "moment";
-import { Redirect } from "react-router-dom";
+
+import { getPaperDetail, editPaper, deletePaper } from "../../util/APIUtils";
+import {
+  handleChange,
+  handleYearChange,
+  handleCategoryChange,
+  handleProfessorChange,
+} from "../../util/Handler";
+import { categoryData, professorData } from "../../constants/index";
+
 const FormItem = Form.Item;
 
 class ItemEdit extends Component {
@@ -24,6 +30,11 @@ class ItemEdit extends Component {
       description_2: "",
       description_3: "",
     };
+
+    this.handleChange = handleChange.bind(this);
+    this.handleYearChange = handleYearChange.bind(this);
+    this.handleCategoryChange = handleCategoryChange.bind(this);
+    this.handleProfessorChange = handleProfessorChange.bind(this);
   }
 
   componentDidMount() {
@@ -57,37 +68,6 @@ class ItemEdit extends Component {
         });
       });
   }
-
-  handleChange = (e) => {
-    const { name, value } = e.target;
-
-    this.setState({
-      [name]: value,
-    });
-  };
-
-  handleYearChange = (date, dateString) => {
-    this.setState({
-      year: dateString,
-    });
-  };
-
-  handleCategoryChange = (e) => {
-    this.setState({
-      category: e,
-    });
-  };
-  handleProfessorChange = (e) => {
-    this.setState({
-      professor: e,
-    });
-  };
-
-  handleGithubChange = (e) => {
-    this.setState({
-      github: e.target.value,
-    });
-  };
 
   handleSubmit = (e) => {
     const data = {
@@ -212,10 +192,10 @@ class ItemEdit extends Component {
               placeholder='Enter Description'
             />
           </FormItem>
-          <FormItem label='Github 주소'>
+          <FormItem label='Repository 주소'>
             <Input
-              type='url'
-              placeholder='Enter Github Address'
+              addonBefore='https://'
+              placeholder='github.com/exID/exRepo'
               name='github'
               onChange={this.handleChange}
               value={this.state.github}
