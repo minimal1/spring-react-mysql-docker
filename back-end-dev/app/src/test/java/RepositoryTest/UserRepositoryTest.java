@@ -1,5 +1,7 @@
 package RepositoryTest;
 
+import java.util.Optional;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,5 +28,8 @@ public class UserRepositoryTest extends HotSpringDockerApplicationTests{
 		System.out.println("3" + user);
 		User newUser = userRepository.save(user);
 		System.out.println("2"+newUser);
+		
+		Optional<User> u = userRepository.findById("201402420");
+		System.out.println(u);
 	}
 }

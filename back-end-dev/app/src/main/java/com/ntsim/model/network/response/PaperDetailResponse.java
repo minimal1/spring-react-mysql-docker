@@ -31,5 +31,5 @@ public class PaperDetailResponse {
 	
 	private String title;
 	private String hashtag;
-
+	
 }
