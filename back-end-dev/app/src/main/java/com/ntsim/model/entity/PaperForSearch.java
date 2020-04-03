@@ -1,9 +1,5 @@
 package com.ntsim.model.entity;
 
-import javax.persistence.Column;
-
-import com.ntsim.model.entity.Paper.PaperBuilder;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -40,4 +36,6 @@ public class PaperForSearch {
 	private String title;	
 	
 	private Integer count;
+	
+	private Long likeCount;
 }
