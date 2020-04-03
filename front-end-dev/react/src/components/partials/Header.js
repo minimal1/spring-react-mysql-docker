@@ -1,8 +1,10 @@
 /** @format */
 
 import React from "react";
-import { Link, withRouter, Redirect } from "react-router-dom";
-import { ACCESS_TOKEN } from "../constants/index";
+import { Link, withRouter } from "react-router-dom";
+import { Input } from "antd";
+
+const { Search } = Input;
 
 class Header extends React.Component {
   constructor(props) {
@@ -46,15 +48,13 @@ class Header extends React.Component {
             </Link>
           </div>
           <div className='header__column'>
-            <form className='header__form' onSubmit={this.handleSubmit}>
-              <input
-                type='text'
-                className='search-keyword'
-                placeholder='Search for papers'
-                onChange={this.handleChange}
-                value={this.searchQuery}
-              />
-            </form>
+            <Search
+              placeholder='Input search text'
+              onChange={this.handleChange}
+              value={this.searchQuery}
+              onSearch={this.handleSubmit}
+              className='header__search'
+            />
           </div>
           <div className='header__column'>
             {isAuthenticated ? (
