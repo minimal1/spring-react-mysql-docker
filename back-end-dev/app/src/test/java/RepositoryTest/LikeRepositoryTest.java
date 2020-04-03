@@ -1,5 +1,6 @@
 package RepositoryTest;
 
+import java.util.List;
 import java.util.Optional;
 
 import javax.transaction.Transactional;
@@ -31,13 +32,22 @@ public class LikeRepositoryTest extends HotSpringDockerApplicationTests{
 	@Test
 	@Transactional
 	public void testLike() {
+		
+//		Optional<User> user = userRepository.findById("123");
+//		
+//		user.ifPresent(u -> {
+//			Optional<Like> l = likeRepository.findByUser(u);
+//			System.out.println(l);
+//			
+//		});
+//		
 		System.out.println("qwe");
-//		Optional<Paper> paper = paperRepository.findById((long) 1);
-//		
-		Optional<User> user = userRepository.findById("201402420");
-//		
+		Optional<Paper> paper = paperRepository.findById((long) 1);
+		
+		Optional<User> user = userRepository.findById("123");
+		
 		System.out.println("start");
-		user.ifPresent(p -> {
+		paper.ifPresent(p -> {
 			System.out.println(p);
 //			user.ifPresent(u -> {
 //				System.out.println(u);

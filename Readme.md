@@ -28,12 +28,12 @@ Pages:
 - [x] PaperDetail
 - [x] EditPaper
 
-Remained(2020.04.02 updated) :
+Remained(2020.04.03 updated) :
 - [x] Search function
 - [ ] Filter function
 - [x] Thumbnail image
 - [ ] Hashtag function(Back Done, Front to do)
-- [ ] Like, view count function
+- [ ] Like function(Back Done, Front to do)
 - [ ] UI refactoring(Front working on)
 - [ ] Back End code refactoring
 - [ ] Front End code refactoring

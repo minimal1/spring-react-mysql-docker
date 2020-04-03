@@ -17,4 +17,5 @@ public class MainViewResponse {
 	
 	private List<Paper> allPaper;
 
+	private List<String> likedPaper;
 }

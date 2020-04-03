@@ -57,6 +57,8 @@ public class Paper {
 
 	private String hashtag;
 	
+	private Long likeCount;
+	
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "paper")
 	private List<Like> likeList;
