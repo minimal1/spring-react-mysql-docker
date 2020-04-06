@@ -9,9 +9,11 @@ class Item extends React.Component {
   }
 
   render() {
-    const { id, thumbnail, title, keyName, github } = this.props;
+    const { id, thumbnail, title, keyName, github, hashtag } = this.props;
     const views = 0;
     const likes = 0;
+    const hashtagList = hashtag.split("/")
+
     return (
       <li className='item'>
         <Link to={`/detail/${id}/`}>
@@ -32,6 +34,11 @@ class Item extends React.Component {
               </li>
             </ul>
             <ul className='item__hashtags'>
+              {paperList.map((p) => (
+                <li className='item__hashtag'>
+                  <Link to={`/detail/${p}/`}>{p}</Link>
+                </li>
+              ))}
               <li className='item__hashtag'>
                 <Link to='/result/test'>#test</Link>
               </li>

@@ -1,17 +1,24 @@
 package com.ntsim.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ntsim.model.entity.Hashtag;
 import com.ntsim.model.entity.Paper;
 import com.ntsim.model.network.Header;
 import com.ntsim.model.network.response.S3UploaderResponse;
+import com.ntsim.repository.HashtagRepository;
 import com.ntsim.repository.PaperRepository;
 
 @Service
 public class PaperApiLogicService {
 	@Autowired
 	private PaperRepository paperRepository;
+	
+	@Autowired
+	private HashtagRepository hashtagRepository;
 	
 	public Header<S3UploaderResponse> upload(String key, String year, String category,String professor,
 			String github, String description_1, String description_2, String description_3, String studentNumber
@@ -32,6 +39,18 @@ public class PaperApiLogicService {
 				.build();
 		
 		Paper newPaper = paperRepository.save(paper);
+		
+		System.out.println(hashtag);
+		String[] hashtag_list = hashtag.split("/");
+		System.out.println(hashtag_list);
+		for(int i = 0; i<hashtag_list.length; i++) {
+			System.out.println(hashtag_list[i]);
+			Hashtag ht = Hashtag.builder()
+					.paperId(paper.getId())
+					.hashtag(hashtag_list[i])
+					.build();
+			hashtagRepository.save(ht);
+		}
     
 		return response(newPaper);
 	}

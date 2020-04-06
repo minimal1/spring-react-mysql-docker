@@ -15,9 +15,14 @@ public class PaperDetailService {
 	@Autowired
 	private PaperRepository paperRepository;
 
-	public Header<PaperDetailResponse> getDetail(Header<PaperDetailRequest> paperDetailRequest) {
+	@Autowired
+	private PaperViewApiService paperViewApiService;
+	
+	public Header<PaperDetailResponse> getDetail(String studentNumber, Header<PaperDetailRequest> paperDetailRequest) {
 
 		PaperDetailRequest request = paperDetailRequest.getData();
+		
+		paperViewApiService.increaseViewCount(studentNumber, request.getPaperId());
 		
 		return paperRepository.findById(request.getPaperId()).map(paper -> response(paper)).orElseGet(() -> Header.ERROR("데이터 없음"));
 	}
