@@ -14,4 +14,9 @@ public interface PaperRepository extends JpaRepository<Paper, Long>{
 	List<Paper> findByDescription1Contains(String str);
 	List<Paper> findByDescription2Contains(String str);
 	List<Paper> findByDescription3Contains(String str);
+	List<Paper> findByYear(String str);
+	List<Paper> findByProfessor(String str);
+	List<Paper> findByCategory(String str);
+
+
 }
