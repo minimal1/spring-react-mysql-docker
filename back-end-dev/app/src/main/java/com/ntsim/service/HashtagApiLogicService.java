@@ -21,27 +21,19 @@ import com.ntsim.repository.UserRepository;
 
 @Service
 public class HashtagApiLogicService {
-	
+
 	@Autowired
 	private HashtagRepository hashtagRepository;
-	
+
 	@Autowired
 	private PaperRepository paperRepository;
-	
-	public Header<MainViewResponse> getAllByHashtag(String hashtag) {
+
+	public List<Paper> getAllByHashtag(String hashtag) {
 		List<Hashtag> allHashtag = hashtagRepository.findByHashtag(hashtag);
-		List<Paper> allPaper = new ArrayList<Paper>();
-		for(int i = 0; i< allHashtag.size(); i++) {
-			allPaper.add(paperRepository.getOne(allHashtag.get(i).getPaperId()));
+		List<Paper> filteredPaper = new ArrayList<Paper>();
+		for (int i = 0; i < allHashtag.size(); i++) {
+			filteredPaper.add(paperRepository.getOne(allHashtag.get(i).getPaperId()));
 		}
-		return response(allPaper);
-	}
-	
-	private Header<MainViewResponse> response(List<Paper> allPaper) {
-
-		MainViewResponse mainViewResponse = MainViewResponse.builder().allPaper(allPaper).build();
-
-		return Header.OK(mainViewResponse);
-
+		return filteredPaper;
 	}
 }
