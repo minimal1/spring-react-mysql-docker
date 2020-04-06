@@ -4,20 +4,23 @@ import React from "react";
 import { withRouter, Route } from "react-router-dom";
 import { notification } from "antd";
 
-import Header from "./components/Header";
-import Container from "./components/Container";
-import Login from "./components/Login";
-import Register from "./components/Register";
-import ItemDetail from "./components/ItemDetail";
+import Header from "./components/partials/Header";
+import Footer from "./components/partials/Footer";
 
+import Login from "./components/pages/Login";
+import Register from "./components/pages/Register";
 import UploadPaper from "./components/pages/UploadPaper";
+import Mypage from "./components/pages/Mypage";
+import ItemDetail from "./components/pages/ItemDetail";
+import ItemEdit from "./components/pages/ItemEdit";
+
+import SearchResults from "./components/pages/SearchResults";
+
+import AuthRoute from "./components/AuthRoute";
+import Container from "./components/Container";
 
 import { getCurrentUser } from "./util/APIUtils";
 import { ACCESS_TOKEN } from "./constants/index";
-import AuthRoute from "./components/AuthRoute";
-import Mypage from "./components/Mypage";
-import ItemEdit from "./components/ItemEdit";
-import SearchResults from "./components/pages/SearchResults";
 
 class App extends React.Component {
   constructor(props) {
@@ -133,6 +136,7 @@ class App extends React.Component {
           path='/editPaper/:itemid/'
           render={(props) => <ItemEdit {...props} />}
         />
+        <Footer />
       </div>
     );
   }

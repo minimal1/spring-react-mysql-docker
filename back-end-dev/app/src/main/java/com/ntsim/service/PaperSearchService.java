@@ -24,12 +24,23 @@ public class PaperSearchService {
 	@Autowired
 	private PaperRepository paperRepository;
 
-	public Header<PaperSearchResponse> searchPaper(Header<PaperSearchRequest> request) {
+	@Autowired
+	private PaperLikeService paperLikeService;
+	
+	public Header<PaperSearchResponse> searchPaper(String studentNumber, Header<PaperSearchRequest> request) {
 
 		PaperSearchRequest rRequest = request.getData();
 		List<PaperForSearch> resultPaperList = getSearchPaperList(rRequest.getQuery());
+		
+		if(studentNumber == null) {
+			return response(resultPaperList, null);
 
-		return response(resultPaperList);
+		} else {
+			List<String> myLikePaper = paperLikeService.getMyLikeList(studentNumber);
+			
+			return response(resultPaperList, myLikePaper);
+		}
+		
 	}
 
 	private List<PaperForSearch> getSearchPaperList(String str) {
@@ -55,7 +66,7 @@ public class PaperSearchService {
 					.github(paper.getGithub()).category(paper.getCategory()).professor(paper.getProfessor())
 					.studentNumber(paper.getStudentNumber()).description1(paper.getDescription1())
 					.description2(paper.getDescription2()).description3(paper.getDescription3())
-					.thumbnail(paper.getThumbnail()).title(paper.getTitle()).count(1).build();
+					.thumbnail(paper.getThumbnail()).title(paper.getTitle()).likeCount(paper.getLikeCount()).count(1).build();
 
 			desc1ForSearch.add(tempPaper);
 		}
@@ -65,7 +76,7 @@ public class PaperSearchService {
 					.github(paper.getGithub()).category(paper.getCategory()).professor(paper.getProfessor())
 					.studentNumber(paper.getStudentNumber()).description1(paper.getDescription1())
 					.description2(paper.getDescription2()).description3(paper.getDescription3())
-					.thumbnail(paper.getThumbnail()).title(paper.getTitle()).count(1).build();
+					.thumbnail(paper.getThumbnail()).title(paper.getTitle()).likeCount(paper.getLikeCount()).count(1).build();
 
 			desc2ForSearch.add(tempPaper);
 		}
@@ -75,7 +86,7 @@ public class PaperSearchService {
 					.github(paper.getGithub()).category(paper.getCategory()).professor(paper.getProfessor())
 					.studentNumber(paper.getStudentNumber()).description1(paper.getDescription1())
 					.description2(paper.getDescription2()).description3(paper.getDescription3())
-					.thumbnail(paper.getThumbnail()).title(paper.getTitle()).count(1).build();
+					.thumbnail(paper.getThumbnail()).title(paper.getTitle()).likeCount(paper.getLikeCount()).count(1).build();
 
 			desc3ForSearch.add(tempPaper);
 		}
@@ -85,7 +96,7 @@ public class PaperSearchService {
 					.github(paper.getGithub()).category(paper.getCategory()).professor(paper.getProfessor())
 					.studentNumber(paper.getStudentNumber()).description1(paper.getDescription1())
 					.description2(paper.getDescription2()).description3(paper.getDescription3())
-					.thumbnail(paper.getThumbnail()).title(paper.getTitle()).count(1).build();
+					.thumbnail(paper.getThumbnail()).title(paper.getTitle()).likeCount(paper.getLikeCount()).count(1).build();
 
 			titleForSearch.add(tempPaper);
 		}
@@ -126,9 +137,9 @@ public class PaperSearchService {
 		return resultList;
 	}
 
-	private Header<PaperSearchResponse> response(List<PaperForSearch> searchedPaper) {
+	private Header<PaperSearchResponse> response(List<PaperForSearch> searchedPaper, List<String> myLikePaper) {
 
-		PaperSearchResponse paperSearchResponse = PaperSearchResponse.builder().searchedPaper(searchedPaper).build();
+		PaperSearchResponse paperSearchResponse = PaperSearchResponse.builder().searchedPaper(searchedPaper).likedPaper(myLikePaper).build();
 
 		return Header.OK(paperSearchResponse);
 

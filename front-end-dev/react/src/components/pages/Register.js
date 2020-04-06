@@ -1,16 +1,17 @@
 /** @format */
 
 import React from "react";
-import { register } from "../util/APIUtils";
 import { Link } from "react-router-dom";
+import { Form, Input, Button, notification } from "antd";
+
+import { register } from "../../util/APIUtils";
 import {
   USERNAME_MIN_LENGTH,
   USERNAME_MAX_LENGTH,
   PASSWORD_MIN_LENGTH,
   PASSWORD_MAX_LENGTH,
-} from "../constants/index";
+} from "../../constants/index";
 
-import { Form, Input, Button, notification } from "antd";
 const FormItem = Form.Item;
 
 class Register extends React.Component {
@@ -92,7 +93,7 @@ class Register extends React.Component {
 
   render() {
     return (
-      <section>
+      <main className='register'>
         <h1 className='page-title'>Create your account</h1>
         <Form onFinish={this.handleSubmit} className='register-form'>
           <FormItem
@@ -161,7 +162,7 @@ class Register extends React.Component {
             Already registed? <Link to='/login'>Login now!</Link>
           </FormItem>
         </Form>
-      </section>
+      </main>
     );
   }
 

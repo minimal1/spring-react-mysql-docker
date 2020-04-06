@@ -16,17 +16,22 @@ public class MyPaperApiService {
 	@Autowired
 	private PaperRepository paperRepository;
 	
+	@Autowired
+	private PaperLikeService paperLikeService;
+	
 	public Header<MyPaperResponse> getMyPaper(String studentNumber) {
 
 		List<Paper> myPaper = paperRepository.findByStudentNumber(studentNumber);
 		
-		return response(myPaper);
+		List<String> myLikePaper = paperLikeService.getMyLikeList(studentNumber);
+		
+		return response(myPaper, myLikePaper);
 	}
 
 	
-	private Header<MyPaperResponse> response(List<Paper> allPaper) {
+	private Header<MyPaperResponse> response(List<Paper> allPaper, List<String> myLikePaper) {
 
-		MyPaperResponse myPaperResponse = MyPaperResponse.builder().myPaper(allPaper).build();
+		MyPaperResponse myPaperResponse = MyPaperResponse.builder().myPaper(allPaper).likedPaper(myLikePaper).build();
 
 		return Header.OK(myPaperResponse);
 	}

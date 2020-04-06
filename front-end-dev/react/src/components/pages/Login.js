@@ -1,20 +1,21 @@
 /** @format */
 
 import React from "react";
-import { login } from "../util/APIUtils";
 import { Link } from "react-router-dom";
-import { ACCESS_TOKEN } from "../constants/index";
-
 import { Form, Input, Button, notification } from "antd";
+
+import { login } from "../../util/APIUtils";
+import { ACCESS_TOKEN } from "../../constants/index";
+
 const FormItem = Form.Item;
 
 class Login extends React.Component {
   render() {
     return (
-      <section>
+      <main className='login'>
         <h1 className='page-title'>Login</h1>
         <LoginForm onLogin={this.props.onLogin} />
-      </section>
+      </main>
     );
   }
 }

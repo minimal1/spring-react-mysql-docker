@@ -16,4 +16,5 @@ import lombok.NoArgsConstructor;
 public class PaperSearchResponse {
 	private List<PaperForSearch> searchedPaper;
 
+	private List<String> likedPaper;
 }

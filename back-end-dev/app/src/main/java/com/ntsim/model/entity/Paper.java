@@ -16,12 +16,14 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Entity
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@ToString(exclude = {"likeList"})
 public class Paper {
 
 	@Id
@@ -54,6 +56,8 @@ public class Paper {
 	private String title;
 
 	private String hashtag;
+	
+	private Long likeCount;
 	
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "paper")

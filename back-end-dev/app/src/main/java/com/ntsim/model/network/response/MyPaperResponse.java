@@ -17,4 +17,5 @@ public class MyPaperResponse {
 
 	private List<Paper> myPaper;
 
+	private List<String> likedPaper;
 }
