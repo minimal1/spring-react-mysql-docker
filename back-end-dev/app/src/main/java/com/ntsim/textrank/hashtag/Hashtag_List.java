@@ -9,10 +9,10 @@ import static java.util.Comparator.reverseOrder;
 
 import java.util.ArrayList;
 
-public class Hashtag {
+public class Hashtag_List {
 	private Map<String, List<String>> extractedSentences;
 	
-	public Hashtag(Map<String, List<String>> extractedSentences) {
+	public Hashtag_List(Map<String, List<String>> extractedSentences) {
 		this.extractedSentences = extractedSentences;
 	}
 	

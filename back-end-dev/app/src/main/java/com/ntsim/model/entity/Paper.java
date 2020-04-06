@@ -58,4 +58,5 @@ public class Paper {
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "paper")
 	private List<Like> likeList;
+	
 }
