@@ -32,7 +32,7 @@ public class HashtagApiLogicService {
 		List<Hashtag> allHashtag = hashtagRepository.findByHashtag(hashtag);
 		List<Paper> allPaper = new ArrayList<Paper>();
 		for(int i = 0; i< allHashtag.size(); i++) {
-			allPaper.add(paperRepository.getOne(allHashtag.get(i).getPaper_id()));
+			allPaper.add(paperRepository.getOne(allHashtag.get(i).getPaperId()));
 		}
 		return response(allPaper);
 	}

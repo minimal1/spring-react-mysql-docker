@@ -46,7 +46,7 @@ public class PaperApiLogicService {
 		for(int i = 0; i<hashtag_list.length; i++) {
 			System.out.println(hashtag_list[i]);
 			Hashtag ht = Hashtag.builder()
-					.paper_id(paper.getId())
+					.paperId(paper.getId())
 					.hashtag(hashtag_list[i])
 					.build();
 			hashtagRepository.save(ht);
