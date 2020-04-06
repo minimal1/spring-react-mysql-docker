@@ -34,7 +34,9 @@ public class PaperApiLogicService {
 				.description3(description_3)
 				.studentNumber(studentNumber)
 				.thumbnail(uploadThumbNail)
-				.title(title)
+        .title(title)
+        .likeCount(Long.parseLong("0"))
+				.viewCount(Long.parseLong("0"))
 				.hashtag(hashtag)
 				.build();
 		

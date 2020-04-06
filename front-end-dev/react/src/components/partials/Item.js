@@ -12,7 +12,15 @@ class Item extends React.Component {
     const { id, thumbnail, title, keyName, github, hashtag } = this.props;
     const views = 0;
     const likes = 0;
-    const hashtagList = hashtag.split("/")
+    let hashtagList = undefined;
+
+    if (hashtag !== undefined && hashtag !== null) {
+      hashtagList = hashtag.split("/").map((p) => (
+        <li className='item__hashtag'>
+          <Link to={`/detail/${p}/`}>#{p}</Link>
+        </li>
+      ));
+    }
 
     return (
       <li className='item'>
@@ -33,22 +41,7 @@ class Item extends React.Component {
                 <i className='fas fa-heart'></i> {likes}
               </li>
             </ul>
-            <ul className='item__hashtags'>
-              {paperList.map((p) => (
-                <li className='item__hashtag'>
-                  <Link to={`/detail/${p}/`}>{p}</Link>
-                </li>
-              ))}
-              <li className='item__hashtag'>
-                <Link to='/result/test'>#test</Link>
-              </li>
-              <li className='item__hashtag'>
-                <Link to='/result/test'>#test</Link>
-              </li>
-              <li className='item__hashtag'>
-                <Link to='/result/test'>#test</Link>
-              </li>
-            </ul>
+            <ul className='item__hashtags'>{hashtagList}</ul>
           </div>
         </div>
         <div className='item--overay'>

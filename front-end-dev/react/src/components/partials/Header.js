@@ -30,8 +30,6 @@ class Header extends React.Component {
   };
 
   handleSubmit = (e) => {
-    e.preventDefault();
-
     const query = this.state.searchQuery;
     this.props.history.push(`/result/${query}`);
   };
@@ -44,9 +42,8 @@ class Header extends React.Component {
         <div className='header__wrapper'>
           <div className='header__column'>
             <Link to='/' className='header__link link'>
-              <img src='/imgs/icon-logo.png' className='header__logo' />
+              <img src='/imgs/logo.png' className='header__logo' />
             </Link>
-            <span className='header__title'>Heap of paper</span>
           </div>
           <div className='header__column'>
             <Search

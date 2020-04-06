@@ -34,7 +34,7 @@ public class PaperEditApiService {
 		return paperCheck.map(paper -> {
 			paper.setCategory(uRequest.getNewCategory());
 			paper.setYear(uRequest.getNewYear());
-			paper.setProfessor(uRequest.getNewProfessor());
+			paper.setProfessor(uRequest.getNewProfessor().trim());
 			paper.setDescription1(uRequest.getNewDescription_1());
 			paper.setDescription2(uRequest.getNewDescription_2());
 			paper.setDescription3(uRequest.getNewDescription_3());
