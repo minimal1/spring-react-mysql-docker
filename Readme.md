@@ -30,9 +30,9 @@ Pages:
 
 Remained(2020.04.06 updated) :
 - [x] Search function
-- [ ] Filter function
+- [ ] Filter function(Back Done, Front to do)
 - [x] Thumbnail image
-- [ ] Hashtag function(Back Done, Front to do)
+- [x] Hashtag function
 - [ ] Like, View Count function(Back Done, Front to do)
 - [ ] UI refactoring(Front working on)
 - [ ] Back End code refactoring
