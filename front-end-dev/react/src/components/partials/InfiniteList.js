@@ -21,6 +21,7 @@ class InfiniteList extends React.Component {
             keyName={p.key_name}
             github={p.github}
             description_1={p.description1}
+            hashtag={p.hashtag}
           />
         ))}
       </ul>
