@@ -46,6 +46,7 @@ class Header extends React.Component {
             <Link to='/' className='header__link link'>
               <img src='/imgs/icon-logo.png' className='header__logo' />
             </Link>
+            <span className='header__title'>Heap of paper</span>
           </div>
           <div className='header__column'>
             <Search

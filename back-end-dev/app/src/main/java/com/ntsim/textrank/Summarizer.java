@@ -1,7 +1,7 @@
 package com.ntsim.textrank;
 
 import com.ntsim.textrank.graph.GraphBuilder;
-import com.ntsim.textrank.hashtag.Hashtag;
+import com.ntsim.textrank.hashtag.Hashtag_List;
 import com.ntsim.textrank.sentence.SentenceSource;
 import com.ntsim.textrank.sentence.ranker.SentenceRanker;
 
@@ -31,7 +31,7 @@ public class Summarizer {
          * */
         final List<String> sentences = sentenceSource.getSentences();
         final Map<String, List<String>> extractedSentences = sentenceSource.getExtractedSentences();
-        final Hashtag hashtag = new Hashtag(extractedSentences);
+        final Hashtag_List hashtag = new Hashtag_List(extractedSentences);
         List<String> hashtag_list = hashtag.getHashtag();
 
         final GraphBuilder graphBuilder = new GraphBuilder(extractedSentences);

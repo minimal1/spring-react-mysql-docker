@@ -1,15 +1,29 @@
 /** @format */
 .item-list {
   width: 100%;
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  row-gap: 30px;
+  column-gap: 25px;
 }
 
 .item {
   padding: 10px;
+  margin: 0 auto;
   max-width: 300px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background-color: white;
+  border-radius: 10px;
+  box-shadow: 0 15px 35px rgba(50, 50, 93, 0.1), 0 5px 15px rgba(0, 0, 0, 0.07);
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1),
+    box-shadow 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.item:hover {
+  box-shadow: rgba(0, 0, 0, 0.35) 0 30px 60px;
+  transform: translateY(-10px);
 }
 
 .item--overay {
@@ -69,5 +83,6 @@
   color: rgba(0, 0, 0, 0.3);
 }
 .item__hashtag a:hover {
-  color: rgba(0, 0, 0, 0.7);
+  /* color: rgba(0, 0, 0, 0.7); */
+  color: #348ac7;
 }
