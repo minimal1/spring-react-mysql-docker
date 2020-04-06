@@ -20,7 +20,7 @@ import lombok.ToString;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString(exclude = {"likeList"})
+@ToString(exclude = {"likeList", "viewList"})
 public class User {
 
 	@Id
@@ -34,4 +34,9 @@ public class User {
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	private List<Like> likeList;
+	
+	// user 1 : N view
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	private List<View> viewList;
 }

@@ -13,9 +13,12 @@ import com.ntsim.model.network.Header;
 import com.ntsim.model.network.response.MainViewResponse;
 import com.ntsim.service.MainViewApiLogicService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("")
+@Slf4j
 public class MainViewController {
 	
 	@Autowired

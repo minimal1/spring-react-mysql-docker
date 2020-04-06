@@ -8,8 +8,8 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ntsim.model.NonEntity.PaperForSearch;
 import com.ntsim.model.entity.Paper;
-import com.ntsim.model.entity.PaperForSearch;
 import com.ntsim.model.network.Header;
 import com.ntsim.model.network.request.PaperSearchRequest;
 import com.ntsim.model.network.response.PaperSearchResponse;
@@ -66,7 +66,7 @@ public class PaperSearchService {
 					.github(paper.getGithub()).category(paper.getCategory()).professor(paper.getProfessor())
 					.studentNumber(paper.getStudentNumber()).description1(paper.getDescription1())
 					.description2(paper.getDescription2()).description3(paper.getDescription3())
-					.thumbnail(paper.getThumbnail()).title(paper.getTitle()).likeCount(paper.getLikeCount()).count(1).build();
+					.thumbnail(paper.getThumbnail()).title(paper.getTitle()).likeCount(paper.getLikeCount()).viewCount(paper.getViewCount()).count(1).build();
 
 			desc1ForSearch.add(tempPaper);
 		}
@@ -76,7 +76,7 @@ public class PaperSearchService {
 					.github(paper.getGithub()).category(paper.getCategory()).professor(paper.getProfessor())
 					.studentNumber(paper.getStudentNumber()).description1(paper.getDescription1())
 					.description2(paper.getDescription2()).description3(paper.getDescription3())
-					.thumbnail(paper.getThumbnail()).title(paper.getTitle()).likeCount(paper.getLikeCount()).count(1).build();
+					.thumbnail(paper.getThumbnail()).title(paper.getTitle()).likeCount(paper.getLikeCount()).viewCount(paper.getViewCount()).count(1).build();
 
 			desc2ForSearch.add(tempPaper);
 		}
@@ -86,7 +86,7 @@ public class PaperSearchService {
 					.github(paper.getGithub()).category(paper.getCategory()).professor(paper.getProfessor())
 					.studentNumber(paper.getStudentNumber()).description1(paper.getDescription1())
 					.description2(paper.getDescription2()).description3(paper.getDescription3())
-					.thumbnail(paper.getThumbnail()).title(paper.getTitle()).likeCount(paper.getLikeCount()).count(1).build();
+					.thumbnail(paper.getThumbnail()).title(paper.getTitle()).likeCount(paper.getLikeCount()).viewCount(paper.getViewCount()).count(1).build();
 
 			desc3ForSearch.add(tempPaper);
 		}
@@ -96,7 +96,7 @@ public class PaperSearchService {
 					.github(paper.getGithub()).category(paper.getCategory()).professor(paper.getProfessor())
 					.studentNumber(paper.getStudentNumber()).description1(paper.getDescription1())
 					.description2(paper.getDescription2()).description3(paper.getDescription3())
-					.thumbnail(paper.getThumbnail()).title(paper.getTitle()).likeCount(paper.getLikeCount()).count(1).build();
+					.thumbnail(paper.getThumbnail()).title(paper.getTitle()).likeCount(paper.getLikeCount()).viewCount(paper.getViewCount()).count(1).build();
 
 			titleForSearch.add(tempPaper);
 		}
