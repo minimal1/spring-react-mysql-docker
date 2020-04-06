@@ -15,3 +15,5 @@ build/
 *.iws
 *.iml
 *.ipr
+
+back-end-dev/app/bin/
