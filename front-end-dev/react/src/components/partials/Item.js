@@ -47,12 +47,12 @@ class Item extends React.Component {
         <div className='item--overay'>
           <div className='item__links'>
             <a
-              className='item__link--github'
+              className='item__link link--github'
               href={`https://${github}`}
               target='_blank'
             ></a>
             <a
-              className='item__link--paper'
+              className='item__link link--paper'
               href={`https://gradubucket.s3.ap-northeast-2.amazonaws.com/${keyName}`}
               target='_blank'
             ></a>

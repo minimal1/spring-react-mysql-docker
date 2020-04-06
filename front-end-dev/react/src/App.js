@@ -129,7 +129,9 @@ class App extends React.Component {
         <AuthRoute
           isAuthenticated={this.state.isAuthenticated}
           path='/detail/:itemid'
-          render={(props) => <ItemDetail {...props} />}
+          render={(props) => (
+            <ItemDetail currentUser={this.state.currentUser} {...props} />
+          )}
         />
         <AuthRoute
           isAuthenticated={this.state.isAuthenticated}

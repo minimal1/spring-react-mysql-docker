@@ -3,7 +3,7 @@
   width: 100%;
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  row-gap: 30px;
+  row-gap: 25px;
   column-gap: 25px;
 }
 
@@ -46,7 +46,7 @@
   display: block;
   color: #444444;
   font-size: 14px;
-  font-weight: 500;
+  font-weight: 600;
   margin-bottom: 10px;
 }
 
@@ -83,6 +83,5 @@
   color: rgba(0, 0, 0, 0.3);
 }
 .item__hashtag a:hover {
-  /* color: rgba(0, 0, 0, 0.7); */
-  color: #348ac7;
+  color: #1890ff;
 }

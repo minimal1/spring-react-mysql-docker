@@ -1,0 +1,37 @@
+/** @format */
+
+a button {
+  padding: 7px 10px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+a button:focus {
+  outline: none;
+}
+
+.link--github button {
+  background-color: rgb(36, 41, 46);
+}
+.link--github button:hover {
+  background-color: rgb(36, 41, 46, 0.8);
+}
+.link--paper button {
+  background-color: rgb(59, 89, 152);
+}
+.link--paper button:hover {
+  background-color: rgba(59, 89, 152, 0.8);
+}
+
+.link--edit-paper button {
+  background-color: rgb(24, 144, 255);
+}
+
+.link--edit-paper button:hover {
+  background-color: rgb(24, 144, 255, 0.8);
+}
+
+.link--edit-paper button:focus {
+  outline: none;
+}
