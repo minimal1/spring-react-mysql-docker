@@ -38,9 +38,12 @@ public class Summarizer {
         final List<String> sentenceRanker = new SentenceRanker(sentences, graphBuilder.build()).getRankedSentences()
                 .stream().map(Map.Entry::getKey).collect(Collectors.toList());
         
+        // 주어진 형태가 없으면 가져올 수 없음.
         String title = sentences.get(0);
         String professor = sentences.get(2).trim();
         professor = professor.replaceAll("\\s","");
+        
+        // 제목과 해쉬태그를 비교해 더욱 정확한 해쉬태그를 가져옴.
         List<String> extracted_hashtag = new ArrayList<String>();
         for(String tag : hashtag_list) {
         	if(title.contains(tag)) {
@@ -50,11 +53,9 @@ public class Summarizer {
         		break;
         	}
         }
-        // add Title of the paper
+        
         sentenceRanker.add(title);
-        // add professor
         sentenceRanker.add(professor);
-        // add hashtag
         sentenceRanker.add(String.join("/", extracted_hashtag));
         return sentenceRanker;
     }
