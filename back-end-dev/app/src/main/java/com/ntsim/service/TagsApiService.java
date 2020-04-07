@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ntsim.model.entity.Paper;
 import com.ntsim.model.network.Header;
 import com.ntsim.model.network.response.TagsResponse;
+import com.ntsim.repository.HashtagRepository;
 import com.ntsim.repository.PaperRepository;
 
 @Service
@@ -15,6 +16,9 @@ public class TagsApiService {
 
 	@Autowired
 	private PaperRepository paperRepository;
+	
+	@Autowired
+	private HashtagRepository hashtagRepository;
 
 	@Autowired
 	private PaperLikeService paperLikeService;
@@ -34,6 +38,7 @@ public class TagsApiService {
 			filteredPaper = paperRepository.findByCategory(searchString);
 		} else if (division.startsWith("h")) { // hashtag
 			filteredPaper = hashtagApiLogicService.getAllByHashtag(searchString);
+//			filteredPaper = hashtagRepository.findPaperByHashtag(searchString);
 		}
 
 		if (studentNumber == null) {

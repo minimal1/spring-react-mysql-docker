@@ -46,14 +46,9 @@ public class S3Uploader {
 
 	public Header<S3UploaderResponse> upload_file(MultipartFile multipartFile, String year, String category,
 			String github, String studentNumber, String dirName) throws IOException {
-		log.info("upload_file start");
-		log.info("Backend : " + year);
-		log.info("Backend : " + category);
-		log.info("Backend : " + github);
 		File uploadFile = convert(multipartFile)
 				.orElseThrow(() -> new IllegalArgumentException("MultipartFile -> File로 전환이 실패했습니다."));
 
-		log.info("TextRank Started");
 		String fileName = dirName + "/" + uploadFile.getName();
 		String uploadImageUrl = putS3(uploadFile, fileName);
 
@@ -64,8 +59,6 @@ public class S3Uploader {
 		String text = tr.getText(uploadFile);
 		Summarizer summarizer = new Summarizer(text);
 		List<String> summary = summarizer.summarize();
-		for (String sentence : summary)
-			log.info(sentence);
 		removeNewFile(uploadFile);
 		return paperApiLogicService.upload(fileName, year, category, summary.get(4), github, summary.get(0), summary.get(1),
 				summary.get(2), studentNumber, uploadThumbNail, summary.get(3), summary.get(5));
