@@ -45,7 +45,8 @@ public class jwtToken {
 
 		String jwt = Jwts.builder().setHeaderParam("typ", "JWT").setSubject("loginToken")
 				.claim("uid", user.getStudentNumber()).claim("email", user.getUserEmail())
-				.setExpiration(new Date(System.currentTimeMillis() + 1 * (1000 * 60 * 60 * 24)))
+				.setExpiration(new Date(System.currentTimeMillis() + 1 * (1000 * 60)))
+//				.setExpiration(new Date(System.currentTimeMillis() + 1 * (1000 * 60 * 60 * 24)))
 				.signWith(KEY, signatureAlgorithm).compact();
 
 		return jwt;
