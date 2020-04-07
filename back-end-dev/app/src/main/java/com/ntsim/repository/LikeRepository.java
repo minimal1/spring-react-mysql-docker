@@ -19,6 +19,9 @@ public interface LikeRepository extends JpaRepository<Like, Long> {
 	@Query(value = "SELECT * FROM minimal_db.`like` where user_student_number = ?1", nativeQuery = true)
 	List<Like> findByUser(User user);
 	
+	@Query(value = "SELECT * FROM minimal_db.`like` where paper_id = ?1", nativeQuery = true)
+	List<Like> findByPaper(Paper paper);
+	
 	@Query(value = "SELECT * FROM minimal_db.`like` where user_student_number = ?1 and paper_id = ?2", nativeQuery = true)
 	Optional<Like> findByUserAndPaper(User user, Paper paper);
 	

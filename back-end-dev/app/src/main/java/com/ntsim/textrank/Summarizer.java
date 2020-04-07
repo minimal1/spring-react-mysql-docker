@@ -39,7 +39,8 @@ public class Summarizer {
                 .stream().map(Map.Entry::getKey).collect(Collectors.toList());
         
         String title = sentences.get(0);
-        String professor = sentences.get(2);
+        String professor = sentences.get(2).trim();
+        professor = professor.replaceAll("\\s","");
         List<String> extracted_hashtag = new ArrayList<String>();
         for(String tag : hashtag_list) {
         	if(title.contains(tag)) {

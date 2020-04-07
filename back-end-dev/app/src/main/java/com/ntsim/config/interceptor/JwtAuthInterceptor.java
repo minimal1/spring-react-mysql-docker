@@ -26,17 +26,24 @@ public class JwtAuthInterceptor implements HandlerInterceptor {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-
-		String loginTokenVal = request.getHeader(HEADER_TOKEN_KEY);
-		
-		if (!request.getMethod().equals("OPTIONS")) {
-			if (jwtToken.validateToken(loginTokenVal)) {
-				return true;
+		try {
+			String loginTokenVal = request.getHeader(HEADER_TOKEN_KEY);
+			if (!request.getMethod().equals("OPTIONS")) {
+				if (jwtToken.validateToken(loginTokenVal)) {
+					if (jwtToken.getExpToken(loginTokenVal)) {
+						return true;
+					} else {
+						return false;
+					}
+				} else {
+					return false;
+				}
 			} else {
-				return false;
+				return true;
 			}
-		} else {
-			return true;
+		} catch (Exception e) {
+			response.addHeader("LOGOUT", "LOGOUT");
 		}
+		return false;
 	}
 }
