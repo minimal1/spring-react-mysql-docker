@@ -107,7 +107,7 @@ class ItemDetail extends Component {
                   target='_blank'
                 >
                   <button>
-                    <i class='far fa-file-alt'></i> Paper
+                    <i className='far fa-file-alt'></i> Paper
                   </button>
                 </a>
               </li>
@@ -118,7 +118,7 @@ class ItemDetail extends Component {
                   target='_blank'
                 >
                   <button>
-                    <i class='fab fa-github'></i> Github
+                    <i className='fab fa-github'></i> Github
                   </button>
                 </a>
               </li>

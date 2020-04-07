@@ -11,6 +11,7 @@
   padding: 10px;
   margin: 0 auto;
   max-width: 300px;
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -24,10 +25,6 @@
 .item:hover {
   box-shadow: rgba(0, 0, 0, 0.35) 0 30px 60px;
   transform: translateY(-10px);
-}
-
-.item--overay {
-  display: none;
 }
 
 .item .item__thumbnail {
@@ -48,9 +45,6 @@
   font-size: 14px;
   font-weight: 600;
   margin-bottom: 10px;
-}
-
-.item .item__title:hover {
 }
 
 .item .item__column {
@@ -84,4 +78,49 @@
 }
 .item__hashtag a:hover {
   color: #1890ff;
+}
+
+.item__links {
+  position: absolute;
+  right: 15px;
+  top: 15px;
+  display: none;
+}
+
+.item:hover .item__links {
+  display: flex;
+}
+
+.item__links li {
+  margin-right: 10px;
+}
+.item__links li:last-child {
+  margin-right: 0px;
+}
+
+.item__link {
+  color: white;
+  font-size: 20px;
+  font-weight: 300;
+}
+
+.item__link--like {
+  color: rgb(36, 41, 46);
+}
+.item__link--like:hover {
+  color: rgba(36, 41, 46, 0.8);
+}
+
+.item__link--github {
+  color: rgb(36, 41, 46);
+}
+.item__link--github:hover {
+  color: rgba(36, 41, 46, 0.8);
+}
+
+.item__link--paper {
+  color: rgb(59, 89, 152);
+}
+.item__link--paper:hover {
+  color: rgba(59, 89, 152, 0.8);
 }

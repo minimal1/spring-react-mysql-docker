@@ -153,3 +153,14 @@ export const searchPaper = (searchRequest) => {
     "JSON"
   );
 };
+
+export const likePaper = (likePaperReuqest) => {
+  return request(
+    {
+      url: API_BASE_URL + "/likePaper",
+      method: "POST",
+      body: JSON.stringify(likePaperReuqest),
+    },
+    "JSON"
+  );
+};

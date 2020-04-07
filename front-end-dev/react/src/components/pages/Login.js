@@ -13,7 +13,8 @@ class Login extends React.Component {
   render() {
     return (
       <main className='login'>
-        <h1 className='page-title'>Login</h1>
+        <h1 className='login__title'>Login</h1>
+
         <LoginForm onLogin={this.props.onLogin} />
       </main>
     );

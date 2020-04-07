@@ -12,37 +12,14 @@ class Container extends React.Component {
     super(props);
 
     this.state = {
-      all_paper: [],
       isLoading: false,
     };
-  }
-
-  componentDidMount() {
-    this.setState({
-      isLoading: true,
-    });
-
-    getAllPaper()
-      .then((response) => {
-        this.setState({
-          all_paper: response.data.all_paper,
-          isLoading: false,
-        });
-      })
-      .catch((error) => {
-        notification.error({
-          message: "Paper 리스트 반환 실패",
-          description:
-            error.description ||
-            "Sorry! Something went wrong. Please try again!",
-        });
-      });
   }
 
   render() {
     return (
       <main className='main'>
-        <InfiniteList allPaper={this.state.all_paper} />
+        <InfiniteList />
         <Loading onLoading={this.state.isLoading} />
       </main>
     );

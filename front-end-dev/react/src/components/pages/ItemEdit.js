@@ -1,7 +1,17 @@
 /** @format */
 
 import React, { Component } from "react";
-import { Form, Input, Button, DatePicker, Select, notification } from "antd";
+import {
+  Tag,
+  Tooltip,
+  Form,
+  Input,
+  Button,
+  DatePicker,
+  Select,
+  notification,
+} from "antd";
+import { PlusOutlined } from "@ant-design/icons";
 import moment from "moment";
 
 import { getPaperDetail, editPaper, deletePaper } from "../../util/APIUtils";
@@ -29,6 +39,9 @@ class ItemEdit extends Component {
       description_1: "",
       description_2: "",
       description_3: "",
+      tags: [],
+      inputVisible: false,
+      inputValue: "",
     };
 
     this.handleChange = handleChange.bind(this);
@@ -48,6 +61,14 @@ class ItemEdit extends Component {
 
     getPaperDetail(detailRequest)
       .then((response) => {
+        console.log(response);
+
+        const tags =
+          response.data.hashtag !== null &&
+          response.data.hashtag !== undefined &&
+          response.data.hashtag !== ""
+            ? response.data.hashtag.split("/")
+            : [];
         this.setState({
           title: response.data.title,
           year: response.data.year,
@@ -57,6 +78,7 @@ class ItemEdit extends Component {
           description_1: response.data.description1,
           description_2: response.data.description2,
           description_3: response.data.description3,
+          tags: tags,
         });
       })
       .catch((error) => {
@@ -70,6 +92,7 @@ class ItemEdit extends Component {
   }
 
   handleSubmit = (e) => {
+    const new_hashtag = this.state.tags.join("/");
     const data = {
       new_github: this.state.github,
       new_year: this.state.year,
@@ -78,6 +101,7 @@ class ItemEdit extends Component {
       new_description_2: this.state.description_2,
       new_description_3: this.state.description_3,
       new_category: this.state.category,
+      new_hashtag: new_hashtag,
     };
 
     const editPaperRequest = {
@@ -132,26 +156,80 @@ class ItemEdit extends Component {
       });
   };
 
+  handleClose = (removedTag) => {
+    const tags = this.state.tags.filter((tag) => tag !== removedTag);
+
+    this.setState({ tags });
+  };
+  showInput = () => {
+    this.setState({ inputVisible: true }, () => this.input.focus());
+  };
+
+  handleInputChange = (e) => {
+    this.setState({ inputValue: e.target.value });
+  };
+
+  handleInputConfirm = () => {
+    const { inputValue } = this.state;
+    let { tags } = this.state;
+    if (inputValue && tags.indexOf(inputValue) === -1) {
+      tags = [...tags, inputValue];
+    }
+    this.setState({
+      tags,
+      inputVisible: false,
+      inputValue: "",
+    });
+  };
+
+  saveInputRef = (input) => (this.input = input);
+
   render() {
     const yearFormat = "YYYY";
 
     const { Option } = Select;
 
+    const {
+      title,
+      year,
+      category,
+      professor,
+      description_1,
+      description_2,
+      description_3,
+      tags,
+      inputValue,
+      inputVisible,
+      github,
+    } = this.state;
+
+    const tagElems = tags.map((tag, index) => {
+      const isLongTag = tag.length > 20;
+      const tagElem = (
+        <Tag key={tag} closable={true} onClose={() => this.handleClose(tag)}>
+          {isLongTag ? `${tag.slice(0, 20)}...` : tag}
+        </Tag>
+      );
+      return isLongTag ? (
+        <Tooltip title={tag} key={tag}>
+          {tagElem}
+        </Tooltip>
+      ) : (
+        tagElem
+      );
+    });
+
     return (
-      <main className='editPaper'>
+      <main className='edit-paper'>
         <Form onFinish={this.handleSubmit}>
           <FormItem label='제목'>
-            <span className='ant-form-text'>{this.state.title}</span>
+            <span className='ant-form-text'>{title}</span>
           </FormItem>
 
           <FormItem label='제출년도'>
             <DatePicker
               onChange={this.handleYearChange}
-              value={
-                "" !== this.state.year
-                  ? moment(this.state.year, yearFormat)
-                  : ""
-              }
+              value={"" !== year ? moment(year, yearFormat) : ""}
               placeholder='Select Year'
               picker='year'
             />
@@ -161,7 +239,7 @@ class ItemEdit extends Component {
               style={{ width: 200 }}
               placeholder='Select Category'
               onChange={this.handleCategoryChange}
-              value={this.state.category}
+              value={category}
             >
               {categoryData.map((item) => (
                 <Option key={item} value={item}>
@@ -173,24 +251,66 @@ class ItemEdit extends Component {
           <FormItem label='담당교수'>
             <Select
               onChange={this.handleProfessorChange}
-              value={this.state.professor}
+              value={professor}
               style={{ width: 200 }}
               placeholder='Select Professor'
             >
-              {professorData.map((professor) => (
-                <Option key={professor} value={professor}>
-                  {professor}
+              {professorData.map((item) => (
+                <Option key={item} value={item}>
+                  {item}
                 </Option>
               ))}
             </Select>
           </FormItem>
-          <FormItem label='Description'>
+          <FormItem label='Description1'>
             <Input.TextArea
-              value={this.state.description_1}
+              value={description_1}
               onChange={this.handleChange}
               name='description_1'
               placeholder='Enter Description'
+              autoSize={{ minRows: 2, maxRows: 6 }}
             />
+          </FormItem>
+          <FormItem label='Description2'>
+            <Input.TextArea
+              value={description_2}
+              onChange={this.handleChange}
+              name='description_2'
+              placeholder='Enter Description'
+              autoSize={{ minRows: 2, maxRows: 6 }}
+            />
+          </FormItem>
+          <FormItem label='Description3'>
+            <Input.TextArea
+              value={description_3}
+              onChange={this.handleChange}
+              autoSize={{ minRows: 2, maxRows: 6 }}
+              name='description_3'
+              placeholder='Enter Description'
+            />
+          </FormItem>
+          <FormItem label='Hashtags'>
+            {tagElems}
+            {inputVisible && (
+              <Input
+                ref={this.saveInputRef}
+                type='text'
+                size='small'
+                style={{ width: 78 }}
+                value={inputValue}
+                onChange={this.handleInputChange}
+                onBlur={this.handleInputConfirm}
+                onPressEnter={this.handleInputConfirm}
+              />
+            )}
+            {!inputVisible && (
+              <Tag
+                style={{ background: "#fff", borderStyle: "dashed" }}
+                onClick={this.showInput}
+              >
+                <PlusOutlined /> New Tag
+              </Tag>
+            )}
           </FormItem>
           <FormItem label='Repository 주소'>
             <Input
@@ -198,7 +318,7 @@ class ItemEdit extends Component {
               placeholder='github.com/exID/exRepo'
               name='github'
               onChange={this.handleChange}
-              value={this.state.github}
+              value={github}
             />
           </FormItem>
           <FormItem>

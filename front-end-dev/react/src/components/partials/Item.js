@@ -5,21 +5,40 @@ import { Link } from "react-router-dom";
 class Item extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {};
   }
 
+  handleLike = (e) => {
+    e.preventDefault();
+
+    this.props.onLiked(this.props.id, !this.props.liked);
+  };
+
   render() {
-    const { id, thumbnail, title, keyName, github, hashtag } = this.props;
-    const views = 0;
-    const likes = 0;
+    const {
+      id,
+      thumbnail,
+      title,
+      keyName,
+      github,
+      hashtag,
+      views,
+      likes,
+      liked,
+    } = this.props;
+
+    let style = {};
     let hashtagList = undefined;
 
-    if (hashtag !== undefined && hashtag !== null) {
+    if (hashtag !== undefined && hashtag !== null && hashtag !== "") {
       hashtagList = hashtag.split("/").map((p) => (
-        <li className='item__hashtag'>
+        <li className='item__hashtag' key={p}>
           <Link to={`/detail/${p}/`}>#{p}</Link>
         </li>
       ));
+    }
+
+    if (liked) {
+      style = { color: "#e74c3c" };
     }
 
     return (
@@ -38,26 +57,47 @@ class Item extends React.Component {
                 <i className='fas fa-eye'></i> {views}
               </li>
               <li>
-                <i className='fas fa-heart'></i> {likes}
+                <i
+                  className={liked ? "fas fa-heart" : "far fa-heart"}
+                  style={style}
+                ></i>{" "}
+                {likes}
               </li>
             </ul>
             <ul className='item__hashtags'>{hashtagList}</ul>
           </div>
         </div>
-        <div className='item--overay'>
-          <div className='item__links'>
+        <ul className='item__links'>
+          <li>
             <a
-              className='item__link link--github'
+              className='item__link item__link--like'
+              onClick={this.handleLike}
+            >
+              <i
+                className={liked ? "fas fa-heart" : "far fa-heart"}
+                style={style}
+              ></i>
+            </a>
+          </li>
+          <li>
+            <a
+              className='item__link item__link--github'
               href={`https://${github}`}
               target='_blank'
-            ></a>
+            >
+              <i className='fab fa-github'></i>
+            </a>
+          </li>
+          <li>
             <a
-              className='item__link link--paper'
+              className='item__link item__link--paper'
               href={`https://gradubucket.s3.ap-northeast-2.amazonaws.com/${keyName}`}
               target='_blank'
-            ></a>
-          </div>
-        </div>
+            >
+              <i className='far fa-file-alt'></i>
+            </a>
+          </li>
+        </ul>
       </li>
     );
   }

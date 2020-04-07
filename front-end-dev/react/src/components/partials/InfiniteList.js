@@ -2,28 +2,149 @@
 
 import React from "react";
 import Item from "./Item";
+import { likePaper, getAllPaper, searchPaper } from "../../util/APIUtils";
+import { notification } from "antd";
 
 class InfiniteList extends React.Component {
   constructor(props) {
     super(props);
+    this.state = {
+      allPaper: [],
+      likedPaper: [],
+    };
   }
+
+  componentDidMount() {
+    this.updatePaper();
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshots) {
+    if (prevProps.query !== this.props.query) {
+      this.updatePaper();
+    }
+  }
+
+  updatePaper = () => {
+    const query = this.props.query;
+
+    if (query === "" || query === undefined || query === null) {
+      getAllPaper()
+        .then((response) => {
+          this.setState({
+            allPaper: response.data.all_paper,
+            likedPaper: response.data.liked_paper,
+          });
+        })
+        .catch((error) => {
+          notification.error({
+            message: "Paper 리스트 반환 실패",
+            description:
+              error.description ||
+              "Sorry! Something went wrong. Please try again!",
+          });
+        });
+    } else if (query !== undefined && query !== null) {
+      const searchRequest = {
+        result_code: "OK",
+        description: "Search papers",
+        data: {
+          query: query,
+        },
+      };
+
+      searchPaper(searchRequest)
+        .then((response) => {
+          this.setState({
+            allPaper: response.data.searched_paper,
+            likedPaper: response.data.liked_paper,
+          });
+        })
+        .catch((error) => {
+          this.setState({
+            isLoading: false,
+          });
+
+          notification.error({
+            message: "Paper 리스트 반환 실패",
+            description:
+              error.description ||
+              "Sorry! Something went wrong. Please try again!",
+          });
+        });
+    }
+  };
+
+  handleLike = (paper_id, liked) => {
+    const likePaperRequest = {
+      result_code: "OK",
+      description: "Request like paper",
+      data: {
+        paper_id,
+        like_or_not: liked ? 1 : 0,
+      },
+    };
+
+    likePaper(likePaperRequest)
+      .then((response) => {
+        console.log(response);
+        // let { paper_id, like_or_not } = response.data;
+        // paper_id += "";
+
+        // const { likedPaper } = this.state;
+        // const alreadyInclude = likedPaper.includes(paper_id);
+
+        // if (like_or_not && !alreadyInclude) {
+        //   likedPaper.push(paper_id);
+        // } else if (!like_or_not && alreadyInclude) {
+        //   const idx = likedPaper.indexOf(paper_id);
+        //   if (idx > -1) likedPaper.splice(idx, 1);
+        // }
+
+        // this.setState({
+        //   likedPaper,
+        // });
+        this.updatePaper();
+      })
+      .catch((error) => {
+        notification.error({
+          message: "Like 실패",
+          description:
+            error.description ||
+            "Sorry! Something went wrong. Please try again!",
+        });
+      });
+  };
+
   render() {
-    const paperList = this.props.allPaper;
+    const paperList = this.state.allPaper;
+    const likedPaper = this.state.likedPaper;
+
     let paperLi = undefined;
 
     if (paperList !== undefined) {
-      paperLi = paperList.map((p) => (
-        <Item
-          key={p.id}
-          id={p.id}
-          thumbnail={p.thumbnail}
-          title={p.title}
-          keyName={p.key_name}
-          github={p.github}
-          description_1={p.description1}
-          hashtag={p.hashtag}
-        />
-      ));
+      paperLi = paperList.map((p) => {
+        let liked = false;
+
+        if (likedPaper !== undefined && likedPaper !== null) {
+          liked = likedPaper.includes("" + p.id);
+        }
+
+        return (
+          <Item
+            key={p.id}
+            id={p.id}
+            thumbnail={p.thumbnail}
+            title={p.title}
+            keyName={p.key_name}
+            github={p.github}
+            hashtag={p.hashtag}
+            views={p.view_count}
+            likes={p.like_count}
+            liked={liked}
+            onLiked={this.handleLike}
+          />
+        );
+      });
     }
     return <ul className='item-list'>{paperLi}</ul>;
   }

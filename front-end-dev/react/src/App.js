@@ -75,13 +75,9 @@ class App extends React.Component {
       currentUser: null,
       isAuthenticated: false,
     });
-
     this.props.history.push(redirectTo);
 
-    notification[notificationType]({
-      message: "졸업작품ing",
-      description: description,
-    });
+    window.location.reload(false);
   }
 
   handleLogin() {
@@ -100,7 +96,13 @@ class App extends React.Component {
           isAuthenticated={this.state.isAuthenticated}
           onLogout={this.handleLogout}
         />
-        <Route exact path='/' component={Container} />
+        <Route
+          exact
+          path='/'
+          render={(props) => (
+            <Container currentUser={this.state.currentUser} {...props} />
+          )}
+        />
         <Route path='/result/:query' component={SearchResults} />
 
         <Route

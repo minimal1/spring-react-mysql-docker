@@ -12,72 +12,9 @@ class SearchResults extends React.Component {
     super(props);
 
     this.state = {
-      searched_paper: [],
       isLoading: false,
     };
   }
-
-  componentDidMount() {
-    this.searching();
-  }
-
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    const {
-      match: {
-        params: { query: prevQuery },
-      },
-    } = prevProps;
-
-    const {
-      match: {
-        params: { query },
-      },
-    } = this.props;
-
-    if (prevQuery !== query) {
-      this.searching();
-    }
-  }
-  searching = () => {
-    this.setState({
-      isLoading: true,
-    });
-
-    const {
-      match: {
-        params: { query },
-      },
-    } = this.props;
-
-    const searchRequest = {
-      result_code: "OK",
-      description: "Search papers",
-      data: {
-        query: query,
-      },
-    };
-
-    searchPaper(searchRequest)
-      .then((response) => {
-        this.setState({
-          searched_paper: response.data.searched_paper,
-          isLoading: false,
-        });
-      })
-      .catch((error) => {
-        this.setState({
-          isLoading: false,
-        });
-
-        notification.error({
-          message: "Paper 리스트 반환 실패",
-          description:
-            error.description ||
-            "Sorry! Something went wrong. Please try again!",
-        });
-      });
-  };
-
   render() {
     const {
       match: {
@@ -87,8 +24,8 @@ class SearchResults extends React.Component {
 
     return (
       <main className='search'>
-        <h4>Search : {query}</h4>
-        <InfiniteList allPaper={this.state.searched_paper} />
+        <h4 className='search__title'>Search : {query}</h4>
+        <InfiniteList query={query} />
         <Loading onLoading={this.state.isLoading} />
       </main>
     );
