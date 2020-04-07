@@ -45,7 +45,9 @@ public class jwtToken {
 
 		String jwt = Jwts.builder().setHeaderParam("typ", "JWT").setSubject("loginToken")
 				.claim("uid", user.getStudentNumber()).claim("email", user.getUserEmail())
-				.setExpiration(new Date(System.currentTimeMillis() + 1 * (1000 * 60 * 60 * 24)))
+				//Session Test를 위해서 유효기간을 1분으로 하려면 바로 아래줄을 사용, 실제 코드는 12시간으로 작동 
+//				.setExpiration(new Date(System.currentTimeMillis() + 1 * (1000 * 60)))
+				.setExpiration(new Date(System.currentTimeMillis() + 1 * (1000 * 60 * 60 * 12)))
 				.signWith(KEY, signatureAlgorithm).compact();
 
 		return jwt;
