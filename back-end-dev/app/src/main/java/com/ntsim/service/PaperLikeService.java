@@ -53,8 +53,9 @@ public class PaperLikeService {
 				if (likeOrNot == 0) { // Cancel like
 					likeRepository.deleteLikeTable(u, p);
 
-					Long prevLike = p.getLikeCount();
-					p.setLikeCount(prevLike - 1);
+					List<Like> likeCountList = likeRepository.findByPaper(p);
+					Long prevLike = Long.parseLong(likeCountList.size() + "");
+					p.setLikeCount(prevLike);
 
 					paperRepository.save(p);
 
@@ -62,8 +63,9 @@ public class PaperLikeService {
 				} else { // Do like
 					likeRepository.insertLikeTable(u, p);
 
-					Long prevLike = p.getLikeCount();
-					p.setLikeCount(prevLike + 1);
+					List<Like> likeCountListt = likeRepository.findByPaper(p);
+					Long prevLike = Long.parseLong(likeCountListt.size() + "");
+					p.setLikeCount(prevLike);
 
 					paperRepository.save(p);
 

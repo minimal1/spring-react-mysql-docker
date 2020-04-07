@@ -36,6 +36,9 @@
     <logger name="com.ntsim" level="ERROR">
         <appender-ref ref="DAILY_ROLLING_FILE_APPENDER" />
     </logger>
+        <logger name="com.ntsim" level="INFO">
+        <appender-ref ref="STDOUT" />
+    </logger>
     <root level="INFO">
         <appender-ref ref="STDOUT" />
     </root>

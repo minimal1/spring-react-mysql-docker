@@ -66,3 +66,5 @@
 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:61)
 	at java.lang.Thread.run(Thread.java:748)
 
+[2020-04-07 08:12:40:39105][http-nio-8080-exec-2] ERROR com.ntsim.service.PaperLikeService - 1 
+[2020-04-07 08:20:28:28623][restartedMain] INFO  com.ntsim.Application - Aplicattion Started.
