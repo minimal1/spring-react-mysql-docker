@@ -46,9 +46,4 @@ public class S3UploaderController {
     	
         return s3Uploader.upload_file(multipartfile, year, category, github, studentNumber, "graduPdf");
     }
-//    @PostMapping("/upload")
-//    @ResponseBody
-//    public String upload(@RequestBody Header<S3UploaderRequest> s3uploaderRequest) throws IOException {
-//        return s3Uploader.upload(s3uploaderRequest);
-//    }
 }
