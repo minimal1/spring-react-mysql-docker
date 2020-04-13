@@ -28,7 +28,7 @@ Pages:
 - [x] PaperDetail
 - [x] EditPaper
 
-Remained(2020.04.07 updated) :
+Remained(2020.04.13 updated) :
 - [x] Search function
 - [ ] Filter function(Back Done, Front to do)
 - [x] Thumbnail image
@@ -38,3 +38,4 @@ Remained(2020.04.07 updated) :
 - [ ] Back End code refactoring
 - [ ] Front End code refactoring
 - [x] Back End logging file
+- [ ] PW encrypting in DB
