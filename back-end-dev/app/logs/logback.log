@@ -188,3 +188,13 @@ Caused by: com.mysql.jdbc.MysqlDataTruncation: Data truncation: Data too long fo
 	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:175)
 	... 89 more
 
+[2020-04-14 05:41:50:26805][restartedMain] INFO  com.ntsim.Application - Aplicattion Started.
+[2020-04-14 06:02:35:1272283][http-nio-8080-exec-9] INFO  com.ntsim.service.PaperLikeService - PaperLikeRequest(paperId=2, likeOrNot=1)
+[2020-04-14 06:02:37:1273521][http-nio-8080-exec-1] INFO  com.ntsim.service.PaperLikeService - PaperLikeRequest(paperId=2, likeOrNot=0)
+[2020-04-14 06:02:37:1274271][http-nio-8080-exec-2] INFO  com.ntsim.service.PaperLikeService - PaperLikeRequest(paperId=2, likeOrNot=1)
+[2020-04-14 06:02:38:1274858][http-nio-8080-exec-5] INFO  com.ntsim.service.PaperLikeService - PaperLikeRequest(paperId=2, likeOrNot=0)
+[2020-04-14 06:02:39:1276080][http-nio-8080-exec-7] INFO  com.ntsim.service.PaperLikeService - PaperLikeRequest(paperId=1, likeOrNot=0)
+[2020-04-14 06:02:40:1276594][http-nio-8080-exec-9] INFO  com.ntsim.service.PaperLikeService - PaperLikeRequest(paperId=1, likeOrNot=1)
+[2020-04-14 06:02:41:1278104][http-nio-8080-exec-1] INFO  com.ntsim.service.PaperLikeService - PaperLikeRequest(paperId=1, likeOrNot=0)
+[2020-04-14 06:02:42:1278611][http-nio-8080-exec-2] INFO  com.ntsim.service.PaperLikeService - PaperLikeRequest(paperId=1, likeOrNot=1)
+[2020-04-14 06:02:42:1279035][http-nio-8080-exec-5] INFO  com.ntsim.service.PaperLikeService - PaperLikeRequest(paperId=1, likeOrNot=0)
