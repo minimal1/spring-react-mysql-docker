@@ -5,12 +5,14 @@ import { Link } from "react-router-dom";
 import { Form, Input, Button, notification } from "antd";
 
 import { register } from "../../util/APIUtils";
+
 import {
-  USERNAME_MIN_LENGTH,
-  USERNAME_MAX_LENGTH,
-  PASSWORD_MIN_LENGTH,
-  PASSWORD_MAX_LENGTH,
-} from "../../constants/index";
+  handleChangeForLoginAndRegister,
+  isFormInvalid,
+  validateUsername,
+  validateEmail,
+  validatePassword,
+} from "../../util/Handler";
 
 const FormItem = Form.Item;
 
@@ -30,26 +32,9 @@ class Register extends React.Component {
       },
     };
 
-    this.handleChange = this.handleChange.bind(this);
+    this.handleChange = handleChangeForLoginAndRegister.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.validateUsernameAvailability = this.validateUsernameAvailability.bind(
-      this
-    );
-    this.validateEmailAvailability = this.validateEmailAvailability.bind(this);
-    this.isFormInvalid = this.isFormInvalid.bind(this);
-  }
-
-  handleChange(e, validationFunc) {
-    const target = e.target;
-    const inputName = target.name;
-    const inputValue = target.value;
-
-    this.setState({
-      [inputName]: {
-        value: inputValue,
-        ...validationFunc(inputValue),
-      },
-    });
+    this.isFormInvalid = isFormInvalid.bind(this);
   }
 
   handleSubmit(values) {
@@ -83,35 +68,24 @@ class Register extends React.Component {
       });
   }
 
-  isFormInvalid() {
-    return !(
-      this.state.username.validateStatus === "success" &&
-      this.state.email.validateStatus === "success" &&
-      this.state.password.validateStatus === "success"
-    );
-  }
-
   render() {
     return (
       <main className='register'>
-        <h1 className='page-title'>Create your account</h1>
-        <Form onFinish={this.handleSubmit} className='register-form'>
+        <h1 className='register__title'>Create your account</h1>
+        <Form onFinish={this.handleSubmit} className='form-container'>
           <FormItem
             hasFeedback
             validateStatus={this.state.username.validateStatus}
             help={this.state.username.errorMsg}
           >
             <Input
-              // className='id-input'
+              className='id-input'
               size='large'
               name='username'
               autoComplete='off'
               placeholder='Your student ID'
               value={this.state.username.value}
-              onBlur={this.validateUsernameAvailability}
-              onChange={(event) =>
-                this.handleChange(event, this.validateUsername)
-              }
+              onChange={(event) => this.handleChange(event, validateUsername)}
             />
           </FormItem>
           <FormItem
@@ -127,8 +101,7 @@ class Register extends React.Component {
               autoComplete='off'
               placeholder='Your email'
               value={this.state.email.value}
-              onBlur={this.validateEmailAvailability}
-              onChange={(event) => this.handleChange(event, this.validateEmail)}
+              onChange={(event) => this.handleChange(event, validateEmail)}
             />
           </FormItem>
           <FormItem
@@ -144,131 +117,28 @@ class Register extends React.Component {
               autoComplete='off'
               placeholder='A password between 6 to 20 characters'
               value={this.state.password.value}
-              onChange={(event) =>
-                this.handleChange(event, this.validatePassword)
-              }
+              onChange={(event) => this.handleChange(event, validatePassword)}
             />
           </FormItem>
           <FormItem>
-            <Button
-              className='register-form-button'
-              type='primary'
-              htmlType='submit'
-              size='large'
-              disabled={this.isFormInvalid()}
-            >
-              Register
-            </Button>
-            Already registed? <Link to='/login'>Login now!</Link>
+            <div className='form-container__submit-wrapper'>
+              <Button
+                className='register-form-button'
+                type='primary'
+                htmlType='submit'
+                size='large'
+                disabled={this.isFormInvalid("register")}
+              >
+                Register
+              </Button>
+              <span className='form-container__anchor-msg'>
+                Already registed? <Link to='/login'>Login now!</Link>
+              </span>
+            </div>
           </FormItem>
         </Form>
       </main>
     );
-  }
-
-  validateUsername = (username) => {
-    if (username.length < USERNAME_MIN_LENGTH) {
-      return {
-        validateStatus: "error",
-        errorMsg: `Username is too short (Minimum ${USERNAME_MIN_LENGTH} characters needed.)`,
-      };
-    } else if (username.length > USERNAME_MAX_LENGTH) {
-      return {
-        validateStatus: "error",
-        errorMsg: `Username is too long (Maximum ${USERNAME_MAX_LENGTH} characters needed.)`,
-      };
-    } else {
-      return {
-        validateStatus: null,
-        errorMsg: null,
-      };
-    }
-  };
-
-  validateEmail = (email) => {
-    if (!email) {
-      return {
-        validateStatus: "error",
-        errorMsg: "Email may not be empty",
-      };
-    }
-
-    const EMAIL_REGEX = RegExp("[^@ ]+@[^@ ]+\\.[^@ ]+");
-
-    if (!EMAIL_REGEX.test(email)) {
-      return {
-        validateStatus: "error",
-        errorMsg: "Email not valid",
-      };
-    }
-
-    return { validateStatus: null, errorMsg: null };
-  };
-
-  validatePassword = (password) => {
-    if (password.length < PASSWORD_MIN_LENGTH) {
-      return {
-        validateStatus: "error",
-        errorMsg: `Password is too shart (Minimum ${PASSWORD_MIN_LENGTH} characters needed.)`,
-      };
-    } else if (password.length > PASSWORD_MAX_LENGTH) {
-      return {
-        validateStatus: "error",
-        errorMsg: `Password is too long (Maximum ${PASSWORD_MAX_LENGTH} characters allowed.)`,
-      };
-    } else {
-      return {
-        validateStatus: "success",
-        errorMsg: null,
-      };
-    }
-  };
-
-  validateUsernameAvailability() {
-    // First check for client side errors in username
-    const usernameValue = this.state.username.value;
-    const usernameValidation = this.validateUsername(usernameValue);
-
-    if (usernameValidation.validateStatus === "error") {
-      this.setState({
-        username: {
-          value: usernameValue,
-          ...usernameValidation,
-        },
-      });
-      return;
-    }
-
-    this.setState({
-      username: {
-        value: usernameValue,
-        validateStatus: "success",
-        errorMsg: null,
-      },
-    });
-  }
-
-  validateEmailAvailability() {
-    const emailValue = this.state.email.value;
-    const emailValidation = this.validateEmail(emailValue);
-
-    if (emailValidation.validateStatus === "error") {
-      this.setState({
-        email: {
-          value: emailValue,
-          ...emailValidation,
-        },
-      });
-      return;
-    }
-
-    this.setState({
-      email: {
-        value: emailValue,
-        validateStatus: "success",
-        errorMsg: null,
-      },
-    });
   }
 }
 

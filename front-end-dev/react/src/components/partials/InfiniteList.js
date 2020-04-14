@@ -2,7 +2,12 @@
 
 import React from "react";
 import Item from "./Item";
-import { likePaper, getAllPaper, searchPaper } from "../../util/APIUtils";
+import {
+  likePaper,
+  getAllPaper,
+  searchPaper,
+  getMyPaper,
+} from "../../util/APIUtils";
 import { notification } from "antd";
 
 class InfiniteList extends React.Component {
@@ -28,21 +33,39 @@ class InfiniteList extends React.Component {
     const query = this.props.query;
 
     if (query === "" || query === undefined || query === null) {
-      getAllPaper()
-        .then((response) => {
-          this.setState({
-            allPaper: response.data.all_paper,
-            likedPaper: response.data.liked_paper,
+      if (this.props.isInMypage) {
+        getMyPaper()
+          .then((response) => {
+            this.setState({
+              allPaper: response.data.my_paper,
+              likedPaper: response.data.liked_paper,
+            });
+          })
+          .catch((error) => {
+            notification.error({
+              message: "Paper 리스트 반환 실패",
+              description:
+                error.description ||
+                "Sorry! Something went wrong. Please try again!",
+            });
           });
-        })
-        .catch((error) => {
-          notification.error({
-            message: "Paper 리스트 반환 실패",
-            description:
-              error.description ||
-              "Sorry! Something went wrong. Please try again!",
+      } else {
+        getAllPaper()
+          .then((response) => {
+            this.setState({
+              allPaper: response.data.all_paper,
+              likedPaper: response.data.liked_paper,
+            });
+          })
+          .catch((error) => {
+            notification.error({
+              message: "Paper 리스트 반환 실패",
+              description:
+                error.description ||
+                "Sorry! Something went wrong. Please try again!",
+            });
           });
-        });
+      }
     } else if (query !== undefined && query !== null) {
       const searchRequest = {
         result_code: "OK",

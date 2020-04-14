@@ -10,5 +10,11 @@
 @import "partials/footer.css";
 @import "partials/item.css";
 @import "partials/links.css";
+@import "partials/form.css";
 
 @import "pages/itemDetail.css";
+@import "pages/login.css";
+@import "pages/register.css";
+@import "pages/editPaper.css";
+@import "pages/myPage.css";
+@import "pages/uploadPaper.css";

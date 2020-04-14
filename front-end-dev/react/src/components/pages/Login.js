@@ -7,6 +7,13 @@ import { Form, Input, Button, notification } from "antd";
 import { login } from "../../util/APIUtils";
 import { ACCESS_TOKEN } from "../../constants/index";
 
+import {
+  handleChangeForLoginAndRegister,
+  isFormInvalid,
+  validateUsername,
+  validatePassword,
+} from "../../util/Handler";
+
 const FormItem = Form.Item;
 
 class Login extends React.Component {
@@ -24,7 +31,19 @@ class Login extends React.Component {
 class LoginForm extends React.Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      username: {
+        value: "",
+      },
+      password: {
+        value: "",
+      },
+    };
+
+    this.handleChange = handleChangeForLoginAndRegister.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.isFormInvalid = isFormInvalid.bind(this);
   }
 
   handleSubmit(values) {
@@ -32,8 +51,8 @@ class LoginForm extends React.Component {
       result_code: "OK",
       description: "login_request",
       data: {
-        id: values.username,
-        pw: values.password,
+        id: this.state.username.value,
+        pw: this.state.password.value,
       },
     };
 
@@ -53,23 +72,34 @@ class LoginForm extends React.Component {
   }
 
   render() {
+    const { username, password } = this.state;
     return (
-      <Form onFinish={this.handleSubmit} className='login-form'>
+      <Form onFinish={this.handleSubmit} className='form-container'>
         <FormItem
-          name='username'
-          rules={[{ required: true, message: "Please input your Username" }]}
+          hasFeedback
+          validateStatus={username.validateStatus}
+          help={username.errorMsg}
         >
-          <Input size='large' placeholder='Username' name='username' />
+          <Input
+            size='large'
+            placeholder='Username'
+            name='username'
+            value={username.value}
+            onChange={(event) => this.handleChange(event, validateUsername)}
+          />
         </FormItem>
         <FormItem
-          name='password'
-          rules={[{ required: true, message: "Please input your Password" }]}
+          hasFeedback
+          validateStatus={password.validateStatus}
+          help={password.errorMsg}
         >
           <Input
             name='password'
             type='password'
             placeholder='Password'
             size='large'
+            value={password.value}
+            onChange={(event) => this.handleChange(event, validatePassword)}
           />
         </FormItem>
         <FormItem>
@@ -78,10 +108,13 @@ class LoginForm extends React.Component {
             htmlType='submit'
             size='large'
             className='login-form-button'
+            disabled={this.isFormInvalid("login")}
           >
             Login
           </Button>
-          Or <Link to='/register'>register now!</Link>
+          <span className='form-container__anchor-msg'>
+            Or <Link to='/register'>register now!</Link>
+          </span>
         </FormItem>
       </Form>
     );

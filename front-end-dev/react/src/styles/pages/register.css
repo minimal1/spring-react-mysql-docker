@@ -1,0 +1,15 @@
+/** @format */
+
+.register {
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  /* justify-content: center; */
+  align-items: center;
+}
+
+.register .register__title {
+  font-weight: 600;
+  font-size: 28px;
+  margin-bottom: 30px;
+}

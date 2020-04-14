@@ -1,0 +1,19 @@
+/** @format */
+
+.mypage .mypage__title-wrapper {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.mypage__title {
+  font-weight: 600;
+  font-size: 28px;
+}
+
+.link--edit-info {
+  align-self: flex-end;
+}

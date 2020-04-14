@@ -127,6 +127,17 @@ class App extends React.Component {
             />
           )}
         />
+        <AuthRoute
+          isAuthenticated={this.state.isAuthenticated}
+          path='/changePassword'
+          render={(props) => (
+            <Mypage
+              loadCurrentUser={this.loadCurrentUser}
+              currentUser={this.state.currentUser}
+              {...props}
+            />
+          )}
+        />
 
         <AuthRoute
           isAuthenticated={this.state.isAuthenticated}

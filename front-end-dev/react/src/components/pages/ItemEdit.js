@@ -4,6 +4,7 @@ import React, { Component } from "react";
 import {
   Tag,
   Tooltip,
+  Tabs,
   Form,
   Input,
   Button,
@@ -24,6 +25,7 @@ import {
 import { categoryData, professorData } from "../../constants/index";
 
 const FormItem = Form.Item;
+const { TabPane } = Tabs;
 
 class ItemEdit extends Component {
   constructor(props) {
@@ -221,22 +223,20 @@ class ItemEdit extends Component {
 
     return (
       <main className='edit-paper'>
-        <Form onFinish={this.handleSubmit}>
-          <FormItem label='제목'>
-            <span className='ant-form-text'>{title}</span>
-          </FormItem>
+        <span className='edit-paper__title'>{title}</span>
 
-          <FormItem label='제출년도'>
+        <Form onFinish={this.handleSubmit} className='form-container'>
+          <FormItem label='제출년도' className='form-container__year'>
             <DatePicker
+              style={{ width: "100%" }}
               onChange={this.handleYearChange}
               value={"" !== year ? moment(year, yearFormat) : ""}
               placeholder='Select Year'
               picker='year'
             />
           </FormItem>
-          <FormItem label='카테고리'>
+          <FormItem label='카테고리' className='form-container__category'>
             <Select
-              style={{ width: 200 }}
               placeholder='Select Category'
               onChange={this.handleCategoryChange}
               value={category}
@@ -248,11 +248,10 @@ class ItemEdit extends Component {
               ))}
             </Select>
           </FormItem>
-          <FormItem label='담당교수'>
+          <FormItem label='담당교수' className='form-container__professor'>
             <Select
               onChange={this.handleProfessorChange}
               value={professor}
-              style={{ width: 200 }}
               placeholder='Select Professor'
             >
               {professorData.map((item) => (
@@ -262,32 +261,36 @@ class ItemEdit extends Component {
               ))}
             </Select>
           </FormItem>
-          <FormItem label='Description1'>
-            <Input.TextArea
-              value={description_1}
-              onChange={this.handleChange}
-              name='description_1'
-              placeholder='Enter Description'
-              autoSize={{ minRows: 2, maxRows: 6 }}
-            />
-          </FormItem>
-          <FormItem label='Description2'>
-            <Input.TextArea
-              value={description_2}
-              onChange={this.handleChange}
-              name='description_2'
-              placeholder='Enter Description'
-              autoSize={{ minRows: 2, maxRows: 6 }}
-            />
-          </FormItem>
-          <FormItem label='Description3'>
-            <Input.TextArea
-              value={description_3}
-              onChange={this.handleChange}
-              autoSize={{ minRows: 2, maxRows: 6 }}
-              name='description_3'
-              placeholder='Enter Description'
-            />
+          <FormItem>
+            <Tabs defaultActiveKey='1'>
+              <TabPane tab='Description 1' key='1'>
+                <Input.TextArea
+                  value={description_1}
+                  onChange={this.handleChange}
+                  name='description_1'
+                  placeholder='Enter Description'
+                  autoSize={{ minRows: 3, maxRows: 3 }}
+                />
+              </TabPane>
+              <TabPane tab='Description 2' key='2'>
+                <Input.TextArea
+                  value={description_2}
+                  onChange={this.handleChange}
+                  name='description_2'
+                  placeholder='Enter Description'
+                  autoSize={{ minRows: 3, maxRows: 3 }}
+                />
+              </TabPane>
+              <TabPane tab='Description 3' key='3'>
+                <Input.TextArea
+                  value={description_3}
+                  onChange={this.handleChange}
+                  autoSize={{ minRows: 3, maxRows: 3 }}
+                  name='description_3'
+                  placeholder='Enter Description'
+                />{" "}
+              </TabPane>
+            </Tabs>
           </FormItem>
           <FormItem label='Hashtags'>
             {tagElems}
@@ -325,11 +328,16 @@ class ItemEdit extends Component {
             <Button type='primary' htmlType='submit' style={{ marginTop: 16 }}>
               Edit Paper
             </Button>
+
+            <Button
+              className='delete-paper'
+              style={{ marginTop: 16 }}
+              onClick={this.handleDelete}
+            >
+              {"Delete Paper"}
+            </Button>
           </FormItem>
         </Form>
-        <Button style={{ marginTop: 16 }} onClick={this.handleDelete}>
-          {"Delete Paper"}
-        </Button>
       </main>
     );
   }

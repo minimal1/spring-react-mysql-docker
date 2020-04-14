@@ -90,10 +90,11 @@ class UploadPaper extends Component {
 
     return (
       <main className='upload'>
-        <h1 className='page-title'>Upload Paper</h1>
-        <Form onFinish={this.handleUpload}>
-          <FormItem label='제출년도'>
+        <h1 className='upload__title'>Upload Paper</h1>
+        <Form onFinish={this.handleUpload} className='form-container'>
+          <FormItem label='제출년도' className='form-container__year'>
             <DatePicker
+              style={{ width: "100%" }}
               onChange={this.handleYearChange}
               value={
                 "" !== this.state.year
@@ -104,9 +105,8 @@ class UploadPaper extends Component {
               picker='year'
             />
           </FormItem>
-          <FormItem label='카테고리'>
+          <FormItem label='카테고리' className='form-container__category'>
             <Select
-              style={{ width: 200 }}
               onChange={this.handleCategoryChange}
               value={this.state.category}
               placeholder='Select Category'
@@ -118,13 +118,6 @@ class UploadPaper extends Component {
               ))}
             </Select>
           </FormItem>
-          <FormItem label='논문 업로드'>
-            <Upload {...props} accept='application/pdf'>
-              <Button>
-                <Icon type='upload' /> Select File
-              </Button>
-            </Upload>
-          </FormItem>
           <FormItem label='Github 주소'>
             <Input
               addonBefore='https://'
@@ -134,6 +127,14 @@ class UploadPaper extends Component {
               value={this.state.github}
             />
           </FormItem>
+          <FormItem label='논문 업로드'>
+            <Upload {...props} accept='application/pdf'>
+              <Button>
+                <Icon type='upload' /> Select File
+              </Button>
+            </Upload>
+          </FormItem>
+
           <FormItem>
             <Button
               htmlType='submit'

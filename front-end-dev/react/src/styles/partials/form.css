@@ -1,0 +1,67 @@
+/** @format */
+
+.form-container {
+  width: 100%;
+}
+
+.form-container .form-container__year {
+  width: 250px;
+}
+
+.form-container .form-container__category {
+  width: 250px;
+}
+
+.form-container .form-container__professor {
+  width: 250px;
+}
+
+.form-container .form-container__description {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.form-container .form-container__submit-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.form-container__anchor-msg {
+  margin-left: 10px;
+  font-size: 16px;
+}
+
+.form-container__submit-wrapper .form-container__anchor-msg {
+  margin-left: 0px;
+}
+
+.form-container__anchor-msg a {
+  color: #1890ff;
+}
+
+button[type="submit"] {
+  color: white;
+  background-color: #1890ff;
+  border: 1px solid #1890ff;
+}
+
+button[type="submit"]:hover {
+  color: #1890ff;
+  background-color: white;
+  border: 1px solid #1890ff;
+}
+
+.delete-paper {
+  margin-left: 10px;
+  color: white;
+  background-color: rgb(231, 76, 60);
+  border: 1px solid rgb(231, 76, 60);
+}
+
+.delete-paper:hover {
+  color: rgb(231, 76, 60);
+  background-color: white;
+  border: 1px solid rgb(231, 76, 60);
+}

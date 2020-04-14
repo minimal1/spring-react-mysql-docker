@@ -69,7 +69,7 @@ class ItemDetail extends Component {
       this.props.currentUser.student_number === this.state.studentNumber ? (
         <li className='paper-detail__link'>
           <Link
-            className='link--edit-paper'
+            className='link--edit-info'
             to={`/editPaper/${this.state.itemId}`}
           >
             <button>Edit paper</button>

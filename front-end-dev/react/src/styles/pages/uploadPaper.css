@@ -1,14 +1,13 @@
 /** @format */
 
-.login {
-  max-width: 440px;
+.upload {
+  max-width: 600px;
   display: flex;
   flex-direction: column;
-  /* justify-content: center; */
   align-items: center;
 }
 
-.login .login__title {
+.upload .upload__title {
   font-weight: 600;
   font-size: 28px;
   margin-bottom: 30px;

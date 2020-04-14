@@ -24,14 +24,21 @@ a button:focus {
   background-color: rgba(59, 89, 152, 0.8);
 }
 
-.link--edit-paper button {
+.link--edit-info,
+.link--edit-info:hover {
+  color: white;
+  font-size: 12px;
+  font-weight: 300;
+}
+
+.link--edit-info button {
   background-color: rgb(24, 144, 255);
 }
 
-.link--edit-paper button:hover {
+.link--edit-info button:hover {
   background-color: rgb(24, 144, 255, 0.8);
 }
 
-.link--edit-paper button:focus {
+.link--edit-info button:focus {
   outline: none;
 }
