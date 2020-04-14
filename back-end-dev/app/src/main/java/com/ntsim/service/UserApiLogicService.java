@@ -17,6 +17,7 @@ import com.ntsim.model.entity.User;
 import com.ntsim.model.network.Header;
 import com.ntsim.model.network.request.UserApiRequest;
 import com.ntsim.model.network.response.UserApiResponse;
+import com.ntsim.model.security.UserSha256;
 import com.ntsim.redis.Redis;
 import com.ntsim.repository.UserRepository;
 
@@ -37,7 +38,10 @@ public class UserApiLogicService {
 	
 	@Autowired
 	private RedisTemplate<Serializable, Serializable> redisTemplate;
-
+	
+	@Autowired
+	private UserSha256 userSha256;
+	
 	private Logger logger = LoggerFactory.getLogger(UserApiLogicService.class);
 	
 	public Header<UserApiResponse> validate(HttpServletRequest request){
@@ -60,7 +64,9 @@ public class UserApiLogicService {
 			return Header.ERROR("이미 존재하는 아이디 입니다.");
 		}
 
-		User user = User.builder().studentNumber(uRequest.getId()).userPassword(uRequest.getPw())
+		String encoded = userSha256.encrypt(uRequest.getPw());
+		
+		User user = User.builder().studentNumber(uRequest.getId()).userPassword(encoded)
 				.userEmail(uRequest.getEmail()).build();
 
 		User newUser = userRepository.save(user);
@@ -85,13 +91,18 @@ public class UserApiLogicService {
 			userEmail = "";
 			userEmail  = user.getUserEmail();
 			String pw = user.getUserPassword();
-			if(uRequest.getPw().equals(pw)) {
+			
+			String encoded = userSha256.encrypt(uRequest.getPw());
+
+			if(encoded.equals(pw)) {
 				pwCheck = true;
 			}
 		});
 		
 		if(pwCheck) {
-			User user = User.builder().studentNumber(uRequest.getId()).userPassword(uRequest.getPw())
+			String encoded = userSha256.encrypt(uRequest.getPw());
+
+			User user = User.builder().studentNumber(uRequest.getId()).userPassword(encoded)
 					.userEmail(userEmail).build();
 			String userToken = this.saveTokenInRedis(user);
 			
