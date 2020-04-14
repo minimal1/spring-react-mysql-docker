@@ -28,13 +28,14 @@ Pages:
 - [x] PaperDetail
 - [x] EditPaper
 
-Remained(2020.04.07 updated) :
+Remained(2020.04.14 updated) :
 - [x] Search function
 - [ ] Filter function(Back Done, Front to do)
 - [x] Thumbnail image
 - [x] Hashtag function
-- [x] Like, View Count function(Back Done, Front to do)
+- [x] Like, View Count function
 - [ ] UI refactoring(Front working on)
 - [ ] Back End code refactoring
 - [ ] Front End code refactoring
 - [x] Back End logging file
+- [x] PW encrypting in DB

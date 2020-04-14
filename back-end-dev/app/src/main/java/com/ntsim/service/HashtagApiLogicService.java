@@ -6,18 +6,11 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.ntsim.model.entity.Hashtag;
 import com.ntsim.model.entity.Paper;
-import com.ntsim.model.entity.User;
-import com.ntsim.model.network.Header;
-import com.ntsim.model.network.request.UserApiRequest;
-import com.ntsim.model.network.response.MainViewResponse;
-import com.ntsim.model.network.response.UserApiResponse;
 import com.ntsim.repository.HashtagRepository;
 import com.ntsim.repository.PaperRepository;
-import com.ntsim.repository.UserRepository;
 
 @Service
 public class HashtagApiLogicService {
