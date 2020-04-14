@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ntsim.jwt.jwtToken;
 import com.ntsim.model.network.Header;
 import com.ntsim.model.network.request.PaperDetailRequest;
-import com.ntsim.model.network.request.PaperLikeRequest;
 import com.ntsim.model.network.response.PaperDetailResponse;
 import com.ntsim.service.PaperDetailService;
 
