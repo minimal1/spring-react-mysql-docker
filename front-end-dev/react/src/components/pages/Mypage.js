@@ -1,12 +1,9 @@
 /** @format */
 
 import React, { Component } from "react";
-import { Form, Input, Button, notification } from "antd";
 import { Link } from "react-router-dom";
 
-import { changePassword } from "../../util/APIUtils";
 import InfiniteList from "../partials/InfiniteList";
-const FormItem = Form.Item;
 class Mypage extends Component {
   constructor(props) {
     super(props);
@@ -16,40 +13,6 @@ class Mypage extends Component {
       isLoading: false,
     };
   }
-  handleSubmit = (values) => {
-    const {
-      currentUser: { student_number, email },
-    } = this.props;
-
-    const changePasswordRequest = {
-      result_code: "OK",
-      description: "changePassword_Request",
-      data: {
-        student_number,
-        email,
-        old_password: values.old_password,
-        new_password: values.new_password,
-      },
-    };
-
-    changePassword(changePasswordRequest)
-      .then((response) => {
-        notification.success({
-          message: "졸업작품ing",
-          description: "Your passowrd is successfully changed.",
-        });
-
-        this.props.history.push("/");
-      })
-      .catch((error) => {
-        notification.error({
-          message: "졸업논문ing",
-          description:
-            error.description ||
-            "Sorry! Something went wrong. Please try again!",
-        });
-      });
-  };
 
   render() {
     return (

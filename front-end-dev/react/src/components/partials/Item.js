@@ -13,6 +13,20 @@ class Item extends React.Component {
     this.props.onLiked(this.props.id, !this.props.liked);
   };
 
+  handleClick = (e, link) => {
+    e.preventDefault();
+
+    if (link === "like" && this.props.isAuthenticated) {
+      this.props.onLiked(this.props.id, !this.props.liked);
+    } else {
+      this.props.onLinkClicked(link);
+    }
+  };
+
+  handleSearch = (e, tag) => {
+    e.preventDefault();
+    this.props.onSearch(tag);
+  };
   render() {
     const {
       id,
@@ -32,7 +46,7 @@ class Item extends React.Component {
     if (hashtag !== undefined && hashtag !== null && hashtag !== "") {
       hashtagList = hashtag.split("/").map((p) => (
         <li className='item__hashtag' key={p}>
-          <Link to={`/detail/${p}/`}>#{p}</Link>
+          <a onClick={(e) => this.handleSearch(e, p)}>#{p}</a>
         </li>
       ));
     }
@@ -60,7 +74,7 @@ class Item extends React.Component {
                 <i
                   className={liked ? "fas fa-heart" : "far fa-heart"}
                   style={style}
-                ></i>{" "}
+                ></i>
                 {likes}
               </li>
             </ul>
@@ -71,7 +85,7 @@ class Item extends React.Component {
           <li>
             <a
               className='item__link item__link--like'
-              onClick={this.handleLike}
+              onClick={(e) => this.handleClick(e, "like")}
             >
               <i
                 className={liked ? "fas fa-heart" : "far fa-heart"}
@@ -82,8 +96,7 @@ class Item extends React.Component {
           <li>
             <a
               className='item__link item__link--github'
-              href={`https://${github}`}
-              target='_blank'
+              onClick={(e) => this.handleClick(e, `https://${github}`)}
             >
               <i className='fab fa-github'></i>
             </a>
@@ -91,8 +104,12 @@ class Item extends React.Component {
           <li>
             <a
               className='item__link item__link--paper'
-              href={`https://gradubucket.s3.ap-northeast-2.amazonaws.com/${keyName}`}
-              target='_blank'
+              onClick={(e) =>
+                this.handleClick(
+                  e,
+                  `https://gradubucket.s3.ap-northeast-2.amazonaws.com/${keyName}`
+                )
+              }
             >
               <i className='far fa-file-alt'></i>
             </a>

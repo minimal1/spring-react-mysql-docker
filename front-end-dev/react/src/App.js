@@ -13,6 +13,7 @@ import UploadPaper from "./components/pages/UploadPaper";
 import Mypage from "./components/pages/Mypage";
 import ItemDetail from "./components/pages/ItemDetail";
 import ItemEdit from "./components/pages/ItemEdit";
+import ChangePassword from "./components/pages/ChangePassword";
 
 import SearchResults from "./components/pages/SearchResults";
 
@@ -30,6 +31,7 @@ class App extends React.Component {
       currentUser: null,
       isAuthenticated: false,
       isLoading: false,
+      query: "",
     };
 
     this.loadCurrentUser = this.loadCurrentUser.bind(this);
@@ -89,21 +91,32 @@ class App extends React.Component {
     this.props.history.push("/");
   }
 
+  handleSearch = (query) => {
+    this.setState({ query });
+  };
+
   render() {
     return (
       <div className='website-main'>
         <Header
           isAuthenticated={this.state.isAuthenticated}
           onLogout={this.handleLogout}
+          onSearch={this.handleSearch}
+          query={this.state.query}
         />
         <Route
           exact
           path='/'
           render={(props) => (
-            <Container currentUser={this.state.currentUser} {...props} />
+            <Container
+              query={this.state.query}
+              onSearch={this.handleSearch}
+              isAuthenticated={this.state.isAuthenticated}
+              {...props}
+            />
           )}
         />
-        <Route path='/result/:query' component={SearchResults} />
+        {/* <Route path='/result/:query' component={SearchResults} /> */}
 
         <Route
           path='/login'
@@ -119,19 +132,13 @@ class App extends React.Component {
         <AuthRoute
           isAuthenticated={this.state.isAuthenticated}
           path='/mypage'
-          render={(props) => (
-            <Mypage
-              loadCurrentUser={this.loadCurrentUser}
-              currentUser={this.state.currentUser}
-              {...props}
-            />
-          )}
+          render={(props) => <Mypage {...props} />}
         />
         <AuthRoute
           isAuthenticated={this.state.isAuthenticated}
           path='/changePassword'
           render={(props) => (
-            <Mypage
+            <ChangePassword
               loadCurrentUser={this.loadCurrentUser}
               currentUser={this.state.currentUser}
               {...props}

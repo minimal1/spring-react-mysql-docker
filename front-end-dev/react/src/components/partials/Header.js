@@ -11,8 +11,15 @@ class Header extends React.Component {
     super(props);
 
     this.state = {
-      searchQuery: "",
+      query: "",
     };
+  }
+
+  componentDidUpdate(prevProps, prevState, snapshots) {
+    if (prevProps.query !== this.props.query) {
+      const query = this.props.query;
+      this.setState({ query });
+    }
   }
 
   handleChange = (e) => {
@@ -21,7 +28,7 @@ class Header extends React.Component {
     } = e;
 
     this.setState({
-      searchQuery: value,
+      query: value,
     });
   };
 
@@ -30,8 +37,7 @@ class Header extends React.Component {
   };
 
   handleSubmit = (e) => {
-    const query = this.state.searchQuery;
-    this.props.history.push(`/result/${query}`);
+    this.props.onSearch(this.state.query);
   };
 
   render() {
@@ -49,7 +55,7 @@ class Header extends React.Component {
             <Search
               placeholder='Input search text'
               onChange={this.handleChange}
-              value={this.searchQuery}
+              value={this.state.query}
               onSearch={this.handleSubmit}
               className='header__search'
             />

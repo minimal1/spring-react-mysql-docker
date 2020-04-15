@@ -98,6 +98,9 @@ class InfiniteList extends React.Component {
   };
 
   handleLike = (paper_id, liked) => {
+    if (!this.props.isAuthenticated) {
+      return;
+    }
     const likePaperRequest = {
       result_code: "OK",
       description: "Request like paper",
@@ -110,22 +113,6 @@ class InfiniteList extends React.Component {
     likePaper(likePaperRequest)
       .then((response) => {
         console.log(response);
-        // let { paper_id, like_or_not } = response.data;
-        // paper_id += "";
-
-        // const { likedPaper } = this.state;
-        // const alreadyInclude = likedPaper.includes(paper_id);
-
-        // if (like_or_not && !alreadyInclude) {
-        //   likedPaper.push(paper_id);
-        // } else if (!like_or_not && alreadyInclude) {
-        //   const idx = likedPaper.indexOf(paper_id);
-        //   if (idx > -1) likedPaper.splice(idx, 1);
-        // }
-
-        // this.setState({
-        //   likedPaper,
-        // });
         this.updatePaper();
       })
       .catch((error) => {
@@ -165,6 +152,9 @@ class InfiniteList extends React.Component {
             likes={p.like_count}
             liked={liked}
             onLiked={this.handleLike}
+            onSearch={this.props.onSearch}
+            isAuthenticated={this.props.isAuthenticated}
+            onLinkClicked={this.props.onLinkClicked}
           />
         );
       });
