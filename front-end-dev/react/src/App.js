@@ -15,8 +15,6 @@ import ItemDetail from "./components/pages/ItemDetail";
 import ItemEdit from "./components/pages/ItemEdit";
 import ChangePassword from "./components/pages/ChangePassword";
 
-import SearchResults from "./components/pages/SearchResults";
-
 import AuthRoute from "./components/AuthRoute";
 import Container from "./components/Container";
 
