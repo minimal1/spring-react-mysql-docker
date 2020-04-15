@@ -35,6 +35,8 @@ public class PaperForSearch {
 
 	private String title;	
 	
+	private String hashtag;
+	
 	private Integer count;
 	
 	private Long likeCount;

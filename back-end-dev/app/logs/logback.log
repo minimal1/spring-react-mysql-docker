@@ -198,3 +198,4 @@ Caused by: com.mysql.jdbc.MysqlDataTruncation: Data truncation: Data too long fo
 [2020-04-14 06:02:41:1278104][http-nio-8080-exec-1] INFO  com.ntsim.service.PaperLikeService - PaperLikeRequest(paperId=1, likeOrNot=0)
 [2020-04-14 06:02:42:1278611][http-nio-8080-exec-2] INFO  com.ntsim.service.PaperLikeService - PaperLikeRequest(paperId=1, likeOrNot=1)
 [2020-04-14 06:02:42:1279035][http-nio-8080-exec-5] INFO  com.ntsim.service.PaperLikeService - PaperLikeRequest(paperId=1, likeOrNot=0)
+[2020-04-14 15:22:23:21114][restartedMain] INFO  com.ntsim.Application - Aplicattion Started.

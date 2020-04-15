@@ -65,7 +65,7 @@ public class PaperSearchService {
 			PaperForSearch tempPaper = PaperForSearch.builder().id(paper.getId()).keyName(paper.getKeyName()).year(paper.getYear())
 					.github(paper.getGithub()).category(paper.getCategory()).professor(paper.getProfessor())
 					.studentNumber(paper.getStudentNumber()).description1(paper.getDescription1())
-					.description2(paper.getDescription2()).description3(paper.getDescription3())
+					.description2(paper.getDescription2()).description3(paper.getDescription3()).hashtag(paper.getHashtag())
 					.thumbnail(paper.getThumbnail()).title(paper.getTitle()).likeCount(paper.getLikeCount()).viewCount(paper.getViewCount()).count(1).build();
 
 			desc1ForSearch.add(tempPaper);
@@ -75,7 +75,7 @@ public class PaperSearchService {
 			PaperForSearch tempPaper = PaperForSearch.builder().id(paper.getId()).keyName(paper.getKeyName()).year(paper.getYear())
 					.github(paper.getGithub()).category(paper.getCategory()).professor(paper.getProfessor())
 					.studentNumber(paper.getStudentNumber()).description1(paper.getDescription1())
-					.description2(paper.getDescription2()).description3(paper.getDescription3())
+					.description2(paper.getDescription2()).description3(paper.getDescription3()).hashtag(paper.getHashtag())
 					.thumbnail(paper.getThumbnail()).title(paper.getTitle()).likeCount(paper.getLikeCount()).viewCount(paper.getViewCount()).count(1).build();
 
 			desc2ForSearch.add(tempPaper);
@@ -85,7 +85,7 @@ public class PaperSearchService {
 			PaperForSearch tempPaper = PaperForSearch.builder().id(paper.getId()).keyName(paper.getKeyName()).year(paper.getYear())
 					.github(paper.getGithub()).category(paper.getCategory()).professor(paper.getProfessor())
 					.studentNumber(paper.getStudentNumber()).description1(paper.getDescription1())
-					.description2(paper.getDescription2()).description3(paper.getDescription3())
+					.description2(paper.getDescription2()).description3(paper.getDescription3()).hashtag(paper.getHashtag())
 					.thumbnail(paper.getThumbnail()).title(paper.getTitle()).likeCount(paper.getLikeCount()).viewCount(paper.getViewCount()).count(1).build();
 
 			desc3ForSearch.add(tempPaper);
@@ -95,7 +95,7 @@ public class PaperSearchService {
 			PaperForSearch tempPaper = PaperForSearch.builder().id(paper.getId()).keyName(paper.getKeyName()).year(paper.getYear())
 					.github(paper.getGithub()).category(paper.getCategory()).professor(paper.getProfessor())
 					.studentNumber(paper.getStudentNumber()).description1(paper.getDescription1())
-					.description2(paper.getDescription2()).description3(paper.getDescription3())
+					.description2(paper.getDescription2()).description3(paper.getDescription3()).hashtag(paper.getHashtag())
 					.thumbnail(paper.getThumbnail()).title(paper.getTitle()).likeCount(paper.getLikeCount()).viewCount(paper.getViewCount()).count(1).build();
 
 			titleForSearch.add(tempPaper);
