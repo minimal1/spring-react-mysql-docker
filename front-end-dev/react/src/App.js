@@ -13,7 +13,7 @@ import UploadPaper from "./components/pages/UploadPaper";
 import Mypage from "./components/pages/Mypage";
 import ItemDetail from "./components/pages/ItemDetail";
 import ItemEdit from "./components/pages/ItemEdit";
-import ChangePassword from "./components/pages/ChangePassword";
+import ChangePassword from "./components/pages/changePassword";
 
 import AuthRoute from "./components/AuthRoute";
 import Container from "./components/Container";
