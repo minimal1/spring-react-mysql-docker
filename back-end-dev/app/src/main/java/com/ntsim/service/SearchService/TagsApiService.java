@@ -1,4 +1,4 @@
-package com.ntsim.service;
+package com.ntsim.service.SearchService;
 
 import java.util.List;
 
@@ -10,6 +10,8 @@ import com.ntsim.model.network.Header;
 import com.ntsim.model.network.response.TagsResponse;
 import com.ntsim.repository.HashtagRepository;
 import com.ntsim.repository.PaperRepository;
+import com.ntsim.service.PaperService.HashtagApiLogicService;
+import com.ntsim.service.PaperService.PaperLikeService;
 
 @Service
 public class TagsApiService {

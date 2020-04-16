@@ -1,4 +1,4 @@
-package com.ntsim.controller;
+package com.ntsim.controller.PaperController;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ntsim.model.network.Header;
 import com.ntsim.model.network.request.PaperEditDoneRequest;
 import com.ntsim.model.network.response.PaperEditResponse;
-import com.ntsim.service.PaperEditApiService;
+import com.ntsim.service.PaperService.PaperEditApiService;
 
 @CrossOrigin(origins = "*")
 @RestController

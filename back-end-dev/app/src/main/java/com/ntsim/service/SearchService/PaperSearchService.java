@@ -1,4 +1,4 @@
-package com.ntsim.service;
+package com.ntsim.service.SearchService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,6 +14,7 @@ import com.ntsim.model.network.Header;
 import com.ntsim.model.network.request.PaperSearchRequest;
 import com.ntsim.model.network.response.PaperSearchResponse;
 import com.ntsim.repository.PaperRepository;
+import com.ntsim.service.PaperService.PaperLikeService;
 
 import lombok.extern.slf4j.Slf4j;
 

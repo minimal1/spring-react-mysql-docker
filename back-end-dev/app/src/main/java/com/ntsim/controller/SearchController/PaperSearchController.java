@@ -1,4 +1,4 @@
-package com.ntsim.controller;
+package com.ntsim.controller.SearchController;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,7 +13,7 @@ import com.ntsim.jwt.jwtToken;
 import com.ntsim.model.network.Header;
 import com.ntsim.model.network.request.PaperSearchRequest;
 import com.ntsim.model.network.response.PaperSearchResponse;
-import com.ntsim.service.PaperSearchService;
+import com.ntsim.service.SearchService.PaperSearchService;
 
 @CrossOrigin(origins = "*")
 @RestController

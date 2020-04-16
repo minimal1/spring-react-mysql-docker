@@ -1,4 +1,4 @@
-package com.ntsim.controller;
+package com.ntsim.controller.PaperController;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;

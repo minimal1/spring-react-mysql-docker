@@ -10,7 +10,7 @@ import com.ntsim.model.entity.Paper;
 import com.ntsim.model.network.Header;
 import com.ntsim.model.network.request.PaperDeleteRequest;
 import com.ntsim.repository.PaperRepository;
-import com.ntsim.service.PaperDeleteApiService;
+import com.ntsim.service.PaperService.PaperDeleteApiService;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.ntsim.controller;
+package com.ntsim.controller.UserController;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ntsim.model.network.Header;
 import com.ntsim.model.network.request.UserProfileApiRequest;
 import com.ntsim.model.network.response.UserProfileApiResponse;
-import com.ntsim.service.UserProfileApiService;
+import com.ntsim.service.UserService.UserProfileApiService;
 
 @CrossOrigin(origins = "*")
 @RestController

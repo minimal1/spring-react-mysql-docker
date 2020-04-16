@@ -1,4 +1,4 @@
-package com.ntsim.service;
+package com.ntsim.service.UserService;
 
 import java.util.List;
 
@@ -9,6 +9,7 @@ import com.ntsim.model.entity.Paper;
 import com.ntsim.model.network.Header;
 import com.ntsim.model.network.response.MyPaperResponse;
 import com.ntsim.repository.PaperRepository;
+import com.ntsim.service.PaperService.PaperLikeService;
 
 @Service
 public class MyPaperApiService {

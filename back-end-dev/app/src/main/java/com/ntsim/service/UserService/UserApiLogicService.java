@@ -1,4 +1,4 @@
-package com.ntsim.service;
+package com.ntsim.service.UserService;
 
 import java.io.Serializable;
 import java.util.Optional;

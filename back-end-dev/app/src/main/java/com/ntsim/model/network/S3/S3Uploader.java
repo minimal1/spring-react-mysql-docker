@@ -23,7 +23,7 @@ import com.amazonaws.services.s3.model.CannedAccessControlList;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.ntsim.model.network.Header;
 import com.ntsim.model.network.response.S3UploaderResponse;
-import com.ntsim.service.PaperApiLogicService;
+import com.ntsim.service.PaperService.PaperApiLogicService;
 import com.ntsim.textrank.Summarizer;
 import com.ntsim.textrank.TextRank;
 

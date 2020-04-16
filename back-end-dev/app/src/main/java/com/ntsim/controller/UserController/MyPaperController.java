@@ -1,4 +1,4 @@
-package com.ntsim.controller;
+package com.ntsim.controller.UserController;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ntsim.jwt.jwtToken;
 import com.ntsim.model.network.Header;
 import com.ntsim.model.network.response.MyPaperResponse;
-import com.ntsim.service.MyPaperApiService;
+import com.ntsim.service.UserService.MyPaperApiService;
 
 @CrossOrigin(origins = "*")
 @RestController

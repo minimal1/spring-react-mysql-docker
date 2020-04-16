@@ -1,5 +1,4 @@
-package com.ntsim.controller;
-
+package com.ntsim.controller.PaperController;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,27 +11,27 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ntsim.jwt.jwtToken;
 import com.ntsim.model.network.Header;
-import com.ntsim.model.network.request.PaperDetailRequest;
-import com.ntsim.model.network.response.PaperDetailResponse;
-import com.ntsim.service.PaperDetailService;
+import com.ntsim.model.network.request.PaperLikeRequest;
+import com.ntsim.model.network.response.PaperLikeResponse;
+import com.ntsim.service.PaperService.PaperLikeService;
 
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("")
-public class PaperDetailController {
+public class PaperLikeController {
 
-	@Autowired
-	private PaperDetailService paperDetailService;
-	
 	@Autowired
 	private jwtToken jwtToken;
 	
-	@PostMapping("/getPaperDetail")
-	public Header<PaperDetailResponse> getDetail(HttpServletRequest request, @RequestBody Header<PaperDetailRequest> paperDetailRequest){
+	@Autowired
+	private PaperLikeService paperLikeService;
+	
+	@PostMapping("/likePaper")
+	public Header<PaperLikeResponse> likePaper(HttpServletRequest request,@RequestBody Header<PaperLikeRequest> paperLikeRequest){
 		
 		String accessToken = request.getHeader("authorization");
     	String studentNumber = jwtToken.getUserUID(accessToken);
-		
-		return paperDetailService.getDetail(studentNumber, paperDetailRequest);
+
+		return paperLikeService.likePaper(studentNumber, paperLikeRequest);
 	}
 }

@@ -9,6 +9,7 @@ import com.ntsim.model.entity.Paper;
 import com.ntsim.model.network.Header;
 import com.ntsim.model.network.response.MainViewResponse;
 import com.ntsim.repository.PaperRepository;
+import com.ntsim.service.PaperService.PaperLikeService;
 
 @Service
 public class MainViewApiLogicService {

@@ -1,4 +1,4 @@
-package com.ntsim.controller;
+package com.ntsim.controller.SearchController;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ntsim.jwt.jwtToken;
 import com.ntsim.model.network.Header;
 import com.ntsim.model.network.response.TagsResponse;
-import com.ntsim.service.TagsApiService;
+import com.ntsim.service.SearchService.TagsApiService;
 
 
 @CrossOrigin(origins = "*")

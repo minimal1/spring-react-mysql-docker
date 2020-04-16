@@ -1,4 +1,4 @@
-package com.ntsim.service;
+package com.ntsim.service.PaperService;
 
 import java.util.ArrayList;
 import java.util.List;
