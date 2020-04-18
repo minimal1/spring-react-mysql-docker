@@ -30,11 +30,11 @@ Pages:
 
 Remained(2020.04.14 updated) :
 - [x] Search function
-- [ ] Filter function(Back Done, Front to do)
+- [ ] Filter function(professor, category, year click filter to do)
 - [x] Thumbnail image
 - [x] Hashtag function
 - [x] Like, View Count function
-- [ ] UI refactoring(Front working on)
+- [x] UI refactoring(Front working on)
 - [ ] Back End code refactoring
 - [ ] Front End code refactoring
 - [x] Back End logging file
