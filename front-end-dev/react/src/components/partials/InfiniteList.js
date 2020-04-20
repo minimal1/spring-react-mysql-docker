@@ -47,7 +47,7 @@ class InfiniteList extends React.Component {
           });
         });
     } else {
-      const { keyword, year, category, professor } = this.props.query;
+      const { keyword, year, category, professor, hashtag } = this.props.query;
 
       const searchRequest = {
         result_code: "OK",
@@ -57,6 +57,7 @@ class InfiniteList extends React.Component {
           year,
           category,
           professor,
+          hashtag,
         },
       };
 

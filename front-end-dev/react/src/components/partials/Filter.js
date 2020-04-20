@@ -9,34 +9,31 @@ import moment from "moment";
 class Filter extends Component {
   constructor(props) {
     super(props);
+    this.state = { year: "", category: "", professor: "" };
   }
-  state = { year: "", category: "", professor: "" };
 
   componentDidUpdate(prevProps, prevState, snapshots) {
-    if (prevProps.year !== this.props.year) {
-      const year = this.props.year;
+    if (prevProps.filterData.year !== this.props.filterData.year) {
+      const year = this.props.filterData.year;
       this.setState({ year });
     }
-    if (prevProps.category !== this.props.category) {
-      const category = this.props.category;
+    if (prevProps.filterData.category !== this.props.filterData.category) {
+      const category = this.props.filterData.category;
       this.setState({ category });
     }
-    if (prevProps.professor !== this.props.professor) {
-      const professor = this.props.professor;
+    if (prevProps.filterData.professor !== this.props.filterData.professor) {
+      const professor = this.props.filterData.professor;
       this.setState({ professor });
     }
   }
 
   handleChange = (name, value) => {
     this.setState({
-      [name]: value,
+      [name]: value ? value : "",
     });
 
-    this.props.onChangeFilters({
-      year: this.state.year,
-      professor: this.state.professor,
-      category: this.state.category,
-    });
+    this.props.onChangeFilters(name, value ? value : "");
+    console.log(this.state);
   };
   render() {
     const { year, category, professor } = this.state;
@@ -59,13 +56,14 @@ class Filter extends Component {
           <DatePicker
             style={{ width: "100%" }}
             onChange={(year, yearString) =>
-              this.handleChange("yaer", yearString)
+              this.handleChange("year", yearString)
             }
             value={"" !== year ? moment(year, yearFormat) : ""}
             placeholder='Year'
             picker='year'
           />
           <Select
+            allowClear
             placeholder='Category'
             onChange={(value) => this.handleChange("category", value)}
             value={category === "" ? undefined : category}
@@ -77,6 +75,7 @@ class Filter extends Component {
             ))}
           </Select>
           <Select
+            allowClear
             onChange={(value) => this.handleChange("professor", value)}
             value={professor === "" ? undefined : professor}
             placeholder='Professor'

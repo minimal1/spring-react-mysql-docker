@@ -30,13 +30,12 @@ class App extends React.Component {
       currentUser: null,
       isAuthenticated: false,
       isLoading: false,
-      query: {
-        keyword: "",
-        year: "",
-        professor: "",
-        category: "",
-        hashtag: "",
-      },
+      keyword: "",
+      year: "",
+      professor: "",
+      category: "",
+      hashtag: "",
+
       filter: false,
     };
 
@@ -98,49 +97,52 @@ class App extends React.Component {
   }
 
   handleSearch = (keyword) => {
-    this.setState((prevState) => ({
-      query: {
-        keyword,
-        ...prevState.query,
-      },
-    }));
+    this.setState({
+      keyword,
+    });
   };
 
-  handleFilters = (filterData) => {
-    this.setState((prevState) => ({
-      query: {
-        year: filterData.year,
-        professor: filterData.professor,
-        category: filterData.category,
-        ...prevState.query,
-      },
-    }));
+  handleFilters = (name, value) => {
+    this.setState({
+      [name]: value,
+    });
   };
 
   toggleFilter = () => {
     const { filter } = this.state;
-    this.setState({
-      filter: !filter,
-    });
+    if (filter) {
+      // not use
+      this.setState({
+        year: "",
+        professor: "",
+        category: "",
+        hashtag: "",
+        filter: false,
+      });
+    } else {
+      this.setState({
+        filter: true,
+      });
+    }
   };
 
   render() {
-    const {
-      query: { year, professor, category },
-    } = this.state;
+    const { keyword, year, professor, category, hashtag } = this.state;
+    const query = { keyword, year, professor, category, hashtag };
 
+    console.log(year, "?", professor, category);
     return (
       <div className='website-main'>
         <Header
           isAuthenticated={this.state.isAuthenticated}
           onLogout={this.handleLogout}
           onSearch={this.handleSearch}
-          query={this.state.query}
+          keyword={keyword}
           toggleFilter={this.toggleFilter}
         />
         <Filter
           doFilterUse={this.state.filter}
-          filterData={(year, professor, category)}
+          filterData={{ year, professor, category }}
           onChangeFilters={this.handleFilters}
         />
         <Route
@@ -148,7 +150,7 @@ class App extends React.Component {
           path='/'
           render={(props) => (
             <Container
-              query={this.state.query}
+              query={query}
               onSearch={this.handleSearch}
               isAuthenticated={this.state.isAuthenticated}
               {...props}
