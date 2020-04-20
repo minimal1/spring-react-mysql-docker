@@ -11,14 +11,14 @@ class Header extends React.Component {
     super(props);
 
     this.state = {
-      query: "",
+      keyword: "",
     };
   }
 
   componentDidUpdate(prevProps, prevState, snapshots) {
-    if (prevProps.query !== this.props.query) {
-      const query = this.props.query;
-      this.setState({ query });
+    if (prevProps.keyword !== this.props.keyword) {
+      const keyword = this.props.keyword;
+      this.setState({ keyword });
     }
   }
 
@@ -28,7 +28,7 @@ class Header extends React.Component {
     } = e;
 
     this.setState({
-      query: value,
+      keyword: value,
     });
   };
 
@@ -37,12 +37,19 @@ class Header extends React.Component {
   };
 
   handleSubmit = (e) => {
-    this.props.onSearch(this.state.query);
+    const keyword = this.state.keyword;
+    this.props.onSearch(keyword);
+  };
+
+  toggleFilter = (e) => {
+    e.preventDefault();
+    this.props.toggleFilter();
   };
 
   render() {
     const isAuthenticated = this.props.isAuthenticated;
 
+    const { keyword } = this.state;
     return (
       <header className='header'>
         <div className='header__wrapper'>
@@ -53,9 +60,14 @@ class Header extends React.Component {
           </div>
           <div className='header__column'>
             <Search
+              prefix={
+                <a className='header__filterBtn' onClick={this.toggleFilter}>
+                  <i className='fas fa-bars'></i>
+                </a>
+              }
               placeholder='Input search text'
               onChange={this.handleChange}
-              value={this.state.query}
+              value={keyword}
               onSearch={this.handleSubmit}
               className='header__search'
             />

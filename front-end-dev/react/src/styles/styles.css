@@ -11,6 +11,7 @@
 @import "partials/item.css";
 @import "partials/links.css";
 @import "partials/form.css";
+@import "partials/filter-bar.css";
 
 @import "pages/itemDetail.css";
 @import "pages/login.css";

@@ -1,0 +1,22 @@
+/** @format */
+
+.filter-bar {
+  padding: 70px 30px;
+  padding-bottom: 0px;
+  max-width: 1150px;
+  margin: 0px auto;
+  margin-bottom: 10px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  align-content: center;
+  transition: all 0.4s ease-in-out;
+}
+
+.filter-bar .filter-bar__column:nth-child(2) {
+  justify-self: center;
+  width: 100%;
+  display: grid;
+  column-gap: 10px;
+  grid-template-columns: repeat(3, 1fr);
+}

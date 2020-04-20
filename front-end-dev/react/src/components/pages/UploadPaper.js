@@ -88,6 +88,8 @@ class UploadPaper extends Component {
       fileList,
     };
 
+    console.log(this.state.category);
+
     return (
       <main className='upload'>
         <h1 className='upload__title'>Upload Paper</h1>
@@ -108,7 +110,9 @@ class UploadPaper extends Component {
           <FormItem label='카테고리' className='form-container__category'>
             <Select
               onChange={this.handleCategoryChange}
-              value={this.state.category}
+              value={
+                this.state.category === "" ? undefined : this.state.category
+              }
               placeholder='Select Category'
             >
               {categoryData.map((category) => (

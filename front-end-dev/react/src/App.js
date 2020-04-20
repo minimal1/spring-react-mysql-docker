@@ -13,13 +13,14 @@ import UploadPaper from "./components/pages/UploadPaper";
 import Mypage from "./components/pages/Mypage";
 import ItemDetail from "./components/pages/ItemDetail";
 import ItemEdit from "./components/pages/ItemEdit";
-import ChangePassword from "./components/pages/changePassword";
+import ChangePassword from "./components/pages/ChangePassword";
 
 import AuthRoute from "./components/AuthRoute";
 import Container from "./components/Container";
 
 import { getCurrentUser } from "./util/APIUtils";
 import { ACCESS_TOKEN } from "./constants/index";
+import Filter from "./components/partials/Filter";
 
 class App extends React.Component {
   constructor(props) {
@@ -29,7 +30,14 @@ class App extends React.Component {
       currentUser: null,
       isAuthenticated: false,
       isLoading: false,
-      query: "",
+      query: {
+        keyword: "",
+        year: "",
+        professor: "",
+        category: "",
+        hashtag: "",
+      },
+      filter: false,
     };
 
     this.loadCurrentUser = this.loadCurrentUser.bind(this);
@@ -89,11 +97,38 @@ class App extends React.Component {
     this.props.history.push("/");
   }
 
-  handleSearch = (query) => {
-    this.setState({ query });
+  handleSearch = (keyword) => {
+    this.setState((prevState) => ({
+      query: {
+        keyword,
+        ...prevState.query,
+      },
+    }));
+  };
+
+  handleFilters = (filterData) => {
+    this.setState((prevState) => ({
+      query: {
+        year: filterData.year,
+        professor: filterData.professor,
+        category: filterData.category,
+        ...prevState.query,
+      },
+    }));
+  };
+
+  toggleFilter = () => {
+    const { filter } = this.state;
+    this.setState({
+      filter: !filter,
+    });
   };
 
   render() {
+    const {
+      query: { year, professor, category },
+    } = this.state;
+
     return (
       <div className='website-main'>
         <Header
@@ -101,6 +136,12 @@ class App extends React.Component {
           onLogout={this.handleLogout}
           onSearch={this.handleSearch}
           query={this.state.query}
+          toggleFilter={this.toggleFilter}
+        />
+        <Filter
+          doFilterUse={this.state.filter}
+          filterData={(year, professor, category)}
+          onChangeFilters={this.handleFilters}
         />
         <Route
           exact

@@ -30,48 +30,33 @@ class InfiniteList extends React.Component {
   }
 
   updatePaper = () => {
-    const query = this.props.query;
+    if (this.props.isInMypage) {
+      getMyPaper()
+        .then((response) => {
+          this.setState({
+            allPaper: response.data.my_paper,
+            likedPaper: response.data.liked_paper,
+          });
+        })
+        .catch((error) => {
+          notification.error({
+            message: "Paper 리스트 반환 실패",
+            description:
+              error.description ||
+              "Sorry! Something went wrong. Please try again!",
+          });
+        });
+    } else {
+      const { keyword, year, category, professor } = this.props.query;
 
-    if (query === "" || query === undefined || query === null) {
-      if (this.props.isInMypage) {
-        getMyPaper()
-          .then((response) => {
-            this.setState({
-              allPaper: response.data.my_paper,
-              likedPaper: response.data.liked_paper,
-            });
-          })
-          .catch((error) => {
-            notification.error({
-              message: "Paper 리스트 반환 실패",
-              description:
-                error.description ||
-                "Sorry! Something went wrong. Please try again!",
-            });
-          });
-      } else {
-        getAllPaper()
-          .then((response) => {
-            this.setState({
-              allPaper: response.data.all_paper,
-              likedPaper: response.data.liked_paper,
-            });
-          })
-          .catch((error) => {
-            notification.error({
-              message: "Paper 리스트 반환 실패",
-              description:
-                error.description ||
-                "Sorry! Something went wrong. Please try again!",
-            });
-          });
-      }
-    } else if (query !== undefined && query !== null) {
       const searchRequest = {
         result_code: "OK",
         description: "Search papers",
         data: {
-          query: query,
+          keyword,
+          year,
+          category,
+          professor,
         },
       };
 

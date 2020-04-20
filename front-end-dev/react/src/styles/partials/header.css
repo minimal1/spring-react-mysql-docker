@@ -6,6 +6,7 @@
   padding: 0px;
   position: fixed;
   top: 0px;
+  left: 0px;
   background-color: #232a38;
   color: white;
   z-index: 2;
@@ -62,6 +63,14 @@
   color: rgba(0, 0, 0, 0.5);
 }
 
+.header__column .header__filterBtn {
+  margin-right: 5px;
+  font-size: 12px;
+  color: rgb(44, 44, 44, 0.5);
+}
+.header__column .header__filterBtn:hover {
+  color: rgb(44, 44, 44, 1);
+}
 .header__column .header__list {
   display: flex;
   text-transform: uppercase;
