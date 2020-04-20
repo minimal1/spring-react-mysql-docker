@@ -2,6 +2,7 @@ package com.ntsim.service.SearchService;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -27,77 +28,163 @@ public class PaperSearchService {
 
 	@Autowired
 	private PaperLikeService paperLikeService;
-	
+
 	public Header<PaperSearchResponse> searchPaper(String studentNumber, Header<PaperSearchRequest> request) {
 
 		PaperSearchRequest rRequest = request.getData();
-		List<PaperForSearch> resultPaperList = getSearchPaperList(rRequest.getQuery());
-		
-		if(studentNumber == null) {
+
+		String keyWord = rRequest.getKeyword();
+		String year = rRequest.getYear();
+		String professor = rRequest.getProfessor();
+		String category = rRequest.getCategory();
+		String hashtag = rRequest.getHashtag();
+
+		List<PaperForSearch> resultPaperList = null;
+
+		if (keyWord == null) {
+			resultPaperList = new ArrayList<PaperForSearch>();
+			List<Paper> allPaper = paperRepository.findAll();
+			for (Paper paper : allPaper) {
+				PaperForSearch temp = PaperForSearch.builder().id(paper.getId()).keyName(paper.getKeyName())
+						.year(paper.getYear()).github(paper.getGithub()).category(paper.getCategory())
+						.professor(paper.getProfessor()).studentNumber(paper.getStudentNumber())
+						.description1(paper.getDescription1()).description2(paper.getDescription2())
+						.description3(paper.getDescription3()).hashtag(paper.getHashtag())
+						.thumbnail(paper.getThumbnail()).title(paper.getTitle()).likeCount(paper.getLikeCount())
+						.viewCount(paper.getViewCount()).count(0).build();
+
+				resultPaperList.add(temp);
+			}
+		} else {
+			resultPaperList = getSearchPaperList(keyWord);
+		}
+
+		// resultPaperList contains the result of search keyword if the keyword is null
+		// or not.
+		// filter the other things here.
+		resultPaperList = filterOtherThings(resultPaperList, year, professor, category, hashtag);
+
+		if (studentNumber == null) {
 			return response(resultPaperList, null);
 
 		} else {
 			List<String> myLikePaper = paperLikeService.getMyLikeList(studentNumber);
-			
+
 			return response(resultPaperList, myLikePaper);
 		}
-		
+
 	}
 
-	private List<PaperForSearch> getSearchPaperList(String str) {
+	private List<PaperForSearch> filterOtherThings(List<PaperForSearch> beforeFilter, String year, String professor,
+			String category, String hashtag) {
+
+		List<PaperForSearch> afterFilterList = beforeFilter;
+
+		if (year != null) {
+			Iterator<PaperForSearch> iter = afterFilterList.iterator();
+			while (iter.hasNext()) {
+				PaperForSearch p = iter.next();
+				if (!p.getYear().equals(year)) {
+					iter.remove();
+				}
+			}
+		}
+
+		if (professor != null) {
+			Iterator<PaperForSearch> iter = afterFilterList.iterator();
+			while (iter.hasNext()) {
+				PaperForSearch p = iter.next();
+				if (!p.getProfessor().equals(professor)) {
+					iter.remove();
+				}
+			}
+		}
+
+		if (category != null) {
+			Iterator<PaperForSearch> iter = afterFilterList.iterator();
+			while (iter.hasNext()) {
+				PaperForSearch p = iter.next();
+				if (!p.getCategory().equals(category)) {
+					iter.remove();
+				}
+			}
+		}
+
+		if (hashtag != null) {
+			Iterator<PaperForSearch> iter = afterFilterList.iterator();
+			while (iter.hasNext()) {
+				PaperForSearch p = iter.next();
+				if (!p.getHashtag().contains(hashtag)) {
+					iter.remove();
+				}
+			}
+		}
+
+		return afterFilterList;
+	}
+
+	private List<PaperForSearch> getSearchPaperList(String keyWord) {
 
 		List<PaperForSearch> resultList = new ArrayList<PaperForSearch>();
 
-		List<Paper> desc1Result = paperRepository.findByDescription1Contains(str);
+		List<Paper> desc1Result = paperRepository.findByDescription1Contains(keyWord);
 		List<PaperForSearch> desc1ForSearch = new ArrayList<PaperForSearch>();
 
-		List<Paper> desc2Result = paperRepository.findByDescription2Contains(str);
+		List<Paper> desc2Result = paperRepository.findByDescription2Contains(keyWord);
 		List<PaperForSearch> desc2ForSearch = new ArrayList<PaperForSearch>();
 
-		List<Paper> desc3Result = paperRepository.findByDescription3Contains(str);
+		List<Paper> desc3Result = paperRepository.findByDescription3Contains(keyWord);
 		List<PaperForSearch> desc3ForSearch = new ArrayList<PaperForSearch>();
-		
-		List<Paper> titleResult = paperRepository.findByTitleContains(str);
+
+		List<Paper> titleResult = paperRepository.findByTitleContains(keyWord);
 		List<PaperForSearch> titleForSearch = new ArrayList<PaperForSearch>();
 
 		Map<Long, PaperForSearch> countingMap = new HashMap<Long, PaperForSearch>();
 
 		for (Paper paper : desc1Result) {
-			PaperForSearch tempPaper = PaperForSearch.builder().id(paper.getId()).keyName(paper.getKeyName()).year(paper.getYear())
-					.github(paper.getGithub()).category(paper.getCategory()).professor(paper.getProfessor())
-					.studentNumber(paper.getStudentNumber()).description1(paper.getDescription1())
-					.description2(paper.getDescription2()).description3(paper.getDescription3()).hashtag(paper.getHashtag())
-					.thumbnail(paper.getThumbnail()).title(paper.getTitle()).likeCount(paper.getLikeCount()).viewCount(paper.getViewCount()).count(1).build();
+			PaperForSearch tempPaper = PaperForSearch.builder().id(paper.getId()).keyName(paper.getKeyName())
+					.year(paper.getYear()).github(paper.getGithub()).category(paper.getCategory())
+					.professor(paper.getProfessor()).studentNumber(paper.getStudentNumber())
+					.description1(paper.getDescription1()).description2(paper.getDescription2())
+					.description3(paper.getDescription3()).hashtag(paper.getHashtag()).thumbnail(paper.getThumbnail())
+					.title(paper.getTitle()).likeCount(paper.getLikeCount()).viewCount(paper.getViewCount()).count(1)
+					.build();
 
 			desc1ForSearch.add(tempPaper);
 		}
 
 		for (Paper paper : desc2Result) {
-			PaperForSearch tempPaper = PaperForSearch.builder().id(paper.getId()).keyName(paper.getKeyName()).year(paper.getYear())
-					.github(paper.getGithub()).category(paper.getCategory()).professor(paper.getProfessor())
-					.studentNumber(paper.getStudentNumber()).description1(paper.getDescription1())
-					.description2(paper.getDescription2()).description3(paper.getDescription3()).hashtag(paper.getHashtag())
-					.thumbnail(paper.getThumbnail()).title(paper.getTitle()).likeCount(paper.getLikeCount()).viewCount(paper.getViewCount()).count(1).build();
+			PaperForSearch tempPaper = PaperForSearch.builder().id(paper.getId()).keyName(paper.getKeyName())
+					.year(paper.getYear()).github(paper.getGithub()).category(paper.getCategory())
+					.professor(paper.getProfessor()).studentNumber(paper.getStudentNumber())
+					.description1(paper.getDescription1()).description2(paper.getDescription2())
+					.description3(paper.getDescription3()).hashtag(paper.getHashtag()).thumbnail(paper.getThumbnail())
+					.title(paper.getTitle()).likeCount(paper.getLikeCount()).viewCount(paper.getViewCount()).count(1)
+					.build();
 
 			desc2ForSearch.add(tempPaper);
 		}
 
 		for (Paper paper : desc3Result) {
-			PaperForSearch tempPaper = PaperForSearch.builder().id(paper.getId()).keyName(paper.getKeyName()).year(paper.getYear())
-					.github(paper.getGithub()).category(paper.getCategory()).professor(paper.getProfessor())
-					.studentNumber(paper.getStudentNumber()).description1(paper.getDescription1())
-					.description2(paper.getDescription2()).description3(paper.getDescription3()).hashtag(paper.getHashtag())
-					.thumbnail(paper.getThumbnail()).title(paper.getTitle()).likeCount(paper.getLikeCount()).viewCount(paper.getViewCount()).count(1).build();
+			PaperForSearch tempPaper = PaperForSearch.builder().id(paper.getId()).keyName(paper.getKeyName())
+					.year(paper.getYear()).github(paper.getGithub()).category(paper.getCategory())
+					.professor(paper.getProfessor()).studentNumber(paper.getStudentNumber())
+					.description1(paper.getDescription1()).description2(paper.getDescription2())
+					.description3(paper.getDescription3()).hashtag(paper.getHashtag()).thumbnail(paper.getThumbnail())
+					.title(paper.getTitle()).likeCount(paper.getLikeCount()).viewCount(paper.getViewCount()).count(1)
+					.build();
 
 			desc3ForSearch.add(tempPaper);
 		}
-		
+
 		for (Paper paper : titleResult) {
-			PaperForSearch tempPaper = PaperForSearch.builder().id(paper.getId()).keyName(paper.getKeyName()).year(paper.getYear())
-					.github(paper.getGithub()).category(paper.getCategory()).professor(paper.getProfessor())
-					.studentNumber(paper.getStudentNumber()).description1(paper.getDescription1())
-					.description2(paper.getDescription2()).description3(paper.getDescription3()).hashtag(paper.getHashtag())
-					.thumbnail(paper.getThumbnail()).title(paper.getTitle()).likeCount(paper.getLikeCount()).viewCount(paper.getViewCount()).count(1).build();
+			PaperForSearch tempPaper = PaperForSearch.builder().id(paper.getId()).keyName(paper.getKeyName())
+					.year(paper.getYear()).github(paper.getGithub()).category(paper.getCategory())
+					.professor(paper.getProfessor()).studentNumber(paper.getStudentNumber())
+					.description1(paper.getDescription1()).description2(paper.getDescription2())
+					.description3(paper.getDescription3()).hashtag(paper.getHashtag()).thumbnail(paper.getThumbnail())
+					.title(paper.getTitle()).likeCount(paper.getLikeCount()).viewCount(paper.getViewCount()).count(1)
+					.build();
 
 			titleForSearch.add(tempPaper);
 		}
@@ -105,7 +192,7 @@ public class PaperSearchService {
 		for (PaperForSearch paper : desc1ForSearch) {
 			countingMap.put(paper.getId(), paper);
 		}
-		
+
 		for (PaperForSearch paper : desc2ForSearch) {
 			if (countingMap.containsKey(paper.getId())) {
 				PaperForSearch tempPaperCount = countingMap.get(paper.getId());
@@ -123,7 +210,7 @@ public class PaperSearchService {
 				countingMap.put(paper.getId(), paper);
 			}
 		}
-		
+
 		for (PaperForSearch paper : titleForSearch) {
 			if (countingMap.containsKey(paper.getId())) {
 				PaperForSearch tempPaperCount = countingMap.get(paper.getId());
@@ -140,7 +227,8 @@ public class PaperSearchService {
 
 	private Header<PaperSearchResponse> response(List<PaperForSearch> searchedPaper, List<String> myLikePaper) {
 
-		PaperSearchResponse paperSearchResponse = PaperSearchResponse.builder().searchedPaper(searchedPaper).likedPaper(myLikePaper).build();
+		PaperSearchResponse paperSearchResponse = PaperSearchResponse.builder().searchedPaper(searchedPaper)
+				.likedPaper(myLikePaper).build();
 
 		return Header.OK(paperSearchResponse);
 
