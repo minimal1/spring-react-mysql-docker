@@ -10,5 +10,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 public class PaperSearchRequest {
-	private String query;
+	private String keyword;
+
+	private String year;
+	
+	private String professor;
+	
+	private String category;
+	
+	private String hashtag;
 }
