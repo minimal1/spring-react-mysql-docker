@@ -74,8 +74,7 @@ class Item extends React.Component {
                 <i
                   className={liked ? "fas fa-heart" : "far fa-heart"}
                   style={style}
-                ></i>
-                {likes}
+                ></i> {likes}
               </li>
             </ul>
             <ul className='item__hashtags'>{hashtagList}</ul>
