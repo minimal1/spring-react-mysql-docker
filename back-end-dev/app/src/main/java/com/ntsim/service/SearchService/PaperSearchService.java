@@ -41,7 +41,7 @@ public class PaperSearchService {
 
 		List<PaperForSearch> resultPaperList = null;
 
-		if (keyWord == null) {
+		if (keyWord.equals("")) {
 			resultPaperList = new ArrayList<PaperForSearch>();
 			List<Paper> allPaper = paperRepository.findAll();
 			for (Paper paper : allPaper) {
@@ -80,7 +80,7 @@ public class PaperSearchService {
 
 		List<PaperForSearch> afterFilterList = beforeFilter;
 
-		if (year != null) {
+		if (!year.equals("")) {
 			Iterator<PaperForSearch> iter = afterFilterList.iterator();
 			while (iter.hasNext()) {
 				PaperForSearch p = iter.next();
@@ -90,7 +90,7 @@ public class PaperSearchService {
 			}
 		}
 
-		if (professor != null) {
+		if (!professor.equals("")) {
 			Iterator<PaperForSearch> iter = afterFilterList.iterator();
 			while (iter.hasNext()) {
 				PaperForSearch p = iter.next();
@@ -100,7 +100,7 @@ public class PaperSearchService {
 			}
 		}
 
-		if (category != null) {
+		if (!category.equals("")) {
 			Iterator<PaperForSearch> iter = afterFilterList.iterator();
 			while (iter.hasNext()) {
 				PaperForSearch p = iter.next();
@@ -110,7 +110,7 @@ public class PaperSearchService {
 			}
 		}
 
-		if (hashtag != null) {
+		if (!hashtag.equals("")) {
 			Iterator<PaperForSearch> iter = afterFilterList.iterator();
 			while (iter.hasNext()) {
 				PaperForSearch p = iter.next();

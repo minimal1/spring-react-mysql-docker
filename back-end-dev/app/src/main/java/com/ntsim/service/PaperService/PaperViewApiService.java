@@ -32,8 +32,6 @@ public class PaperViewApiService {
 		 * 일단 테이블에 있는 지확인 한다. 없는 경우 만들고 1 값을 증가시킨다.
 		 */
 		
-		log.info(studentNumber);
-		
 		if (studentNumber != null) {
 			Optional<User> userCheck = userRepository.findById(studentNumber);
 			Optional<Paper> paperCheck = paperRepository.findById(paperId);

@@ -136,3 +136,8 @@
 	at java.lang.Thread.run(Thread.java:748)
 
 [2020-04-20 05:56:59:26546][restartedMain] INFO  com.ntsim.Application - Aplicattion Started.
+[2020-04-20 06:03:52:25747][restartedMain] INFO  com.ntsim.Application - Aplicattion Started.
+[2020-04-20 06:12:13:26732][restartedMain] INFO  com.ntsim.Application - Aplicattion Started.
+[2020-04-20 07:39:32:5265562][http-nio-8080-exec-8] INFO  c.n.s.P.PaperViewApiService - 1234
+[2020-04-20 07:39:34:5267601][http-nio-8080-exec-10] INFO  c.n.s.P.PaperViewApiService - 1234
+[2020-04-20 07:39:35:5268774][http-nio-8080-exec-2] INFO  c.n.s.P.PaperViewApiService - 1234
