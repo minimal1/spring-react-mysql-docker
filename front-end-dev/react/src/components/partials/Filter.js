@@ -33,8 +33,8 @@ class Filter extends Component {
     });
 
     this.props.onChangeFilters(name, value ? value : "");
-    console.log(this.state);
   };
+
   render() {
     const { year, category, professor } = this.state;
     const { Option } = Select;

@@ -55,9 +55,12 @@ button[type="submit"]:hover {
 
 .delete-paper {
   margin-left: 10px;
+  padding: 5px 10px;
+  border-radius: 10px;
   color: white;
   background-color: rgb(231, 76, 60);
   border: 1px solid rgb(231, 76, 60);
+  outline: none;
 }
 
 .delete-paper:hover {

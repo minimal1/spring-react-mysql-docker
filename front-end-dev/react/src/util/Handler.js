@@ -45,7 +45,8 @@ export function isFormInvalid(checkpoint) {
     ? !(
         this.state.username.validateStatus === "success" &&
         this.state.email.validateStatus === "success" &&
-        this.state.password.validateStatus === "success"
+        this.state.password.validateStatus === "success" &&
+        this.state.password1.validateStatus === "success"
       )
     : !(
         this.state.username.validateStatus === "success" &&
@@ -53,15 +54,19 @@ export function isFormInvalid(checkpoint) {
       );
 }
 
-export function handleChangeForLoginAndRegister(e, validationFunc) {
+export function handleChangeForLoginAndRegister(e, validationFunc, param) {
   const target = e.target;
   const inputName = target.name;
   const inputValue = target.value;
 
+  const status = param
+    ? validationFunc(inputValue, param)
+    : validationFunc(inputValue);
+
   this.setState({
     [inputName]: {
       value: inputValue,
-      ...validationFunc(inputValue),
+      ...status,
     },
   });
 }
@@ -115,6 +120,19 @@ export function validatePassword(password) {
     return {
       validateStatus: "error",
       errorMsg: `Password is too long (Maximum ${PASSWORD_MAX_LENGTH} characters allowed.)`,
+    };
+  } else {
+    return {
+      validateStatus: "success",
+      errorMsg: null,
+    };
+  }
+}
+export function validatePassword1(password1, password) {
+  if (password1 !== password) {
+    return {
+      validateStatus: "error",
+      errorMsg: `Password is not same`,
     };
   } else {
     return {

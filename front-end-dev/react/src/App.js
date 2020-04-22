@@ -14,6 +14,7 @@ import Mypage from "./components/pages/Mypage";
 import ItemDetail from "./components/pages/ItemDetail";
 import ItemEdit from "./components/pages/ItemEdit";
 import ChangePassword from "./components/pages/ChangePassword";
+import Admin from "./components/pages/Admin";
 
 import AuthRoute from "./components/AuthRoute";
 import Container from "./components/Container";
@@ -135,6 +136,7 @@ class App extends React.Component {
       <div className='website-main'>
         <Header
           isAuthenticated={this.state.isAuthenticated}
+          currentUser={this.state.currentUser}
           onLogout={this.handleLogout}
           onSearch={this.handleSearch}
           keyword={keyword}
@@ -175,6 +177,7 @@ class App extends React.Component {
           path='/mypage'
           render={(props) => <Mypage {...props} />}
         />
+        <Route path='/admin' render={(props) => <Admin {...props} />} />
         <AuthRoute
           isAuthenticated={this.state.isAuthenticated}
           path='/changePassword'

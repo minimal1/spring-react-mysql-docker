@@ -143,6 +143,17 @@ export const deletePaper = (deletePaperRequest) => {
   );
 };
 
+export const deleteCheckedPaper = (deleteCheckedPaperRequest) => {
+  return request(
+    {
+      url: API_BASE_URL + "/deleteMyPaper",
+      method: "POST",
+      body: JSON.stringify(deleteCheckedPaperRequest),
+    },
+    "JSON"
+  );
+};
+
 export const searchPaper = (searchRequest) => {
   return request(
     {
