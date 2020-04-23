@@ -1,0 +1,18 @@
+/** @format */
+
+.paper {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.paper:last-child {
+  margin-bottom: 0;
+}
+
+.paper .paper__column {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+}

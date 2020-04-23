@@ -12,6 +12,7 @@ import {
   validateUsername,
   validateEmail,
   validatePassword,
+  validatePassword1,
 } from "../../util/Handler";
 
 const FormItem = Form.Item;
@@ -28,6 +29,9 @@ class Register extends React.Component {
         value: "",
       },
       password: {
+        value: "",
+      },
+      password1: {
         value: "",
       },
     };
@@ -118,6 +122,26 @@ class Register extends React.Component {
               placeholder='A password between 6 to 20 characters'
               value={this.state.password.value}
               onChange={(event) => this.handleChange(event, validatePassword)}
+            />
+          </FormItem>
+          <FormItem
+            hasFeedback
+            validateStatus={this.state.password1.validateStatus}
+            help={this.state.password1.errorMsg}
+          >
+            <Input
+              name='password1'
+              type='password'
+              placeholder='Check password'
+              size='large'
+              value={this.state.password1.value}
+              onChange={(event) =>
+                this.handleChange(
+                  event,
+                  validatePassword1,
+                  this.state.password.value
+                )
+              }
             />
           </FormItem>
           <FormItem>

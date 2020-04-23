@@ -3,6 +3,7 @@
 import React from "react";
 import { Link, withRouter } from "react-router-dom";
 import { Input } from "antd";
+import { getCurrentUser } from "../../util/APIUtils";
 
 const { Search } = Input;
 
@@ -74,23 +75,49 @@ class Header extends React.Component {
           </div>
           <div className='header__column'>
             {isAuthenticated ? (
-              <ul className='header__list'>
-                <li>
-                  <Link to='/upload' className='header__link link'>
-                    Upload
-                  </Link>
-                </li>
-                <li>
-                  <Link to='/mypage' className='header__link link'>
-                    Mypage
-                  </Link>
-                </li>
-                <li>
-                  <a className='header__link link' onClick={this.handleLogout}>
-                    Logout
-                  </a>
-                </li>
-              </ul>
+              getCurrentUser.name === "admin" ? (
+                <ul className='header__list'>
+                  <li>
+                    <Link to='/upload' className='header__link link'>
+                      Upload
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to='/admin' className='header__link link'>
+                      Admin
+                    </Link>
+                  </li>
+                  <li>
+                    <a
+                      className='header__link link'
+                      onClick={this.handleLogout}
+                    >
+                      Logout
+                    </a>
+                  </li>
+                </ul>
+              ) : (
+                <ul className='header__list'>
+                  <li>
+                    <Link to='/upload' className='header__link link'>
+                      Upload
+                    </Link>
+                  </li>
+                  <li>
+                    <Link to='/mypage' className='header__link link'>
+                      Mypage
+                    </Link>
+                  </li>
+                  <li>
+                    <a
+                      className='header__link link'
+                      onClick={this.handleLogout}
+                    >
+                      Logout
+                    </a>
+                  </li>
+                </ul>
+              )
             ) : (
               <ul className='header__list'>
                 <li>

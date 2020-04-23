@@ -12,6 +12,8 @@
 @import "partials/links.css";
 @import "partials/form.css";
 @import "partials/filter-bar.css";
+@import "partials/papers.css";
+@import "partials/users.css";
 
 @import "pages/itemDetail.css";
 @import "pages/login.css";
@@ -20,3 +22,4 @@
 @import "pages/myPage.css";
 @import "pages/uploadPaper.css";
 @import "pages/changePassword.css";
+@import "pages/admin.css";
