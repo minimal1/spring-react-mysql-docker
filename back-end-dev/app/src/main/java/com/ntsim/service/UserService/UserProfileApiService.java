@@ -1,5 +1,6 @@
 package com.ntsim.service.UserService;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.ntsim.model.entity.User;
 import com.ntsim.model.network.Header;
 import com.ntsim.model.network.request.UserProfileApiRequest;
+import com.ntsim.model.network.response.UserListApiResponse;
 import com.ntsim.model.network.response.UserProfileApiResponse;
 import com.ntsim.model.security.UserSha256;
 import com.ntsim.repository.UserRepository;
@@ -62,6 +64,16 @@ public class UserProfileApiService {
 
 		return Header.OK(userApiResponse);
 
+	}
+
+	//For Admin
+	public Header<UserListApiResponse> getAllUser() {
+		
+		List<User> userList = userRepository.findAll();
+		
+		UserListApiResponse userListApiResponse = UserListApiResponse.builder().userList(userList).build();
+		
+		return Header.OK(userListApiResponse);
 	}
 
 }
