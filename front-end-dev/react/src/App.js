@@ -131,7 +131,6 @@ class App extends React.Component {
     const { keyword, year, professor, category, hashtag } = this.state;
     const query = { keyword, year, professor, category, hashtag };
 
-    console.log(year, "?", professor, category);
     return (
       <div className='website-main'>
         <Header
