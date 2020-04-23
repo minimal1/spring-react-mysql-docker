@@ -66,14 +66,4 @@ public class UserProfileApiService {
 
 	}
 
-	//For Admin
-	public Header<UserListApiResponse> getAllUser() {
-		
-		List<User> userList = userRepository.findAll();
-		
-		UserListApiResponse userListApiResponse = UserListApiResponse.builder().userList(userList).build();
-		
-		return Header.OK(userListApiResponse);
-	}
-
 }
