@@ -56,6 +56,16 @@ export const getAllPaper = () => {
   );
 };
 
+export const getAllUser = () => {
+  return request(
+    {
+      url: API_BASE_URL + "/getAllUser",
+      method: "GET",
+    },
+    "JSON"
+  );
+};
+
 export const getMyPaper = () => {
   return request(
     {
@@ -116,6 +126,17 @@ export const changePassword = (changePasswordRequest) => {
       url: API_BASE_URL + "/changePassword",
       method: "POST",
       body: JSON.stringify(changePasswordRequest),
+    },
+    "JSON"
+  );
+};
+
+export const setPassword = (setPasswordRequest) => {
+  return request(
+    {
+      url: API_BASE_URL + "/setPassword",
+      method: "POST",
+      body: JSON.stringify(setPasswordRequest),
     },
     "JSON"
   );

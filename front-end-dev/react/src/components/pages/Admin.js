@@ -2,16 +2,19 @@
 
 import React, { Component } from "react";
 
-import { Tabs, notification, Checkbox } from "antd";
+import { Tabs, notification, Checkbox, Form, Input, Button } from "antd";
 
 import {
   searchPaper,
   deletePaper,
   deleteCheckedPaper,
+  getAllUser,
+  setPassword,
 } from "../../util/APIUtils";
 import { Link } from "react-router-dom";
 const { TabPane } = Tabs;
 const CheckboxGroup = Checkbox.Group;
+const FormItem = Form.Item;
 
 class Admin extends Component {
   constructor(props) {
@@ -28,6 +31,7 @@ class Admin extends Component {
 
   componentDidMount() {
     this.updatePaper();
+    this.updateUser();
   }
   updatePaper = () => {
     const searchRequest = {
@@ -55,6 +59,21 @@ class Admin extends Component {
 
         notification.error({
           message: "Paper 리스트 반환 실패",
+          description:
+            error.description ||
+            "Sorry! Something went wrong. Please try again!",
+        });
+      });
+  };
+
+  updateUser = () => {
+    getAllUser()
+      .then((response) => {
+        this.setState({ allUser: response.data.user_list });
+      })
+      .catch((error) => {
+        notification.error({
+          message: "User 리스트 반환 실패",
           description:
             error.description ||
             "Sorry! Something went wrong. Please try again!",
@@ -150,6 +169,36 @@ class Admin extends Component {
         console.log(error);
       });
   };
+
+  onHandelUserPassword = (user, e) => {
+    const { student_number } = user;
+
+    const setPasswordRequest = {
+      result_code: "OK",
+      description: "setPassword_Request",
+      data: {
+        student_number,
+        new_password: e.password,
+      },
+    };
+
+    setPassword(setPasswordRequest)
+      .then((response) => {
+        notification.success({
+          message: "졸업작품ing",
+          description: "Your passowrd is successfully changed.",
+        });
+      })
+      .catch((error) => {
+        notification.error({
+          message: "졸업논문ing",
+          description:
+            error.description ||
+            "Sorry! Something went wrong. Please try again!",
+        });
+      });
+  };
+
   render() {
     const { allPaper, allUser } = this.state;
     const paperList = allPaper.map((aPaper) => {
@@ -180,7 +229,63 @@ class Admin extends Component {
       );
     });
 
-    const userList = allUser.map((aUser) => {});
+    const userList = allUser.map((aUser) => {
+      const { student_number, user_email: email } = aUser;
+      return (
+        <li className='user-list__user user'>
+          <Form
+            className='form-container'
+            onFinish={(e) =>
+              this.onHandelUserPassword({ student_number, email }, e)
+            }
+          >
+            <span className='ant-form-text'>{student_number}</span>
+            <span className='ant-form-text'>{email}</span>
+
+            <Form.Item
+              name='password'
+              rules={[
+                {
+                  required: true,
+                  message: "Input new password!",
+                },
+              ]}
+              hasFeedback
+            >
+              <Input.Password />
+            </Form.Item>
+
+            <Form.Item
+              name='confirm'
+              dependencies={["password"]}
+              hasFeedback
+              rules={[
+                {
+                  required: true,
+                  message: "Confirm new password!",
+                },
+                ({ getFieldValue }) => ({
+                  validator(rule, value) {
+                    if (!value || getFieldValue("password") === value) {
+                      return Promise.resolve();
+                    }
+                    return Promise.reject("Passwords do not match!");
+                  },
+                }),
+              ]}
+            >
+              <Input.Password />
+            </Form.Item>
+            <FormItem>
+              <Button type='primary' htmlType='submit'>
+                <i className='fas fa-check'></i>
+              </Button>
+            </FormItem>
+          </Form>
+        </li>
+      );
+    });
+
     return (
       <main className='admin'>
         <h1 className='admin__title'>Admin page</h1>
@@ -204,11 +309,20 @@ class Admin extends Component {
               onChange={this.onChangePaper}
               value={this.state.checkedList}
             >
-              <ul className='admin__list'>{paperList}</ul>
+              <ul className='paper-list'>{paperList}</ul>
             </CheckboxGroup>
           </TabPane>
           <TabPane tab='Users' key='2'>
-            <ul className='admin__list'>{userList}</ul>
+            <ul className='user-list'>
+              <li>
+                <span>Student Number</span>
+                <span>Email</span>
+                <span>New Password</span>
+                <span>Confirm Password</span>
+                <span></span>
+              </li>
+              {userList}
+            </ul>
           </TabPane>
         </Tabs>
       </main>

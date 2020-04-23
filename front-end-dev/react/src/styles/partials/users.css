@@ -1,0 +1,20 @@
+/** @format */
+.user-list li:first-child {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr 2fr 0.5fr;
+  column-gap: 5px;
+  font-size: 12px;
+  font-weight: 600;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  padding-bottom: 15px;
+  margin-bottom: 24px;
+}
+
+.user .form-container {
+  /* background-color: lawngreen; */
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2fr 2fr 2fr 2fr 0.5fr;
+  column-gap: 5px;
+}
