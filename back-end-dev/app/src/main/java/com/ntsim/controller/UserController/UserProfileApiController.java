@@ -32,9 +32,4 @@ public class UserProfileApiController {
 		return userProfileApiService.modifiProfile(accessToken, userApiRequest);
 	}
 	
-	@GetMapping("/getAllUser")
-	public Header<UserListApiResponse> getAllUser(){
-		return userProfileApiService.getAllUser();
-	}
-	
 }
