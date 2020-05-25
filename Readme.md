@@ -30,7 +30,7 @@ Pages:
 
 Remained(2020.04.14 updated) :
 - [x] Search function
-- [ ] Filter function(professor, category, year click filter to do)
+- [x] Filter function
 - [x] Thumbnail image
 - [x] Hashtag function
 - [x] Like, View Count function
@@ -39,3 +39,4 @@ Remained(2020.04.14 updated) :
 - [ ] Front End code refactoring
 - [x] Back End logging file
 - [x] PW encrypting in DB
+- [x] Admin Account
