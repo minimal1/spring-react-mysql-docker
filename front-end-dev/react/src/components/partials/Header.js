@@ -75,7 +75,7 @@ class Header extends React.Component {
           </div>
           <div className='header__column'>
             {isAuthenticated ? (
-              getCurrentUser.name === "admin" ? (
+              getCurrentUser.student_number === "admin" ? (
                 <ul className='header__list'>
                   <li>
                     <Link to='/upload' className='header__link link'>
